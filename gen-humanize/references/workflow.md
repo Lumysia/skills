@@ -66,6 +66,16 @@ Read the rewrite as an editor. Remove padding, verify claims, vary cadence, and 
 
 Do not use randomness as a substitute for judgment. More variation can reduce mechanical rhythm, but random wording, excessive temperature, or decorative mess can damage clarity, facts, and voice.
 
+## Language Rule References
+
+After the general audit, load the language-specific rule file that matches the text:
+
+- English or mostly English prose: `references/english.md`.
+- Simplified Chinese prose: `references/simplified-chinese.md`.
+- Mixed-language prose: apply the dominant language first, then preserve proper nouns, code, quotes, and field-specific terms.
+
+If the text uses Traditional Chinese or another language without a dedicated rule file, apply only the general workflow and avoid importing English- or Simplified-Chinese-specific punctuation, syntax, or idiom rules.
+
 ## Evidence And Grounding
 
 Prefer facts, names, numbers, examples, source notes, quotes, scenes, constraints, and tradeoffs over broad claims.
@@ -81,41 +91,6 @@ Paragraph goal: <what this paragraph must do>
 Needed evidence: <fact, quote, example, citation, number, or source note>
 Status: verified | provided | missing | needs human check
 ```
-
-## Patterns To Fix
-
-Treat these as clusters, not automatic errors. A single pattern can be normal; stacked patterns often create the generic AI feel.
-
-Fix structure patterns:
-
-- Formulaic opening that says the topic is important before saying anything specific.
-- Conclusion that restates the prompt, becomes upbeat, or promises future potential without new information.
-- Overbalanced sections that force pros, cons, challenges, and future outlook when the genre does not need them.
-- Lists with identical item shape, bold labels, and colon summaries.
-- Headings followed by warm-up sentences that merely repeat the heading.
-
-Fix language patterns:
-
-- Significance inflation: pivotal, crucial, transformative, testament, landscape, underscores, showcases.
-- Vague authorities: experts say, observers note, industry reports suggest, according to sources.
-- Empty transitions: additionally, moreover, furthermore, in conclusion, let's explore.
-- Forced triads and false ranges: three-item symmetry or `from X to Y` when no real scale exists.
-- Copula avoidance: `serves as`, `stands as`, `boasts`, `features` when `is` or `has` is clearer.
-- Hedging piles: could potentially possibly, it may be argued, it is important to note.
-
-Fix content patterns:
-
-- Abstract claims with no example, source, mechanism, or consequence.
-- Generic praise, brand-speak, or tourism language where plain description is better.
-- Unsupported speculation about motives, private history, impact, or future outcomes.
-- Smooth but low-information paragraphs that could fit many topics.
-
-Fix rhythm patterns:
-
-- Sentences all landing at the same length.
-- Every paragraph following the same explanation pattern.
-- Over-polished neutrality in genres where a human stance is expected.
-- Artificial messiness added where the genre requires precision.
 
 ## Genre Rules
 

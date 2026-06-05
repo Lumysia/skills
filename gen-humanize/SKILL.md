@@ -7,8 +7,6 @@ description: Humanize drafted text by preserving meaning, matching author voice,
 
 Use this skill to turn generic or AI-sounding prose into writing with clearer authorship, appropriate register, concrete detail, and stronger editorial judgment.
 
-Adapted from a user-provided research report on reducing AI-like writing, with [blader/humanizer](https://github.com/blader/humanizer) used as a pattern reference.
-
 ## Flow
 
 1. Identify the text's purpose, audience, genre, risk level, and required format.
@@ -21,4 +19,4 @@ Adapted from a user-provided research report on reducing AI-like writing, with [
 
 Hard dependencies: source text and target use. Ask once if either is missing.
 
-For style and preference cards, rewrite rules, audit checks, quality evaluation, and output formats, read `references/workflow.md`.
+For the general workflow, read `references/workflow.md`. For language-specific pattern rules, read `references/english.md` or `references/simplified-chinese.md` as needed.
