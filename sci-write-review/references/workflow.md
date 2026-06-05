@@ -170,7 +170,7 @@ Subagents should:
 
 1. Intake
 
-First ask for interaction/output language. Then create `review_project` from topic, review type, audience, language, source plan, project directory, and intervention mode.
+Infer the interaction/output language first; ask once only if it cannot be inferred confidently. Then create `review_project` from topic, review type, audience, language, source plan, project directory, and intervention mode.
 
 Write: `project.json` and `manifest.json`.
 

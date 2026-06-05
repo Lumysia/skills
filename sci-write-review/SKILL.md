@@ -23,6 +23,7 @@ Use this skill to run an evidence-grounded review-writing workflow without relyi
 - Use Work Check Agent for important operational nodes that do not have a scholarly Critic gate.
 - Preserve reviewer independence: Project Manager may provide content, dependencies, rubric, and scope, but must not prescribe the criticism, quality-test conclusion, or work-check outcome.
 - Ask the user at bootstrap whether they want detailed human intervention or autonomous quality selection after retry exhaustion.
+- For paper discovery or source acquisition, route to `sci-paper-search` when external paper-search tools are useful; do not make it a hard dependency for review writing.
 
 ## Bootstrap
 

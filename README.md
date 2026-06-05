@@ -13,4 +13,5 @@
 
 ## Scientific
 
+- [`sci-paper-search`](./sci-paper-search/SKILL.md) - Academic paper search and retrieval workflow using available external tools such as paper-search-mcp.
 - [`sci-write-review`](./sci-write-review/SKILL.md) - Evidence-grounded review and manuscript workflow with file artifacts, critic gates, and export traceability.

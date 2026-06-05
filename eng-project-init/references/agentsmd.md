@@ -18,6 +18,7 @@ Do not block on soft dependencies: issue tracker, domain glossary, ADRs, labels,
 # AGENTS.md
 
 - Respond in the user's language unless code, logs, commands, or external text require otherwise.
+- Do not add unrequested policy preferences, normative constraints, or default source restrictions to skills; limit rules to the user's request, repository conventions, and verifiable tool behavior.
 - When creating or updating a skill, include a `SKILL.md` Startup/Bootstrap rule that infers the user's interaction/output language before starting and asks once only if it cannot be inferred confidently.
 - Be concise: one sentence beats two, one word beats several, and empty phrasing is not allowed.
 - Address current-system problems; do not add speculative rules or generic filler.
