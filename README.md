@@ -1,5 +1,9 @@
 # Skills
 
+## General
+
+- [`gen-humanize`](./gen-humanize/SKILL.md) - Generic prose humanization workflow for author voice, genre fit, evidence grounding, and formulaic-pattern cleanup; adapted from [blader/humanizer](https://github.com/blader/humanizer) and a user-provided research report.
+
 ## Engineering
 
 - [`eng-agent-init`](./eng-agent-init/SKILL.md) - Agent host initialization workflow for skill sources and MCP config.
