@@ -7,6 +7,10 @@ description: Initialize agent hosts by discovering config, registering skill sou
 
 Use this skill to configure an agent host without assuming one vendor. Register the current skills repository as a skill source and configure requested MCP servers.
 
+## Startup
+
+Before starting, infer the user's preferred interaction and output language from the request, existing artifacts, or project conventions. If it cannot be inferred confidently, ask once; then use that language for prompts, summaries, and outputs unless the user specifies otherwise.
+
 ## Flow
 
 1. Detect the target agent runtime and version.

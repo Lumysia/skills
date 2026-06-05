@@ -20,6 +20,10 @@ tools/runtime = whatever capabilities the host can provide
 results/<target>/<ts>/ = portable artifacts
 ```
 
+## Startup
+
+Before routing or starting a mode, infer the user's preferred interaction and report language from the request, target materials, existing artifacts, or project conventions. If it cannot be inferred confidently, ask once; then use that language for prompts, summaries, artifacts, and reports unless the user specifies otherwise.
+
 ## Routing
 
 - New run or first-time setup: read `references/stages.md`, then `references/state.md`.

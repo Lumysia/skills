@@ -7,6 +7,10 @@ description: Initialize a software project for agent use by inspecting repo conv
 
 Use this skill to create concise, repo-specific agent instructions. Do not create CLAUDE.md, ADRs, glossaries, or broad process docs unless the user asks.
 
+## Startup
+
+Before starting, infer the user's preferred interaction and output language from the request, existing artifacts, or project conventions. If it cannot be inferred confidently, ask once; then use that language for prompts, summaries, and outputs unless the user specifies otherwise.
+
 ## Flow
 
 1. Inspect existing guidance: `AGENTS.md`, README, package/build files, test config, formatter/linter config, CI, scripts, and docs.

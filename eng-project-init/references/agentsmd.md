@@ -18,6 +18,7 @@ Do not block on soft dependencies: issue tracker, domain glossary, ADRs, labels,
 # AGENTS.md
 
 - Respond in the user's language unless code, logs, commands, or external text require otherwise.
+- When creating or updating a skill, include a `SKILL.md` Startup/Bootstrap rule that infers the user's interaction/output language before starting and asks once only if it cannot be inferred confidently.
 - Be concise: one sentence beats two, one word beats several, and empty phrasing is not allowed.
 - Address current-system problems; do not add speculative rules or generic filler.
 - Keep naming and layout consistent with nearby files.

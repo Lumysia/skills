@@ -26,11 +26,11 @@ Use this skill to run an evidence-grounded review-writing workflow without relyi
 
 ## Bootstrap
 
-Before any other bootstrap question, ask the user for the language to use for interaction and final outputs. Use that language for subsequent prompts, artifact summaries, critic reasons, quality decisions, and manuscript prose unless the user specifies separate interaction/output languages.
+Before any other bootstrap question, infer the language to use for interaction and final outputs from the request, source corpus, existing artifacts, or project conventions. If it cannot be inferred confidently, ask once. Use that language for subsequent prompts, artifact summaries, critic reasons, quality decisions, and manuscript prose unless the user specifies separate interaction/output languages.
 
 Then collect the remaining minimal missing inputs:
 
-- Interaction/output language
+- Interaction/output language, if not already inferred or specified
 - Topic or research question
 - Review type: narrative, scoping, systematic, critical, theoretical, methods, or technical
 - Target audience

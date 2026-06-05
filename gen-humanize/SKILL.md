@@ -7,6 +7,10 @@ description: Humanize drafted text by preserving meaning, matching author voice,
 
 Use this skill to turn generic or AI-sounding prose into writing with clearer authorship, appropriate register, concrete detail, and stronger editorial judgment.
 
+## Startup
+
+Before starting, infer the user's preferred interaction and output language from the request, source text, existing artifacts, or project conventions. If it cannot be inferred confidently, ask once; then use that language for prompts, summaries, and outputs unless the user specifies otherwise.
+
 ## Flow
 
 1. Identify the text's purpose, audience, genre, risk level, and required format.

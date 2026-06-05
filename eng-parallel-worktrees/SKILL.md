@@ -9,6 +9,10 @@ Use this skill to run independent engineering tracks in isolated git worktrees, 
 
 Adapted from [SpillwaveSolutions/parallel-worktrees](https://github.com/spillwavesolutions/parallel-worktrees), generalized to avoid depending on one agent host.
 
+## Startup
+
+Before starting, infer the user's preferred interaction and output language from the request, existing artifacts, or project conventions. If it cannot be inferred confidently, ask once; then use that language for prompts, summaries, and outputs unless the user specifies otherwise.
+
 ## Flow
 
 1. Confirm the task can be split without heavy file overlap or sequential dependency risk.
