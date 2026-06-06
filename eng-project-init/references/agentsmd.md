@@ -26,6 +26,10 @@ Do not block on soft dependencies: issue tracker, domain glossary, ADRs, labels,
 - Prefer maintainable fixes over narrow symptom patches.
 - Gather evidence before changing unclear code paths.
 - Fix shared abstractions or contracts when the bug crosses state, sync, protocol, rendering, or data boundaries.
+- For design or architecture decisions, define the target state before discussing migration, compatibility, and implementation constraints.
+- Follow SemVer for compatibility: versions before `1.0.0` do not require backward compatibility, and breaking changes after `1.0.0` must be expressed by a major version change.
+- Do not add or preserve legacy paths, aliases, transitional wrappers, compatibility shims, partial implementations, or smaller diffs when they conflict with the target model, unless SemVer or an explicit external contract requires them.
+- Treat high-confidence design assumptions as hypotheses and include the cheapest validation step or falsifying condition.
 - Keep reusable policy, protocol values, and cross-file literals in registries, config, or typed constants.
 - Keep source files under `<line limit>` by default; split by responsibility before adding more behavior.
 - Run `<test command>` before claiming code works.
