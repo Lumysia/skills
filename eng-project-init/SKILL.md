@@ -17,9 +17,12 @@ Before starting, infer the user's preferred interaction and output language from
 2. Infer commands, style rules, project layout, safety rules, and commit rules from files, not guesses.
 3. Ask only for hard dependencies that cannot be inferred, such as preferred commit format or required test command.
 4. Treat naming preferences, issue tracker, domain terms, and optional docs as soft dependencies; skip them if absent.
-5. Write or update `AGENTS.md` with short, actionable rules.
-6. Preserve existing valid rules; remove duplication and empty phrasing.
-7. Verify the final file is concise and matches the repository.
+5. Treat user preferences and template entries as candidate rules until repo evidence or explicit target-project scope confirms them.
+6. If `AGENTS.md` exists, use it as the base; apply the reference template only to fill gaps or tighten weak rules.
+7. If `AGENTS.md` is missing, create it with short, actionable rules that apply to the inspected project.
+8. Preserve existing valid rules; remove obsolete, duplicate, placeholder, or empty guidance.
+9. Treat the reference template as a menu, not a checklist; omit optional or irrelevant rules.
+10. Verify the final file is concise and matches the repository.
 
 ## Output
 

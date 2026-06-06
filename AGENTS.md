@@ -7,10 +7,10 @@
 - Each public skill must be listed in `README.md` under its category with a one-sentence description and link to `SKILL.md`.
 - Keep skills model- and host-agnostic. Do not depend on a specific provider, CLI, repository, or global config unless the skill is explicitly for that tool.
 - Do not add unrequested policy preferences, normative constraints, or default source restrictions to skills; limit rules to the user's request, repository conventions, and verifiable tool behavior.
+- When adapting templates, include only rules that apply to this repository; do not copy placeholder, optional, or irrelevant rules.
 - Do not rewrite wording just to make it sound better; if a problem is not clear, do not edit it.
 - For design or architecture decisions, define the target state before discussing migration, compatibility, and implementation constraints.
-- Follow SemVer for compatibility: versions before `1.0.0` do not require backward compatibility, and breaking changes after `1.0.0` must be expressed by a major version change.
-- Do not add or preserve legacy paths, aliases, transitional wrappers, compatibility shims, partial implementations, or smaller diffs when they conflict with the target model, unless SemVer or an explicit external contract requires them.
+- Do not add or preserve legacy paths, aliases, transitional wrappers, compatibility shims, partial implementations, or smaller diffs when they conflict with the target model, unless an explicit external contract requires them.
 - Treat high-confidence design assumptions as hypotheses and include the cheapest validation step or falsifying condition.
 - When creating or updating a skill, include a `SKILL.md` Startup/Bootstrap rule that infers the user's interaction/output language before starting and asks once only if it cannot be inferred confidently.
 - Distinguish hard dependencies from soft dependencies. Hard dependencies must be collected or confirmed before execution; soft dependencies should improve output but must not cause repeated user prompts or block progress.

@@ -14,6 +14,12 @@ Do not block on soft dependencies: issue tracker, domain glossary, ADRs, labels,
 
 ## Template
 
+Use this template as a menu, not a checklist. Include only rules supported by the inspected project and useful for future agent behavior.
+
+When `AGENTS.md` already exists, use it as the base and apply this template only to fill gaps, tighten weak rules, or remove obsolete guidance.
+
+Do not promote a user preference, template example, or broadly useful practice into `AGENTS.md` unless it applies to the target project by evidence or explicit user scope.
+
 ```markdown
 # AGENTS.md
 
@@ -54,6 +60,9 @@ Do not block on soft dependencies: issue tracker, domain glossary, ADRs, labels,
 - One rule per bullet.
 - Prefer commands over prose.
 - Keep only rules that affect future agent behavior.
+- Preserve existing valid rules when updating an existing `AGENTS.md`.
+- Omit template rules that do not apply to the inspected project.
+- Add rules only from existing guidance, inspected repo evidence, or explicit target-project instructions.
 - Use exact filenames, commands, and paths.
 - Preserve project-specific names only when they are part of the contract.
 - Mark uncertain rules as questions, not instructions.
@@ -73,5 +82,6 @@ Do not block on soft dependencies: issue tracker, domain glossary, ADRs, labels,
 - No duplicated rules.
 - No vague rules such as "write good code".
 - No unverifiable claims.
+- Every added rule has a clear source: existing guidance, repo evidence, or explicit target-project instruction.
 - No unnecessary user prompts.
 - No instructions copied from unrelated projects.
