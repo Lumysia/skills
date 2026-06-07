@@ -11,6 +11,10 @@
 - [`eng-project-init`](./eng-project-init/SKILL.md) - Project initialization workflow for concise repo-specific `AGENTS.md` instructions.
 - [`eng-security-assessment`](./eng-security-assessment/SKILL.md) - Autonomous security assessment: profile selection, tool discovery, verification, reporting, and patching; inspired by [Anthropic's defending-code-reference-harness](https://github.com/anthropics/defending-code-reference-harness).
 
+## Education
+
+- [`edu-assignment-deliverable`](./edu-assignment-deliverable/SKILL.md) - Course assignment deliverable workflow for rubric checks, required files, reports, notebooks, code answers, and PDFs.
+
 ## Scientific
 
 - [`sci-paper-search`](./sci-paper-search/SKILL.md) - Academic paper search and retrieval workflow using available external tools such as paper-search-mcp.
