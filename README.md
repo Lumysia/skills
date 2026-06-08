@@ -2,6 +2,7 @@
 
 ## General
 
+- [`gen-browser-control`](./gen-browser-control/SKILL.md) - Browser control workflow for Playwright MCP extension mode using existing Chrome, Edge, or Chromium-family tabs and logged-in sessions.
 - [`gen-humanize`](./gen-humanize/SKILL.md) - Generic prose humanization workflow for author voice, genre fit, evidence grounding, and formulaic-pattern cleanup; adapted from [blader/humanizer](https://github.com/blader/humanizer), [qu-ai-wei](https://github.com/LifelongLazyLearner/qu-ai-wei), and a user-provided research report.
 
 ## Engineering
