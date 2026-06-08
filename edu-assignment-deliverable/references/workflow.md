@@ -45,7 +45,7 @@ Track any required items when present:
 
 The active agent coordinates the assignment workflow directly. It gathers inputs, identifies files, builds the checklist, applies focused fixes, and makes final handoff decisions. It should not perform detailed deliverable validation or final rubric review itself while subagents are available.
 
-Use the prompt templates in `references/subagents.md` for every delegated role. Do not rely on ad hoc prompts for the core workflow agents.
+Use the prompt templates in `references/subagents.md` for every delegated role. The active agent must read the templates itself and paste the full selected template into each Task prompt, replacing placeholders with concrete paths, constraints, validation goals, prior findings, and explicit non-modification rules. Do not rely on ad hoc prompts for the core workflow agents. Do not tell subagents to read `references/subagents.md`, choose their own role, or reconstruct instructions from a summary.
 
 Required delegation points:
 

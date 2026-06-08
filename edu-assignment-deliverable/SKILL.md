@@ -29,3 +29,5 @@ The active agent coordinates the workflow directly: gather inputs, identify cand
 Hard dependencies: assignment instructions and required deliverable format. Ask once if either is missing.
 
 For missing-input rules, subagent routing, temporary provisioning, severity calibration, template handling, cleanup, and handoff rules, read `references/workflow.md`. For exact worker subagent roles and prompt templates, read `references/subagents.md`.
+
+When launching a worker subagent, the active agent must first read `references/subagents.md`, select the matching role template, and paste the full template text into the Task prompt with all placeholders replaced by concrete paths, constraints, validation goals, prior findings, and non-modification rules. Do not ask a worker subagent to read `references/subagents.md`, infer its own role, or operate from a shortened summary prompt.
