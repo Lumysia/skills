@@ -10,6 +10,7 @@
 - For system-level entrypoints managed by setup, add repository templates under `eng-agent-init/references/global-entrypoints/`; do not write directly to user global config paths such as `~/.config/opencode/commands/` unless the user explicitly asks to install them now.
 - Do not add unrequested policy preferences, normative constraints, or default source restrictions to skills; limit rules to the user's request, repository conventions, and verifiable tool behavior.
 - When adapting templates, include only rules that apply to this repository; do not copy placeholder, optional, or irrelevant rules.
+- Avoid long “such as” example lists in skill instructions. Prefer general, outcome-based categories; keep examples only when they prevent ambiguity, define a boundary, or change agent behavior.
 - Do not rewrite wording just to make it sound better; if a problem is not clear, do not edit it.
 - For design or architecture decisions, define the target state before discussing migration, compatibility, and implementation constraints.
 - Do not add or preserve legacy paths, aliases, transitional wrappers, compatibility shims, partial implementations, or smaller diffs when they conflict with the target model, unless an explicit external contract requires them.
