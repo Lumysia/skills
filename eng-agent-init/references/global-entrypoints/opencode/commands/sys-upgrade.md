@@ -1,8 +1,8 @@
 ---
-description: Upgrade operating-system software using the repository lifecycle skill.
+description: Update or upgrade operating-system software using the repository lifecycle skill.
 ---
 
-Run the repository skill `sys-software-lifecycle` for an upgrade request.
+Run the repository skill `sys-software-lifecycle` for an update or upgrade request.
 
 User request: $ARGUMENTS
 

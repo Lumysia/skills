@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Initialize agent hosts by discovering config, registering skill sources, and configuring requested MCP servers. Use when setting up coding agents, agent host config, skills paths, or MCP servers.
+description: Initialize the current agent host by discovering config, registering skill sources, and configuring requested MCP servers. Use when setting up coding agent config, skill paths, or MCP servers.
 ---
 
 # Setup

@@ -1,11 +1,11 @@
 ---
 name: sys-upgrade
-description: Upgrade operating-system software. Use when the user asks to upgrade installed software with source and version comparison.
+description: Update or upgrade operating-system software. Use when the user asks to refresh package metadata, update software, or upgrade installed software with source and version comparison.
 ---
 
 # Sys Upgrade
 
-Run the repository skill `sys-software-lifecycle` for an upgrade request.
+Run the repository skill `sys-software-lifecycle` for an update or upgrade request.
 
 User request: $ARGUMENTS
 

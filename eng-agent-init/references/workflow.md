@@ -2,7 +2,7 @@
 
 ## Scope
 
-Configure agent hosts to use this skills directory and MCP servers.
+Configure the target agent host to use this skills directory and MCP servers.
 
 Do not configure model providers, API keys, permissions, prompts, themes, telemetry, or global shell settings unless the user asks.
 
@@ -24,16 +24,16 @@ Setup is idempotent: it may be run repeatedly to detect missing pieces and fill 
 
 Rules:
 
-- Prefer the agent host currently running the setup request.
-- Install or link entrypoints only for hosts that are locally installed or have an existing config directory.
-- Do not create entrypoints for absent hosts just because this repository supports them.
+- Default to the agent host currently running the setup request.
+- Install or link entrypoints only for the target host unless the user explicitly names additional hosts.
+- Do not inspect or create entrypoints for other hosts just because this repository supports them.
 - Use repository-managed sources under `references/global-entrypoints/`.
 - Prefer symlinks from global host locations to repository-managed source files when the host supports them.
 - If symlinks are not safe or supported, copy only missing files and preserve existing different files.
 - Treat an existing correct symlink or identical file as complete.
 - If an existing destination differs from the repository source and is not a managed symlink, report the conflict and ask before replacing it.
 - For commands that invoke repository skills, keep wrappers as pointers and do not duplicate skill instructions.
-- After syncing entrypoints, tell the user which hosts were updated, skipped as absent, or skipped due to conflicts.
+- After syncing entrypoints, tell the user which target host was updated or skipped due to conflicts.
 
 ## MCP Servers
 

@@ -1,5 +1,5 @@
 ---
-description: Initialize agent host config, skill paths, and requested MCP servers.
+description: Initialize current agent host config, skill paths, and requested MCP servers.
 ---
 
 Run the repository skill `eng-agent-init`.
