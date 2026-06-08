@@ -3,7 +3,7 @@
 ## Principles
 
 - Prefer the exact manager, installer, app store, or vendor uninstaller that installed the software.
-- For installs and updates, compare package managers, official downloads, app stores, source repositories, and release feeds before choosing a source.
+- For installs and targeted updates, compare package managers, official downloads, app stores, source repositories, and release feeds before choosing a source.
 - Search for software-specific uninstall and cleanup notes before using generic leftovers.
 - Separate app removal from user-data removal; ask before deleting settings, credentials, saves, profiles, or license data.
 - Treat registry edits, services, drivers, launch daemons, kernel extensions, and system directories as high risk.
@@ -14,11 +14,13 @@
 ## Discovery
 
 1. Detect OS and version.
-2. Identify install source: native package manager, app store, vendor installer, portable archive, source build, containerized package, managed endpoint tooling, or unknown.
-3. Resolve the exact package identifier, cask token, bundle ID, product code, app ID, service name, or executable path.
-4. Compare available versions across trusted sources and prefer the newest stable compatible source unless the user requests a channel, version, or manager.
-5. Search official docs, package metadata, and common issue reports for software-specific cleanup paths.
-6. Find active processes, services, startup items, scheduled jobs, agents, daemons, and open files before uninstalling.
+2. Identify operation scope: global package-manager update/upgrade, targeted software lifecycle action, or unknown.
+3. If an update or upgrade request does not name specific software, choose global scope and do not ask for a software identifier.
+4. Identify install source: native package manager, app store, vendor installer, portable archive, source build, containerized package, managed endpoint tooling, or unknown.
+5. For targeted actions, resolve the exact package identifier, cask token, bundle ID, product code, app ID, service name, or executable path.
+6. Compare available versions across trusted sources and prefer the newest stable compatible source unless the user requests a channel, version, or manager.
+7. For targeted actions, search official docs, package metadata, and common issue reports for software-specific cleanup paths.
+8. Find active processes, services, startup items, scheduled jobs, agents, daemons, and open files before uninstalling.
 
 ## Install
 
@@ -32,11 +34,12 @@
 
 ## Update
 
-1. Check whether the app self-updates or should be updated by the package manager, app store, vendor installer, or release feed.
-2. Snapshot current version and config locations when rollback matters.
-3. Compare available versions, then upgrade from the newest stable compatible trusted source.
-4. Run dependency and cache cleanup appropriate to the manager.
-5. Verify the new version and note any restart or logout requirement.
+1. For global scope, list candidate package managers and outdated packages, then present one confirmation covering metadata refresh, upgrades, autoremove, cache cleanup, logging, and verification.
+2. For targeted scope, check whether the app self-updates or should be updated by the package manager, app store, vendor installer, or release feed.
+3. Snapshot current version and config locations when rollback matters.
+4. Compare available versions, then upgrade from the newest stable compatible trusted source.
+5. Run dependency and cache cleanup appropriate to the manager.
+6. Verify the new version or global outdated status and note any restart or logout requirement.
 
 ## Uninstall
 
