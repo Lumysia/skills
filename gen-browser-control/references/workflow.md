@@ -83,12 +83,14 @@ Treat the token as profile-local sensitive configuration. Do not paste it into c
 ## Operating Loop
 
 1. Start by identifying the selected tab, current URL, and user goal.
-2. Prefer accessibility snapshots for page understanding; use screenshots only when visual layout or rendering must be checked.
-3. Before each meaningful action, verify the target element by role, accessible name, and nearby text.
-4. For navigation, form filling, clicking, keyboard input, tab switching, and dialogs, use Playwright MCP tools instead of shell scripts or ad hoc browser automation.
-5. After actions, verify the result from page state, URL, visible text, network or console evidence when available, or a screenshot when visual proof matters.
-6. If the page changes unexpectedly, take a fresh snapshot before continuing.
-7. Summarize completed actions and remaining user-owned steps at the end.
+2. Treat `/browser` arguments as the task brief; infer whether to search, open a site, inspect, test, debug, translate, extract, or operate the current page.
+3. If the goal is translation or bilingual reading, follow `translation.md`; translate in-place on the page and report only progress or blockers in chat.
+4. Prefer accessibility snapshots for page understanding; use screenshots only when visual layout or rendering must be checked.
+5. Before each meaningful action, verify the target element by role, accessible name, and nearby text.
+6. For navigation, form filling, clicking, keyboard input, tab switching, and dialogs, use Playwright MCP tools instead of shell scripts or ad hoc browser automation.
+7. After actions, verify the result from page state, URL, visible text, network or console evidence when available, or a screenshot when visual proof matters.
+8. If the page changes unexpectedly, take a fresh snapshot before continuing.
+9. Summarize completed actions and remaining user-owned steps at the end.
 
 ## Safety
 

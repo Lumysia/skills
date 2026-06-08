@@ -5,7 +5,7 @@ description: Browser control via Playwright MCP extension mode. Use when control
 
 # General Browser Control
 
-Use this skill when the user wants an agent to browse, inspect, test, debug, or automate a real browser session through Playwright MCP extension mode.
+Use this skill when the user wants an agent to browse, search, inspect, test, debug, translate, or automate a real browser session through Playwright MCP extension mode.
 
 ## Startup
 
@@ -15,15 +15,17 @@ Infer the target browser before asking: use the user's wording, an already conne
 
 ## Flow
 
-1. Identify the target browser from context when possible; confirm only if ambiguous or before changing host configuration for a live profile.
-2. Ensure the Playwright MCP Bridge extension is installed and enabled in the target browser profile.
-3. Reuse an existing working Playwright MCP extension-mode entry; otherwise configure the agent host to run `npx @playwright/mcp@latest --extension`, adding browser path flags when the target is not the default Chrome or Edge profile.
-4. Ask the user to open the target page or tab and approve/select it on first connection.
-5. Smoke-test control with a read-only action such as taking a snapshot, reading the URL, or identifying the page title.
-6. Use accessibility snapshots and stable element references before clicking, typing, or asserting page state.
-7. Pause for confirmation before submitting forms, changing account state, making purchases, deleting data, or exposing secrets.
-8. Report the browser tab used, actions taken, verification evidence, and any manual follow-up.
+1. Parse `/browser` arguments as the browser task: open/search/navigate, inspect, test, debug, translate, extract, or operate a page.
+2. Identify the target browser from context when possible; confirm only if ambiguous or before changing host configuration for a live profile.
+3. Ensure the Playwright MCP Bridge extension is installed and enabled in the target browser profile.
+4. Reuse an existing working Playwright MCP extension-mode entry; otherwise configure the agent host to run `npx @playwright/mcp@latest --extension`, adding browser path flags when the target is not the default Chrome or Edge profile.
+5. Route specialized tasks to their reference files; for translation, read `references/translation.md` before operating the page.
+6. Ask the user to open the target page or tab and approve/select it on first connection only when no suitable tab is already available.
+7. Smoke-test control with a read-only action such as taking a snapshot, reading the URL, or identifying the page title.
+8. Use accessibility snapshots and stable element references before clicking, typing, editing, or asserting page state.
+9. Pause for confirmation before submitting forms, changing account state, making purchases, deleting data, or exposing secrets.
+10. Report the tab used, actions taken, verification evidence, and any manual follow-up.
 
 Hard dependencies: target browser, target page or task, installed extension, and an MCP-capable agent host. Ask once if any are missing.
 
-For setup, operating workflow, and safety rules, read `references/workflow.md`.
+For setup, operating workflow, and safety rules, read `references/workflow.md`. For translation tasks, also read `references/translation.md`.
