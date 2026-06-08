@@ -8,6 +8,7 @@
 - Homebrew formula uninstall: `brew uninstall <formula> && brew autoremove && brew cleanup -s`.
 - Homebrew cask clean uninstall: `brew uninstall --zap <cask> && brew autoremove && brew cleanup -s`.
 - Homebrew dry-run checks: `brew info <name>`, `brew uses --installed <formula>`, `brew autoremove --dry-run`, `brew cleanup --dry-run`.
+- macOS authorization prompt for exact privileged actions: `osascript -e 'do shell script "<quoted-command>" with administrator privileges'`.
 - Mac App Store apps are normally removed through Finder, Launchpad, or `mas` if the user already uses it.
 - Vendor `.pkg` installers may need vendor uninstallers, package receipts, launch daemon cleanup, and reboot checks.
 
@@ -41,6 +42,7 @@
 - Prefer `brew uninstall --zap` for casks installed by Homebrew, but warn that `--zap` can remove shared files.
 - Stop Homebrew services before uninstalling: `brew services stop <formula>`.
 - Use `brew services cleanup` after removing Homebrew-managed services.
+- Do not run Homebrew itself with `sudo`; if a cask blocks on privileged helper cleanup, authorize only the exact `launchctl`, helper, plugin, or package path with AppleScript, then rerun Homebrew as the normal user.
 - Move manual leftovers to Trash when possible instead of using `rm -rf` directly.
 - Do not delete `/Library` items without admin confirmation and a clear app/vendor match.
 - Do not delete package receipts unless the package is fully removed and receipts are confirmed stale.

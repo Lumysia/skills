@@ -8,6 +8,7 @@
 - Separate app removal from user-data removal; ask before deleting settings, credentials, saves, profiles, or license data.
 - Treat registry edits, services, drivers, launch daemons, kernel extensions, and system directories as high risk.
 - Prefer dry-run, list, search, info, preview, or what-if commands before write operations.
+- When a confirmed operation needs elevation, use the platform's standard authorization flow to continue instead of stopping at non-interactive `sudo`; limit elevated commands to the exact verified paths or manager actions.
 - Treat platform references as common patterns, not exhaustive policy; adapt to the detected OS, distribution, package manager, installer, and software vendor.
 - Prefer moving leftovers to Trash, Recycle Bin, quarantine, or a timestamped backup over permanent deletion when feasible.
 
@@ -38,18 +39,20 @@
 2. For targeted scope, check whether the app self-updates or should be updated by the package manager, app store, vendor installer, or release feed.
 3. Snapshot current version and config locations when rollback matters.
 4. Compare available versions, then upgrade from the newest stable compatible trusted source.
-5. Run dependency and cache cleanup appropriate to the manager.
-6. Verify the new version or global outdated status and note any restart or logout requirement.
+5. If the manager fails only because it cannot prompt for elevation, retry with the platform authorization mechanism for the specific privileged cleanup or service action, then rerun the manager command as the normal user.
+6. Run dependency and cache cleanup appropriate to the manager.
+7. Verify the new version or global outdated status and note any restart or logout requirement.
 
 ## Uninstall
 
 1. Stop the app and related services cleanly.
 2. Run the native uninstaller or package-manager remove command.
-3. Run dependency cleanup and package cache cleanup.
-4. Search software-specific leftover paths from docs and package metadata.
-5. Search generic platform leftover locations for app name, vendor name, bundle ID, product code, service name, and executable name.
-6. Present candidate leftovers with risk level before deletion.
-7. Remove confirmed leftovers, then verify no package, service, startup item, or process remains.
+3. If removal needs elevation, use the platform authorization mechanism for the exact privileged uninstall, service, or known package path instead of asking the user to run it manually.
+4. Run dependency cleanup and package cache cleanup.
+5. Search software-specific leftover paths from docs and package metadata.
+6. Search generic platform leftover locations for app name, vendor name, bundle ID, product code, service name, and executable name.
+7. Present candidate leftovers with risk level before deletion.
+8. Remove confirmed leftovers, then verify no package, service, startup item, or process remains.
 
 ## Cleanup Output
 
