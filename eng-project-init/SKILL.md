@@ -28,4 +28,4 @@ Before starting, infer the user's preferred interaction and output language from
 
 Default output is only `AGENTS.md`. Add other files only on explicit request.
 
-For the template and checks, read `references/agentsmd.md`.
+For the template and checks, read `references/agentsmd.md`. For user-specific local setup, read `references/personal-setup.md`.
