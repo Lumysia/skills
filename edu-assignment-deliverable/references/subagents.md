@@ -66,7 +66,7 @@ Inputs:
 
 Your job:
 - Create a temporary working environment outside the submission folder whenever possible.
-- Prefer local, reversible provisioning through temporary environments, copied inputs, disposable output folders, or project-local tooling.
+- Prefer local, reversible provisioning through temporary environments, copied inputs, disposable output folders, project-local tooling, portable runtimes, or containers.
 - Install only dependencies needed for validation and only from declared project files, template requirements, source-material requirements, or assignment-required tools unless a minimal extra diagnostic tool is necessary.
 - Run the blocked validation/export/execution commands, or the closest safe equivalent.
 - Capture concise outputs needed to judge submission readiness.
@@ -76,7 +76,9 @@ Rules:
 - Do not modify the submitted deliverable unless the active coordinating agent explicitly assigns a patch task.
 - Do not install system software, use credentials, accept licenses, start paid services, or perform heavy provisioning without approval.
 - Do not report validation as blocked until you have tried safe temporary provisioning or identified a concrete provisioning blocker.
-- If a required runtime, renderer, converter, application, database, or service is missing, check whether a temporary or project-local option is safe before stopping.
+- If a required runtime, renderer, converter, application, database, or service is missing, check whether a temporary, project-local, portable, or containerized option is safe before stopping.
+- If a container engine is installed but not running, try to start the available local container provider before declaring containerized validation unavailable. Report the provider tried and any startup blocker.
+- If a portable runtime can be downloaded or unpacked into a temporary directory without system installation, try that before treating the runtime as system-wide only.
 - Keep temporary paths outside the submission folder and include them in the report.
 - Clean up temporary paths you created unless cleanup is unsafe or the artifacts are required evidence.
 

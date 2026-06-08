@@ -76,7 +76,7 @@ For work that depends on local processing, generated evidence, or exported files
 - Record setup, commands, parameters, tool versions when relevant, and source scope when results depend on local processing.
 - Keep temporary work outside the submission unless requested.
 - Keep intermediates only when requested or needed for reproducibility.
-- Prefer reversible, local, or temporary provisioning over lasting system changes. Use a temporary directory outside the submission folder for dependencies, draft outputs, validation files, and disposable intermediates whenever possible.
+- Prefer reversible, local, temporary, portable, or containerized provisioning over lasting system changes. Use a temporary directory outside the submission folder for dependencies, runtimes, draft outputs, validation files, and disposable intermediates whenever possible.
 - Ask or report the blocker when provisioning requires user approval, credentials, licenses, payment, unsafe cleanup, or excessive resources.
 - Remove non-submission artifacts after validation unless needed for reproducibility.
 - Have Environment Setup Agent return commands run, artifacts produced, cleanup performed, and unresolved blockers; do not rely on unstated assumptions.
