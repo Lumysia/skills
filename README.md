@@ -11,6 +11,10 @@
 - [`eng-project-init`](./eng-project-init/SKILL.md) - Project initialization workflow for concise repo-specific `AGENTS.md` instructions.
 - [`eng-security-assessment`](./eng-security-assessment/SKILL.md) - Autonomous security assessment: profile selection, tool discovery, verification, reporting, and patching; inspired by [Anthropic's defending-code-reference-harness](https://github.com/anthropics/defending-code-reference-harness).
 
+## System
+
+- [`sys-software-lifecycle`](./sys-software-lifecycle/SKILL.md) - Cross-platform operating-system software install, update, uninstall, source selection, operation logging, and leftover cleanup workflow.
+
 ## Education
 
 - [`edu-assignment-deliverable`](./edu-assignment-deliverable/SKILL.md) - Course assignment deliverable workflow for rubric checks, required files, reports, notebooks, code answers, and PDFs.

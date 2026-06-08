@@ -18,6 +18,23 @@ Rules:
 - Do not copy skill files into another directory unless the host cannot load paths.
 - After editing config, tell the user to restart or reload the host.
 
+## Global Entrypoints
+
+Setup is idempotent: it may be run repeatedly to detect missing pieces and fill gaps without duplicating entries or overwriting user-managed files.
+
+Rules:
+
+- Prefer the agent host currently running the setup request.
+- Install or link entrypoints only for hosts that are locally installed or have an existing config directory.
+- Do not create entrypoints for absent hosts just because this repository supports them.
+- Use repository-managed sources under `references/global-entrypoints/`.
+- Prefer symlinks from global host locations to repository-managed source files when the host supports them.
+- If symlinks are not safe or supported, copy only missing files and preserve existing different files.
+- Treat an existing correct symlink or identical file as complete.
+- If an existing destination differs from the repository source and is not a managed symlink, report the conflict and ask before replacing it.
+- For commands that invoke repository skills, keep wrappers as pointers and do not duplicate skill instructions.
+- After syncing entrypoints, tell the user which hosts were updated, skipped as absent, or skipped due to conflicts.
+
 ## MCP Servers
 
 Start from user-requested servers. If the user asks for a default research/code-search setup, this catalog is a useful seed:

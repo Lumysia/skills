@@ -6,6 +6,7 @@
 - Each skill is self-contained: `SKILL.md` is the short index, detailed instructions live under `references/`.
 - Each public skill must be listed in `README.md` under its category with a one-sentence description and link to `SKILL.md`.
 - Keep skills model- and host-agnostic. Do not depend on a specific provider, CLI, repository, or global config unless the skill is explicitly for that tool.
+- When adding host-specific entrypoints such as commands, skills, wrappers, or config loaders, update every supported host surface in the repository in the same change and prefer pointer wrappers for repository skills instead of duplicating instructions.
 - Do not add unrequested policy preferences, normative constraints, or default source restrictions to skills; limit rules to the user's request, repository conventions, and verifiable tool behavior.
 - When adapting templates, include only rules that apply to this repository; do not copy placeholder, optional, or irrelevant rules.
 - Do not rewrite wording just to make it sound better; if a problem is not clear, do not edit it.
