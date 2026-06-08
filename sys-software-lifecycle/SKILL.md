@@ -18,7 +18,7 @@ Before starting, infer the user's preferred interaction and output language from
 3. Search package managers, official vendor sources, source repositories, and release channels before choosing an install or update source.
 4. Read the matching platform reference when available: `references/macos.md`, `references/windows.md`, or `references/linux.md`; adapt when the host platform or package manager differs.
 5. Build a dry-run style plan showing source choice, lifecycle actions, candidate leftovers, risk level, and rollback options.
-6. Execute only confirmed writes or deletes; prefer reversible moves for user data and caches.
+6. Execute only confirmed writes or deletes; for uninstall requests, default to removing matching settings, caches, logs, and user-data leftovers unless a safety stop applies.
 7. Run standard package-manager cleanup for the platform after install, update, or uninstall when appropriate.
 8. Record performed operations, verify the final state, and report remaining manual checks.
 

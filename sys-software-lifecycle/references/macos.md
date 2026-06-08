@@ -33,16 +33,16 @@
 ## Discovery
 
 1. Resolve cask token and bundle ID with `brew info --cask <name>`, `mdls -name kMDItemCFBundleIdentifier /Applications/<App>.app`, or app `Info.plist`.
-2. Read Homebrew cask `zap` stanza when available; treat it as software-specific cleanup guidance, not an automatic delete list.
+2. Read Homebrew cask `zap` stanza when available; treat app-specific zap paths as default cleanup targets and stop for shared or sensitive paths.
 3. Check services with `brew services list`, `launchctl list | grep -i <name>`, and matching plist paths.
 4. Search common locations by app name, vendor name, cask token, and bundle ID.
 
 ## Cleanup Rules
 
-- Prefer `brew uninstall --zap` for casks installed by Homebrew, but warn that `--zap` can remove shared files.
+- Prefer `brew uninstall --zap` for casks installed by Homebrew when the zap stanza is app-specific; otherwise uninstall first and remove safe zap paths manually.
 - Stop Homebrew services before uninstalling: `brew services stop <formula>`.
 - Use `brew services cleanup` after removing Homebrew-managed services.
 - Do not run Homebrew itself with `sudo`; if a cask blocks on privileged helper cleanup, authorize only the exact `launchctl`, helper, plugin, or package path with AppleScript, then rerun Homebrew as the normal user.
-- Move manual leftovers to Trash when possible instead of using `rm -rf` directly.
+- Move ambiguous or higher-risk leftovers to Trash when possible instead of using `rm -rf` directly.
 - Do not delete `/Library` items without admin confirmation and a clear app/vendor match.
 - Do not delete package receipts unless the package is fully removed and receipts are confirmed stale.

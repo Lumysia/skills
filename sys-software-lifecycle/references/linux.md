@@ -10,7 +10,7 @@
 - Arch uninstall cleanup: `sudo pacman -Rns <pkg>`; orphan cleanup: `pacman -Qdtq | sudo pacman -Rns -` after reviewing the list.
 - openSUSE install/update/remove: `sudo zypper install <pkg>`, `sudo zypper update <pkg>`, `sudo zypper remove --clean-deps <pkg>`.
 - Flatpak install/update/remove: `flatpak install <remote> <app-id>`, `flatpak update`, `flatpak uninstall <app-id>`, `flatpak uninstall --unused`.
-- Flatpak data removal: use `flatpak uninstall --delete-data <app-id>` only when user data should be removed.
+- Flatpak clean uninstall: use `flatpak uninstall --delete-data <app-id>` for uninstall requests unless the user asks to preserve app data.
 - Snap install/update/remove: `sudo snap install <snap>`, `sudo snap refresh <snap>`, `sudo snap remove <snap>`.
 
 ## Common Leftover Locations
@@ -44,8 +44,8 @@
 
 - Use package-manager purge/remove commands before deleting files.
 - Review dependency removals before confirming; do not remove large dependency sets unexpectedly.
-- Delete user config/cache/data only when the user wants a clean reinstall or full removal.
+- Delete matching user config/cache/data by default for uninstall requests unless the user asks to preserve app data or a safety stop applies.
 - Prefer cache cleanup commands over manual deletion of package manager cache directories.
 - Do not delete files owned by another installed package.
 - Run `sudo systemctl daemon-reload` after removing system unit files, and `systemctl --user daemon-reload` after removing user units.
-- For AppImage or manual archive installs, remove the app file, desktop entry, icon, update metadata, and matching user config/cache after confirmation.
+- For AppImage or manual archive installs, remove the app file, desktop entry, icon, update metadata, and matching user config/cache by default after presenting the paths.

@@ -5,7 +5,8 @@
 - Prefer the exact manager, installer, app store, or vendor uninstaller that installed the software.
 - For installs and targeted updates, compare package managers, official downloads, app stores, source repositories, and release feeds before choosing a source.
 - Search for software-specific uninstall and cleanup notes before using generic leftovers.
-- Separate app removal from user-data removal; ask before deleting settings, credentials, saves, profiles, or license data.
+- Treat uninstall as clean removal by default: remove matching settings, caches, logs, support files, startup entries, and user-data leftovers unless the user asks to preserve them or a safety stop applies.
+- Ask before deleting credentials, license data, browser profiles, game saves, cloud-sync data, databases, shared runtimes, or ambiguous vendor folders.
 - Treat registry edits, services, drivers, launch daemons, kernel extensions, and system directories as high risk.
 - Prefer dry-run, list, search, info, preview, or what-if commands before write operations.
 - When a confirmed operation needs elevation, use the platform's standard authorization flow to continue instead of stopping at non-interactive `sudo`; limit elevated commands to the exact verified paths or manager actions.
@@ -51,8 +52,8 @@
 4. Run dependency cleanup and package cache cleanup.
 5. Search software-specific leftover paths from docs and package metadata.
 6. Search generic platform leftover locations for app name, vendor name, bundle ID, product code, service name, and executable name.
-7. Present candidate leftovers with risk level before deletion.
-8. Remove confirmed leftovers, then verify no package, service, startup item, or process remains.
+7. Present candidate leftovers with risk level before deletion; mark the low-risk, app-specific items that will be removed by default.
+8. Remove app-specific leftovers by default, stop for safety-stop items, then verify no package, service, startup item, or process remains.
 
 ## Cleanup Output
 

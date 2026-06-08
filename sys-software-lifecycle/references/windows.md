@@ -6,7 +6,7 @@
 - WinGet install: `winget install --id <id> --exact`.
 - WinGet update: `winget upgrade --id <id> --exact` or `winget upgrade --all` when requested.
 - WinGet uninstall: `winget uninstall --id <id> --exact`; add `--scope user` or `--scope machine` when needed.
-- WinGet portable cleanup: `winget uninstall --id <id> --exact --purge` only for portable packages where this is applicable.
+- WinGet portable cleanup: use `winget uninstall --id <id> --exact --purge` for portable packages when supported.
 - Chocolatey install/update/uninstall: `choco install <pkg>`, `choco upgrade <pkg>`, `choco uninstall <pkg>`.
 - Chocolatey dry-run: add `--noop` when supported by the command.
 - Scoop install/update/uninstall/cleanup: `scoop install <app>`, `scoop update <app>`, `scoop uninstall <app>`, `scoop cleanup <app>`, `scoop cache rm <app>`.
@@ -39,7 +39,8 @@
 ## Cleanup Rules
 
 - Always run the app's registered uninstaller before deleting folders.
-- Back up registry keys before deleting them; registry cleanup is optional and high risk.
+- Delete matching app data, cache, logs, shortcuts, and startup entries by default after uninstall unless a safety stop applies.
+- Back up registry keys before deleting them; registry cleanup remains high risk and requires explicit confirmation.
 - Remove only registry keys clearly tied to the uninstalled app or vendor.
 - Prefer disabling a suspicious service or startup entry before deleting it if ownership is unclear.
 - Avoid deleting shared runtimes, drivers, `C:\Windows`, `System32`, `WinSxS`, browser profiles, and cloud-sync folders.
