@@ -15,13 +15,13 @@ Before starting, infer the user's preferred interaction and output language from
 
 1. Gather the prompt, rubric, required deliverable format, submission constraints, starter files, data, templates, target voice, and validation expectations.
 2. Check required inputs before drafting or coding; ask one concise question and stop if an essential prompt, rubric, starter file, data file, or template is missing.
-3. Convert the rubric and instructions into a checklist of required sections, files, functions, experiments, evidence, explanations, and formatting constraints.
-4. Draft, implement, or fill the deliverable using real files and prompt wording; keep temporary environments, caches, and experiments outside the submission folder unless requested.
-5. Create the requested deliverable file and verify it exists, is readable, and matches the requested format.
-6. Run an independent rubric review on the final deliverable and relevant source files; fix blockers and serious major issues, then rerun only when necessary.
-7. Run an independent humanization review only when requested or clearly needed for prose quality; preserve technical accuracy, rubric coverage, numbers, citations, code, and equations.
-8. Hand off the final path, checks run, and any real remaining risk.
+3. Convert the rubric and instructions into a checklist, then build the deliverable from real files and prompt wording.
+4. If a required capability is missing, delegate temporary provisioning, required execution, and cleanup to a subagent. If subagents are unavailable, state that explicitly and do it in the main flow.
+5. Verify the deliverable exists, is readable, matches the requested format, and has been validated whenever feasible.
+6. Run an independent rubric review using a fresh subagent. If subagents are unavailable, state that explicitly and review in a separate main-agent pass. Fix blockers and serious major issues.
+7. Run humanization only when requested or clearly needed; preserve technical accuracy and required evidence.
+8. Hand off the final path, checks run, cleanup performed, review status, and real remaining risks.
 
 Hard dependencies: assignment instructions and required deliverable format. Ask once if either is missing.
 
-For missing-input rules, review prompts, severity calibration, PDF/template handling, and handoff rules, read `references/workflow.md`.
+For missing-input rules, temporary provisioning, review prompts, severity calibration, template handling, cleanup, and handoff rules, read `references/workflow.md`.

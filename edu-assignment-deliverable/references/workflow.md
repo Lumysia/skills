@@ -41,12 +41,18 @@ Track these items when present:
 
 Work from real files and assignment wording. Keep changes minimal and aligned with the requested deliverable. Do not introduce broad engineering cleanup, extra frameworks, compatibility layers, or unrelated files unless the assignment requires them.
 
+Do not stop at a partial deliverable just because a required capability is missing. Delegate temporary provisioning, required execution or validation, and cleanup to a subagent. If subagents are unavailable, state that explicitly and do the work in the main flow. The main agent remains responsible for deciding what must be produced, reviewing the result, and reporting any blocker honestly.
+
 For measured or code-backed work:
 
 - Record setup, commands, seeds, and data scope when results depend on execution.
-- Put virtual environments, dependency installs, caches, build outputs, and temporary experiments outside the submission folder unless requested.
-- Keep intermediate files only when they are requested or needed to reproduce the final deliverable.
-- Exclude `.venv`, `__pycache__`, package directories, generated caches, and build outputs from clean submission folders.
+- Keep temporary work outside the submission unless requested.
+- Keep intermediates only when requested or needed for reproducibility.
+- Prefer reversible, local, or temporary provisioning over lasting system changes.
+- Ask or report the blocker when provisioning requires user approval, credentials, licenses, payment, unsafe cleanup, or excessive resources.
+- Remove non-submission artifacts after validation unless needed for reproducibility.
+- Have the subagent return commands run, artifacts produced, cleanup performed, and unresolved blockers; do not rely on unstated assumptions.
+- If subagent delegation is unavailable, state that explicitly before using the main-agent fallback. If delegation fails after starting, report the blocker unless a safe retry or fallback is clearly possible.
 
 ## Deliverable Creation
 
@@ -57,6 +63,7 @@ Before calling the deliverable ready:
 - Confirm the final file or folder exists and is readable.
 - Confirm the format, filename, and included files match the instructions.
 - Confirm all required sections or questions are answered.
+- Confirm required code, calculations, conversions, screenshots, exports, or experiments were actually run or produced whenever feasible.
 - Confirm no extra files are recommended when the instructions say to submit only one file.
 
 ## PDF And Template Handling
@@ -67,7 +74,7 @@ If a PDF or locked template cannot be filled reliably, do not fake a visually br
 
 ## Independent Rubric Review
 
-Use a fresh subagent when available. If subagents are unavailable, perform the review as a separate pass using only the prompt, rubric, final deliverable, and relevant source files. Do not review from memory of the drafting process.
+Use a fresh subagent for the independent rubric review. This review is mandatory before handoff for finished deliverables, not optional polish. If subagents are unavailable, state that explicitly and perform the review as a separate main-agent pass. If delegation fails after starting, report the blocker unless a safe retry or fallback is clearly possible. Do not review from memory of the drafting process.
 
 Prompt shape:
 
@@ -125,5 +132,6 @@ Keep the final response short and practical:
 
 - Final deliverable path
 - Checks or commands run
+- Temporary provisioning and cleanup performed
 - Whether rubric review found remaining blockers or serious majors
 - Any real remaining risk, such as manual PDF fill required, unrun experiments, unavailable starter files, or format constraints that could not be verified
