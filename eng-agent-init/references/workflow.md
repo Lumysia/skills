@@ -29,9 +29,11 @@ Rules:
 - Do not inspect or create entrypoints for other hosts just because this repository supports them.
 - Use repository-managed sources under `references/global-entrypoints/`.
 - Prefer symlinks from global host locations to repository-managed source files when the host supports them.
-- If symlinks are not safe or supported, copy only missing files and preserve existing different files.
+- Never copy repository-managed entrypoints as a fallback; use another link type or skip with a reported blocker.
+- On Windows, if file symlinks require elevation, create an NTFS directory junction for the containing entrypoint directory with `cmd /c mklink /J <global-entrypoint-dir> <repo-entrypoint-dir>`.
+- Do not replace an entrypoint with a text file, shortcut, or config value that merely contains the repository path.
 - Treat an existing correct symlink or identical file as complete.
-- If an existing destination differs from the repository source and is not a managed symlink, report the conflict and ask before replacing it.
+- If an existing destination differs from the repository source and is not a managed link, report the conflict and ask before replacing it.
 - For commands that invoke repository skills, keep wrappers as pointers and do not duplicate skill instructions.
 - After syncing entrypoints, tell the user which target host was updated or skipped due to conflicts.
 
