@@ -4,6 +4,7 @@
 
 - Project layout
 - Manifest rules
+- Status and checkpoints
 - Context-control rules
 - Text extraction stage
 - Work-check gates
@@ -19,8 +20,11 @@ Use this structure when the host environment supports files:
 
 ```text
 review-project/
+  README.md
   project.json
   manifest.json
+  status.json
+  plan.md
   sources/
   artifacts/
     framing/
@@ -39,6 +43,8 @@ review-project/
     escalations.json
   workcheck/
     decisions.json
+  checkpoints/
+  logs/
   quality/
     decisions.json
   export/
@@ -52,7 +58,7 @@ Use forward slash paths in skill instructions even on Windows.
 
 ## Manifest Rules
 
-The Project Manager Agent should keep a compact manifest and use it as the active context object:
+The Coordinator should keep a compact manifest and use it as the active context object:
 
 ```json
 {
@@ -75,41 +81,68 @@ The Project Manager Agent should keep a compact manifest and use it as the activ
 
 Manifest entries should include artifact id, kind, status, path, summary, dependencies, source ids, citation anchor count, and latest work-check/critic/quality decision path where applicable.
 
+## Status And Checkpoints
+
+`status.json` records resumable state:
+
+```json
+{
+  "skill": "sci-write-review",
+  "project_dir": "review-project",
+  "state": {
+    "phase": "intake|framing|source_intake|extraction|reading|synthesis|drafting|quality_recovery|export|handoff",
+    "status": "not_started|in_progress|blocked|partial|complete|failed",
+    "updated_at": "ISO-8601",
+    "coordinator_action": "specific next action"
+  },
+  "quality_gates": {
+    "work_check": "pass|fail|blocked|not_run",
+    "critic": "pass|fail|blocked|not_run",
+    "source_grounding": "pass|fail|blocked|not_run",
+    "export_trace": "pass|fail|blocked|not_run"
+  },
+  "blockers": [],
+  "open_risks": []
+}
+```
+
+Write `checkpoints/phase-<n>-<slug>.json` after each phase and major worker batch. Each checkpoint should record inputs inspected, artifacts created or modified, worker reports, critic/work-check/quality decisions, retries, assumptions, blockers, and coordinator action.
+
 ## Context-Control Rules
 
-- Keep only project goal, manifest, artifact statuses, summaries, and next decisions in the Project Manager Agent's active context.
+- Keep only project goal, manifest, artifact statuses, summaries, and next decisions in the Coordinator's active context.
 - Do not paste full source documents or full artifact contents into chat unless needed for targeted diagnosis.
 - Prefer targeted reads by artifact id, section, source id, or citation anchor id.
-- Ask subagents to return concise summaries, not full generated artifacts.
-- Spawn a critic subagent for review instead of reviewing every detail in the main context.
+- Ask workers to return concise summaries, not full generated artifacts.
+- Spawn a Critic worker for review instead of reviewing every detail in the main context.
 - If an artifact is large, require a companion summary file and anchor index.
 
 ## Incremental Reading Loop
 
 For long corpora, do not ask Reader Agent to read every source before writing. Use a one-source-at-a-time loop:
 
-1. Project Manager selects the next unread source from the manifest.
+1. Coordinator selects the next unread source from the manifest.
 2. Reader Agent reads only that source's registered extraction outputs, summaries, and targeted anchors.
 3. Reader Agent writes `source_read_patch` for that source immediately.
 4. Reader Agent applies the patch to cumulative evidence and memo artifacts, either by updating the existing artifact file or writing a new version file according to the host workflow.
 5. Work Check Agent verifies the patch file, updated cumulative artifact path, manifest status, dependencies, and source coverage.
-6. Project Manager repeats for the next source.
+6. Coordinator repeats for the next source.
 7. Critic Agent reviews cumulative evidence and memo artifacts only after the relevant batch or corpus pass is complete, unless a patch contains obvious source-grounding risks that need immediate critic review.
 
-This prevents context blowups and avoids the failure mode where a subagent reads too much and produces one vague, late summary.
+This prevents context blowups and avoids the failure mode where a worker reads too much and produces one vague, late summary.
 
 ## Incremental Writing Loop
 
 Do not ask Writer Agent to draft an entire section or manuscript in one task when the section plan contains multiple paragraph commitments or key points. Use a one-key-point-at-a-time loop:
 
-1. Project Manager selects the next undrafted `paragraph_commitment` or key point from an approved `section_plan`.
+1. Coordinator selects the next undrafted `paragraph_commitment` or key point from an approved `section_plan`.
 2. Writer Agent reads only the approved section plan, relevant locked synthesis claims, targeted evidence packs, and citation anchors for that commitment.
 3. Writer Agent writes `draft_point_patch` immediately for that one commitment.
 4. Writer Agent must not write the shared section draft or manuscript file directly.
 5. Work Check Agent verifies the patch file, manifest status, dependencies, and trace fragment.
-6. Project Manager or a dedicated integration step serially applies approved patches to the cumulative draft section in section-plan order.
+6. Coordinator or a dedicated integration step serially applies approved patches to the cumulative draft section in section-plan order.
 7. Critic Agent reviews a point patch immediately when the point introduces sensitive claims, dense citations, surprising synthesis, or source-grounding risk. Otherwise Critic Agent reviews the cumulative draft section after the section's commitments are complete.
-8. Project Manager repeats for the next commitment.
+8. Coordinator repeats for the next commitment.
 
 This prevents long drafting tasks from drifting, inventing unsupported prose, or losing anchor traceability.
 
@@ -133,7 +166,7 @@ Disallowed parallelism:
 Integration rule:
 
 - Writer Agents produce patch files only.
-- Project Manager selects a deterministic merge order, usually section order then paragraph commitment order.
+- Coordinator selects a deterministic merge order, usually section order then paragraph commitment order.
 - One serial integration step applies patches to `drafts/section-<n>.md` and `artifacts/drafts/section-<n>.json`.
 - Work Check Agent verifies the integrated section path and trace fragments.
 - Manuscript integration is also serial and should read approved section files, not live patch files.
@@ -155,9 +188,9 @@ Use Work Check Agent after:
 
 Work Check Agent does not replace Critic Agent. Critic Agent judges scholarly/content quality and source grounding. Work Check Agent judges operational completeness, file existence, path consistency, dependency availability, and whether there are blockers.
 
-If Work Check Agent reports blockers, Project Manager Agent must fix them or relaunch the responsible worker before moving to the next stage.
+If Work Check Agent reports blockers, the Coordinator must fix them or relaunch the responsible worker before moving to the next stage.
 
-Subagents should:
+Workers should:
 
 - Read only assigned source files and dependency artifacts.
 - Write complete outputs to assigned files.
@@ -252,7 +285,7 @@ Create `review_thesis` from approved synthesis claims.
 
 Write: `artifacts/synthesis/review-thesis.json`.
 
-Gate: thesis critic or project manager approval.
+Gate: thesis critic or Coordinator approval.
 
 11. Argument Plan
 
@@ -298,7 +331,7 @@ Work check: required export files exist, export trace references known manuscrip
 
 ## File Handoff Format
 
-Subagent final responses should be short:
+Worker final responses should be short:
 
 ```json
 {

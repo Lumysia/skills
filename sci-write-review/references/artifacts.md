@@ -49,6 +49,7 @@ Each artifact should include:
 - `path`
 - `dependencies`
 - `summary`
+- `latest_decision_path`
 
 ## Large Artifact Splitting
 
@@ -127,6 +128,26 @@ Downstream agents should normally read registered native Markdown/JSON/text outp
 }
 ```
 
+## Status Checkpoint
+
+```json
+{
+  "checkpoint_id": "phase-4-reading-batch",
+  "timestamp": "ISO-8601",
+  "phase": "reading",
+  "result": "completed|blocked|failed|superseded",
+  "inputs_inspected": ["path"],
+  "artifacts_created": ["path"],
+  "artifacts_modified": ["path"],
+  "worker_reports": ["path"],
+  "critic_decisions": ["path"],
+  "work_check_decisions": ["path"],
+  "quality_decisions": ["path"],
+  "blockers": [],
+  "coordinator_action": "specific next action"
+}
+```
+
 ## Critic Decision
 
 ```json
@@ -139,7 +160,7 @@ Downstream agents should normally read registered native Markdown/JSON/text outp
   "rubric": "drafting",
   "review_scope": "one paragraph commitment patch",
   "review_request_neutrality": {
-    "project_manager_provided_direction": false,
+    "coordinator_provided_direction": false,
     "allowed_inputs_only": true
   },
   "dependency_paths_checked": ["artifacts/plans/section-plan-1.json", "artifacts/evidence/evidence-pack-001.json"],
@@ -155,7 +176,7 @@ Downstream agents should normally read registered native Markdown/JSON/text outp
       "result": "supports | does_not_support | missing | unclear"
     }
   ],
-  "project_manager_adjudication": {
+  "coordinator_adjudication": {
     "decision": "accept | revise | waive_nonblocking",
     "rationale": "why this feedback blocks or does not block progress"
   },

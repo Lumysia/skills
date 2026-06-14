@@ -14,7 +14,7 @@ User: "Write a review on solid-state battery thermal safety from these papers."
 
 Process:
 
-1. Project Manager frames the review scope and audience.
+1. Coordinator frames the review scope and audience.
 2. Text Extraction Agent converts PDFs with MinerU when available, or asks to install MinerU and uses Docling fallback when needed.
 3. Text Extraction Agent registers MinerU/Docling native outputs under the project and writes minimal extraction manifests/logs.
 4. Work Check Agent verifies extraction output paths and manifest dependencies before Reader starts.
@@ -25,9 +25,9 @@ Process:
 9. Synthesis Agent creates cross-source claim files about thermal pathways, interface instability, mitigation strategies, and evidence limits.
 10. Writer drafts one paragraph commitment/key point and writes an independent `draft_point_patch`; parallel writers may only write different patch files.
 11. Work Check Agent verifies each writing patch and trace fragment.
-12. Project Manager runs one serial integration step to merge approved patches into the section draft.
+12. Coordinator runs one serial integration step to merge approved patches into the section draft.
 13. Critic reviews risky point patches immediately or the cumulative section draft after commitments are integrated.
-14. Project Manager exports manuscript and trace files.
+14. Coordinator exports manuscript and trace files.
 15. Work Check Agent verifies final export files exist and trace dependencies resolve.
 
 Result: A review manuscript whose major claims can be traced back to source anchors.
@@ -41,7 +41,7 @@ Process:
 1. Agents complete framing, reading, evidence extraction, memos, and synthesis.
 2. Synthesis Agent creates an argument plan file.
 3. Critic reviews the plan for thesis alignment and evidence coverage.
-4. Project Manager presents the approved plan summary and file path to the user.
+4. Coordinator presents the approved plan summary and file path to the user.
 5. User edits or accepts the plan.
 6. Writer drafts only from the human-approved plan file.
 
@@ -59,9 +59,9 @@ Process:
 4. Writer revises with approved anchors.
 5. Critic fails again because one anchor does not support the causal claim.
 6. Writer creates multiple revised candidate versions.
-7. Project Manager sends candidate paths, critic decision paths, dependency paths, and targeted anchor paths to Quality Test Agent.
+7. Coordinator sends candidate paths, critic decision paths, dependency paths, and targeted anchor paths to Quality Test Agent.
 8. Quality Test Agent selects only a source-grounded candidate or rejects all.
-9. Project Manager approves the selected candidate or requests scoped regeneration.
+9. Coordinator approves the selected candidate or requests scoped regeneration.
 
 Result: The final section is selected for evidence faithfulness, not just fluency. Fabricated or source-mismatched claims are not approved.
 
@@ -73,7 +73,7 @@ Process:
 
 1. Define artifact schemas and lifecycle states.
 2. Implement tools for source registration, MinerU/Docling extraction, reading artifacts, writing artifacts, locking artifacts, listing versions, requesting human approval, quality-testing candidates, and exporting traces.
-3. Create Project Manager, Work Check, Text Extraction, Reader, Synthesis, Writer, Critic, and Quality Test agents.
+3. Create Coordinator, Work Check, Text Extraction, Reader, Synthesis, Writer, Critic, and Quality Test agents.
 4. Define sequential tasks with typed outputs.
 5. Insert critic tasks after every major artifact.
 6. Add retry and escalation policy.

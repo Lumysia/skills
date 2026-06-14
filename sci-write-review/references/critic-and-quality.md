@@ -13,10 +13,10 @@ Use this rule for every critic-gated artifact:
 
 1. Producing agent writes a candidate artifact file.
 2. Producing agent updates the manifest with candidate path, dependencies, status, and summary.
-3. Project Manager sends Critic Agent the candidate path plus the same relevant dependency/source context used by the producing agent.
+3. Coordinator sends Critic Agent the candidate path plus the same relevant dependency/source context used by the producing agent.
 4. Critic Agent evaluates only the assigned candidate span/artifact against the active rubric and declared context.
 5. Critic Agent writes a critic decision file separating blocking findings from nonblocking suggestions.
-6. Project Manager adjudicates whether the critic finding is valid, in scope, and blocking.
+6. Coordinator adjudicates whether the critic finding is valid, in scope, and blocking.
 7. If findings are nonblocking or out of scope, record a waiver/rationale and approve or continue when safe.
 8. If valid blocking findings remain, pass required changes and file paths back to the producing agent.
 9. Producing agent writes a new version file or patch according to the host workflow.
@@ -24,8 +24,8 @@ Use this rule for every critic-gated artifact:
 11. If retries are exhausted and `intervention_mode` is `human_detailed`, present candidate version paths and critic feedback paths to the human.
 12. If retries are exhausted and `intervention_mode` is `autonomous_quality_test`, launch Quality Test Agent with candidate paths, critic decision paths, dependency paths, and targeted anchor paths.
 13. Quality Test Agent writes a `quality_decision` file selecting the strongest source-grounded candidate, or rejecting all candidates if none are safe to approve.
-14. If Quality Test Agent selects a candidate, Project Manager approves that candidate only when the decision explains source-grounding and critic issues are not blocking fabrication/source failures.
-15. If Quality Test Agent rejects all candidates, Project Manager requests scoped regeneration from the producing agent; if the failure repeats, ask the human for direction even in autonomous mode.
+14. If Quality Test Agent selects a candidate, Coordinator approves that candidate only when the decision explains source-grounding and critic issues are not blocking fabrication/source failures.
+15. If Quality Test Agent rejects all candidates, Coordinator requests scoped regeneration from the producing agent; if the failure repeats, ask the human for direction even in autonomous mode.
 16. Record the human, quality, or waiver decision and continue only from the accepted artifact file.
 
 Default retry count: `3`.
@@ -44,7 +44,7 @@ Critic Agent should not inspect random or unrelated content. It should receive:
 - approved evidence/claim/section-plan files that the producing agent used,
 - explicit scope of review, such as one paragraph patch, one evidence pack, or one section plan.
 
-Project Manager must not provide criticism direction. It may not tell Critic Agent what to find, which issue to focus on, whether the candidate is probably good/bad, or whether the expected outcome is pass/fail. It should send neutral routing metadata and content only.
+Coordinator must not provide criticism direction. It may not tell Critic Agent what to find, which issue to focus on, whether the candidate is probably good/bad, or whether the expected outcome is pass/fail. It should send neutral routing metadata and content only.
 
 Neutral review request format:
 
@@ -68,9 +68,9 @@ Disallowed leading review request examples:
 - "The previous agent likely fabricated this claim."
 - "Please be lenient unless there is a huge problem."
 
-The same independence rule applies to Quality Test Agent and Work Check Agent. Project Manager may provide candidate paths, dependency paths, expected files, and rubrics/checklists, but not preferred findings or desired outcomes.
+The same independence rule applies to Quality Test Agent and Work Check Agent. Coordinator may provide candidate paths, dependency paths, expected files, and rubrics/checklists, but not preferred findings or desired outcomes.
 
-Project Manager remains responsible for deciding what happens after criticism:
+Coordinator remains responsible for deciding what happens after criticism:
 
 - Hard source-grounding failures are blocking and must be fixed.
 - Missing required schema fields are blocking when downstream agents need them.
@@ -134,7 +134,7 @@ These are hard failures:
 - Multiple Writer Agents write to the same section draft or manuscript file concurrently.
 - A point-level Writer Agent modifies a shared draft/manuscript file instead of writing an independent patch file.
 
-Fabricated, unverifiable, or source-mismatched claims must not be approved by human bypass, quality testing, or project-manager judgment unless removed or grounded in verified sources.
+Fabricated, unverifiable, or source-mismatched claims must not be approved by human bypass, quality testing, or Coordinator judgment unless removed or grounded in verified sources.
 
 ## Rubrics
 
