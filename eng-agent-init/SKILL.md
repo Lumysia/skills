@@ -5,7 +5,7 @@ description: Initialize the current agent host by discovering config, registerin
 
 # Engineering Agent Init
 
-Use this skill to configure the current agent host without assuming one vendor. Register the current skills repository as a skill source and configure requested MCP servers.
+Use this skill to configure an agent host to load this skills repository, repository-managed entrypoints, and requested MCP servers without assuming one provider or host.
 
 ## Startup
 
@@ -13,15 +13,19 @@ Before starting, infer the user's preferred interaction and output language from
 
 ## Flow
 
-1. Detect the current agent runtime and target only that host unless the user explicitly asks for others.
-2. Locate its config from docs, existing files, CLI output, or user input.
-3. Preserve existing providers, models, permissions, agents, commands, and MCP entries.
-4. Add the current repository path as a skill path or equivalent skill source.
-5. Add repository-managed global entrypoints only for the target host.
-6. Add requested MCP servers using the host's config shape.
-7. Validate config syntax with the host schema or parser when available.
-8. Tell the user how to reload the host.
+1. Detect the target host from the current runtime, user request, existing config, or installed host directories.
+2. Read `references/workflow.md` before editing host config or entrypoints.
+3. Locate the target config and preserve existing providers, models, permissions, agents, commands, and MCP entries.
+4. Register this repository as a skill source using the host's native config shape.
+5. Link repository-managed entrypoints from `references/global-entrypoints/` only for requested or clearly targeted hosts.
+6. Add requested MCP servers using the host's native MCP shape.
+7. Validate changed config with an available parser or schema, then report reload steps and any unresolved blockers.
 
-Hard dependencies: target host and writable config path. Ask once if either is unclear.
+Hard dependencies are target host, config scope, writable config or entrypoint destination, and permission to modify user-level config. Do non-destructive discovery first; ask one concise question only when a hard dependency remains unclear.
 
-For workflow rules, read `references/workflow.md`. For host examples, read `references/hosts.md`. For repository-managed global entrypoint sources, read `references/global-entrypoints/`.
+## Resources
+
+- `references/workflow.md`: execution rules for discovery, config merges, entrypoint linking, MCP setup, validation, and handoff.
+- `references/hosts.md`: host-specific examples and common config locations; verify against the active host before editing.
+- `references/evals.md`: smoke scenarios for idempotence, host targeting, entrypoint conflicts, MCP preservation, and validation.
+- `references/global-entrypoints/`: repository-managed entrypoint templates for supported hosts.

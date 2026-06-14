@@ -6,4 +6,4 @@ Run the repository skill `sys-software-lifecycle` for an update or upgrade reque
 
 User request: $ARGUMENTS
 
-Read `/Users/vya/Projects/skills/sys-software-lifecycle/SKILL.md` and follow its referenced files. This wrapper only exposes `/sys-upgrade` globally for Claude Code.
+Read `sys-software-lifecycle/SKILL.md` from the registered skills repository and follow its referenced files. This wrapper only exposes `/sys-upgrade` globally for Claude Code.

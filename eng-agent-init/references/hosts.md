@@ -1,6 +1,6 @@
-# Host Examples
+# Host Reference
 
-These are examples, not fixed requirements. Confirm the current host schema before editing.
+These are examples and common locations, not fixed requirements. Confirm the current host schema before editing.
 
 ## opencode
 
@@ -46,13 +46,13 @@ Global command wrappers usually live in:
 ~/.config/opencode/commands/
 ```
 
-For repository-managed wrappers, link from `references/global-entrypoints/opencode/commands/` only when OpenCode is installed or `~/.config/opencode/` already exists. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
+For repository-managed wrappers, link from `references/global-entrypoints/opencode/commands/` only when OpenCode is installed, already configured, or explicitly requested. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
 
 ## Claude Code
 
 Claude Code commonly loads skills from user or project skill folders and MCP from its own config commands/files. Discover the current documented method before editing.
 
-If path registration is unsupported, copy only on explicit approval or create a symlink when safe.
+If path registration is unsupported, create a symlink when safe or copy only with explicit approval.
 
 Global command wrappers commonly live in:
 
@@ -60,7 +60,7 @@ Global command wrappers commonly live in:
 ~/.claude/commands/
 ```
 
-For repository-managed wrappers, link from `references/global-entrypoints/claude/commands/` only when Claude Code is installed or `~/.claude/` already exists. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
+For repository-managed wrappers, link from `references/global-entrypoints/claude/commands/` only when Claude Code is installed, already configured, or explicitly requested. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
 
 ## Codex
 
@@ -80,7 +80,7 @@ Codex-specific user skills may live in:
 ~/.codex/skills/
 ```
 
-For repository-managed wrappers, link from `references/global-entrypoints/agents/skills/` or `references/global-entrypoints/codex/skills/` only when Codex or a compatible Agent Skills host is installed or already configured. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
+For repository-managed wrappers, link from `references/global-entrypoints/agents/skills/` or `references/global-entrypoints/codex/skills/` only when Codex or a compatible Agent Skills host is installed, already configured, or explicitly requested. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
 
 ## Other Hosts
 

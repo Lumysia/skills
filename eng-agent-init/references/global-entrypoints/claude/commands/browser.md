@@ -6,4 +6,4 @@ Run the repository skill `gen-browser-control`.
 
 User request: $ARGUMENTS
 
-Read `/Users/vya/Projects/skills/gen-browser-control/SKILL.md` and follow its referenced files. This wrapper only exposes `/browser` globally for Claude Code.
+Read `gen-browser-control/SKILL.md` from the registered skills repository and follow its referenced files. This wrapper only exposes `/browser` globally for Claude Code.
