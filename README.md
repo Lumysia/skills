@@ -29,7 +29,7 @@
 
 ## Education
 
-- [`edu-assignment-deliverable`](./edu-assignment-deliverable/SKILL.md) - Course assignment deliverable workflow for rubric checks, required files, reports, notebooks, code answers, and PDFs.
+- [`edu-assignment-deliverable`](./edu-assignment-deliverable/SKILL.md) - Resumable course assignment deliverable workflow with runtime workspaces, rubric checks, worker reviews, validation gates, and final handoff.
 
 ## Scientific
 

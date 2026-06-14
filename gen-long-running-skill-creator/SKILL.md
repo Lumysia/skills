@@ -43,13 +43,14 @@ Treat these as hypotheses. Include the cheapest validation step or falsifying co
 ## Flow
 
 1. Capture the mission, expected runtime, deliverables, hard dependencies, risk level, and stop conditions.
-2. Design the runtime directory layout before execution starts.
-3. Split the workflow into phases with checkpoints, artifacts, status files, and validation gates.
-4. Define what gets logged: prompts, commands, sources, decisions, errors, assumptions, and outputs.
-5. Specify worker/subagent workflows under `agents/<role>.md` when parallelism is useful; define exact return schemas and merge rules.
-6. Add progress-update rules that keep the user informed without interrupting long autonomous stretches.
-7. Add recovery rules for crashes, timeouts, missing dependencies, partial outputs, and failed quality gates.
-8. Build a small dry-run or smoke eval before recommending a full multi-hour run.
+2. Study this creator skill's own structure and file content patterns before designing the target skill: `SKILL.md` as the short entrypoint, `agents/` as role workflow files, `references/` as shared schemas and state contracts, `scripts/` as repeatable tooling, and runtime workspaces as resumable execution state.
+3. Design the runtime directory layout before execution starts.
+4. Split the workflow into phases with checkpoints, artifacts, status files, and validation gates.
+5. Define what gets logged: prompts, commands, sources, decisions, errors, assumptions, and outputs.
+6. Specify worker/subagent workflows under `agents/<role>.md` when parallelism is useful; define exact return schemas and merge rules.
+7. Add progress-update rules that keep the user informed without interrupting long autonomous stretches.
+8. Add recovery rules for crashes, timeouts, missing dependencies, partial outputs, and failed quality gates.
+9. Build a small dry-run or smoke eval before recommending a full multi-hour run.
 
 ## Runtime Layout
 

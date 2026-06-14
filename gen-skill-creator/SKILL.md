@@ -14,12 +14,13 @@ Before starting, infer the user's preferred interaction and output language from
 ## Flow
 
 1. Capture the intended task, trigger conditions, expected outputs, hard dependencies, and success criteria.
-2. Inspect any existing skill, examples, files, or repo conventions before drafting changes.
-3. Draft or update `SKILL.md` with concise frontmatter, a clear startup rule, and only the instructions needed for the workflow.
-4. Move detailed guidance into `references/`, repeatable operations into `scripts/`, reusable materials into `assets/`, and reviewer prompts into `agents/` when useful.
-5. Create realistic test prompts when behavior is verifiable; skip heavy evals for subjective or one-off drafting unless the user wants them.
-6. Run the smallest useful validation loop, compare outputs against the success criteria, and revise until the user is satisfied.
-7. Package or present the final skill only after the user accepts the behavior and metadata.
+2. Study this creator skill's own structure and file content patterns before designing the target skill: `SKILL.md` as the short entrypoint, `agents/` as reusable agent files, `references/` as shared schemas and examples, `scripts/` as repeatable tooling, and `assets/` as reusable static material.
+3. Inspect any existing target skill, examples, files, or repo conventions before drafting changes.
+4. Draft or update `SKILL.md` with concise frontmatter, a clear startup rule, and only the instructions needed for the workflow.
+5. Move detailed guidance into `references/`, repeatable operations into `scripts/`, reusable materials into `assets/`, and reviewer prompts into `agents/` when useful.
+6. Create realistic test prompts when behavior is verifiable; skip heavy evals for subjective or one-off drafting unless the user wants them.
+7. Run the smallest useful validation loop, compare outputs against the success criteria, and revise until the user is satisfied.
+8. Package or present the final skill only after the user accepts the behavior and metadata.
 
 ## Skill Shape
 
