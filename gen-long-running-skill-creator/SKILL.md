@@ -36,6 +36,7 @@ Define the target operating model before writing instructions:
 - **Autonomy budget**: what the agent may do without asking, and what requires user confirmation.
 - **Dependency model**: hard prerequisites that block work and soft inputs that improve quality.
 - **Verification model**: tests, audits, critic passes, human review gates, or evidence checks.
+- **Source-trace model**: which files, records, user messages, or evidence are authoritative for requirements and claims.
 - **Resume model**: how a later session determines state and continues safely.
 
 Treat these as hypotheses. Include the cheapest validation step or falsifying condition before committing to a long run.
@@ -44,13 +45,16 @@ Treat these as hypotheses. Include the cheapest validation step or falsifying co
 
 1. Capture the mission, expected runtime, deliverables, hard dependencies, risk level, and stop conditions.
 2. Study this creator skill's own structure and file content patterns before designing the target skill: `SKILL.md` as the short entrypoint, `agents/` as role workflow files, `references/` as shared schemas and state contracts, `scripts/` as repeatable tooling, and runtime workspaces as resumable execution state.
-3. Design the runtime directory layout before execution starts.
-4. Split the workflow into phases with checkpoints, artifacts, status files, and validation gates.
-5. Define what gets logged: prompts, commands, sources, decisions, errors, assumptions, and outputs.
-6. Specify worker/subagent workflows under `agents/<role>.md` when parallelism is useful; define exact return schemas and merge rules.
-7. Add progress-update rules that keep the user informed without interrupting long autonomous stretches.
-8. Add recovery rules for crashes, timeouts, missing dependencies, partial outputs, and failed quality gates.
-9. Build a small dry-run or smoke eval before recommending a full multi-hour run.
+3. Read the target skill's relevant files before editing; use search only to find candidates, not as a substitute for reading structure and content.
+4. Create `agents/coordinator.md` as the required main-agent operating spec before designing optional worker roles.
+5. Make `SKILL.md` require reading `agents/coordinator.md` as the first execution step before planning, todos, workspace discovery, drafting, validation, or worker launch.
+6. Design the runtime directory layout before execution starts.
+7. Split the workflow into phases with checkpoints, artifacts, status files, and validation gates.
+8. Define what gets logged: prompts, commands, sources, decisions, errors, assumptions, and outputs.
+9. Specify worker/subagent workflows under `agents/<role>.md` when parallelism is useful; define exact return schemas and merge rules.
+10. Add progress-update rules that keep the user informed without interrupting long autonomous stretches.
+11. Add recovery rules for crashes, timeouts, missing dependencies, partial outputs, and failed quality gates.
+12. Run a small dry-run or smoke eval before recommending a full multi-hour run.
 
 ## Runtime Layout
 
@@ -64,13 +68,35 @@ Every long-running skill should create or name a fixed runtime directory for eac
 ├── logs/                  # commands, agent notes, errors, timestamps
 ├── inputs/                # copied or referenced source inputs
 ├── artifacts/             # intermediate outputs by phase
-├── agents/                # role workflow specs used by workers/subagents
+├── agents/                # coordinator plus worker/subagent role specs
 ├── reviews/               # critic passes, user feedback, QA notes
 ├── reports/               # final or staged deliverables
 └── checkpoints/           # resumable snapshots and phase completion markers
 ```
 
 The layout may be adapted, but the skill must state where state is stored and how to resume.
+
+Every long-running skill must include `agents/coordinator.md`. `SKILL.md` must explicitly instruct the agent to read `agents/coordinator.md` before creating a plan, todo list, workspace search, draft, validation run, or worker task.
+
+Resume behavior must be automatic: when a runtime workspace already exists, the coordinator should inspect its state files and continue from the first incomplete phase or failed gate. A specific user phrase should not be required.
+
+## Coordinator Design
+
+`agents/coordinator.md` is the main-agent operating spec. It should define:
+
+- Intake and hard-dependency gate.
+- Runtime workspace setup and resume behavior.
+- Phase sequence, checkpoints, artifacts, and status updates.
+- Autonomy limits and escalation rules.
+- Worker routing, mandatory delegation gates, fallback rules when subagents are unavailable, and merge rules.
+- Primary-source rules that prevent summaries, plans, extracted paraphrases, or worker handoffs from becoming the source of truth for requirements.
+- Separation between coordination and actual artifact/content creation when the workflow produces substantial deliverables.
+- Quality gates and failure paths.
+- Final handoff requirements.
+
+Keep `SKILL.md` as the short trigger and index. Put the detailed long-running execution contract in `agents/coordinator.md`, not in `references/` and not only in optional worker files.
+
+Keep new and revised instructions concise; merge similar rules and remove filler.
 
 ## Phase Design
 
@@ -102,6 +128,9 @@ Use child agents or worker batches only when their work can be independently ver
 
 - Role workflow file under `agents/`, one file per role.
 - Worker scope and forbidden scope.
+- Which gates require delegation when subagents are available.
+- Which workers own artifact/content creation versus review, validation, setup, synthesis, or human-facing handoff.
+- Fallback behavior when subagents are unavailable, including how the fallback is recorded.
 - Input files and output directory.
 - Required final schema.
 - Evidence requirements.
@@ -116,8 +145,9 @@ Do not put all role workflows into one large reference file. Use `agents/` for e
 
 Long runs need explicit gates so the agent does not drift. Choose gates appropriate to the task:
 
-- Build/test/lint/typecheck for code.
+- Artifact-specific checks such as render/export/open/readback, build/test/lint/typecheck, schema validation, or dry-run execution.
 - Source traceability and claim checks for research.
+- Primary-source traceability for rubric, compliance, legal, academic, or user-provided requirements.
 - Schema validation for structured outputs.
 - Critic or adversarial review for strategy and writing.
 - Sample-based manual review before scaling a batch.
@@ -166,6 +196,9 @@ Use the copied creator resources when they fit the environment:
 Return the long-running skill design or patch with:
 
 - Runtime directory contract.
+- Required `agents/coordinator.md` main-agent spec.
+- `SKILL.md` first-step instruction to read `agents/coordinator.md`.
+- Worker role specs for substantial artifact/content creation when the long-running workflow produces deliverables.
 - Phase map and checkpoints.
 - Autonomy and escalation rules.
 - Worker/subagent specs if used.

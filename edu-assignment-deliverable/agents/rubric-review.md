@@ -23,9 +23,10 @@ You receive these parameters in your prompt:
 
 ### Step 1: Read From Files
 
-1. Read the prompt, rubric, checklist, validation reports, and final deliverable.
-2. Do not rely on the coordinator's memory or summary when source files are available.
-3. Identify mark-weighted criteria and submission rejection risks.
+1. Read the original prompt, rubric, template, submission rules, validation reports, and final deliverable from files or explicit user-message labels.
+2. Read the checklist only as a navigation aid containing raw source excerpts and locations, not as the source of truth.
+3. Do not rely on the coordinator's memory, summary, plan, extracted paraphrase, checklist paraphrase, or interpreted checklist text when source files are available.
+4. Identify mark-weighted criteria and submission rejection risks from primary sources.
 
 ### Step 2: Check Coverage
 
@@ -37,7 +38,8 @@ You receive these parameters in your prompt:
 
 1. Identify missing, weak, incorrect, unsupported, unnecessary, over-included, or likely-to-lose-marks items.
 2. Calibrate severity to the actual assignment, not preferred style.
-3. Do not invent requirements that are not tied to the prompt, rubric, checklist, required format, or submission constraints.
+3. Do not invent requirements that are not tied to original prompt, rubric, template, submission rules, explicit user instructions, required format, or submission constraints.
+4. Treat checklist items that contain interpretations instead of raw source excerpts as blockers or risks until corrected against the primary source.
 
 ### Step 4: Decide Readiness
 
@@ -64,6 +66,7 @@ Save the report to `report_path` when tool access permits. Otherwise return the 
     {
       "severity": "blocker|major|minor|note",
       "requirement_source": "<prompt|rubric|template|submission_rule|user>",
+      "source_location": "<path/page/section/line/user-message label or null>",
       "finding": "<issue or observation>",
       "location": "<file/section/page/cell or null>",
       "recommended_action": "<specific fix or none>"
@@ -78,6 +81,9 @@ Save the report to `report_path` when tool access permits. Otherwise return the 
 
 - Do not edit files.
 - Review independently from files and validation evidence.
+- Use original source files or explicit user-message labels as the authority for grading requirements.
+- Do not use coordinator summaries, plans, or paraphrases as primary sources.
+- Do not treat interpreted checklist text as a requirement.
 - Report findings ordered by severity.
 - Only blockers and majors require another fix/review loop.
 - Keep the review tied to assignment requirements and submission readiness.

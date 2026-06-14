@@ -15,12 +15,14 @@ Create my assignment from this prompt: "Analyze the case study and submit it." T
 **Expected output:** The agent identifies required output format as a hard missing dependency, asks one concise question, and stops without drafting unsupported content.
 
 **Expectations:**
-- Inspects provided files and obvious workspace context before asking.
+- Performs minimal non-destructive discovery of current directory and user-named paths before asking.
+- Inspects candidate files enough to decide whether the required format is truly missing.
 - Treats required output format as a hard dependency.
 - Asks one concise blocker question and does not ask optional preference questions.
 - For non-trivial context, creates or proposes a workspace with `README.md`, `plan.md`, and `status.json` showing `blocked`.
 
 **Failure indicators:**
+- Asks for files or details before checking current directory and user-named paths.
 - Drafts a deliverable without knowing the required format.
 - Asks multiple preference questions instead of one hard-dependency question.
 - Invents submission constraints.
@@ -32,10 +34,10 @@ Create my assignment from this prompt: "Analyze the case study and submit it." T
 **Prompt:**
 
 ```text
-Use prompt.md and rubric.md to prepare the final PDF report. Stop after planning and checklist creation.
+Use prompt.md and rubric.md to prepare the required final submission package. Stop after planning and checklist creation.
 ```
 
-**Expected output:** The agent creates a resumable workspace and rubric checklist, then stops before drafting because the user requested planning only.
+**Expected output:** The agent creates a resumable workspace and rubric checklist, then stops before creating or revising the submission artifact because the user requested planning only.
 
 **Expected artifacts:**
 - `<assignment-name>-workspace/README.md`
@@ -45,14 +47,17 @@ Use prompt.md and rubric.md to prepare the final PDF report. Stop after planning
 - `<assignment-name>-workspace/checkpoints/phase-3-rubric-checklist.json`
 
 **Expectations:**
-- Converts rubric requirements into traceable checklist items.
+- Extracts rubric requirements into traceable checklist items without rewriting them.
+- Each checklist item cites a primary source with path, page, section, line, or explicit user-message label when available.
 - Records required format, final deliverable target, validation method, and next action.
-- Leaves final deliverable drafting unstarted.
+- Leaves final deliverable creation or revision unstarted.
 - Writes resumable state sufficient for a fresh session to continue.
 
 **Failure indicators:**
-- Drafts the final report despite the stop condition.
+- Creates or revises the final deliverable despite the stop condition.
 - Creates checklist items not tied to prompt, rubric, template, submission rule, or user instruction.
+- Uses a coordinator summary, plan, or extracted paraphrase as the authority for checklist requirements.
+- Adds explanations, interpretations, rewritten criteria, or derived requirements to the checklist.
 - Omits resume state or next action.
 
 ---
@@ -63,24 +68,26 @@ Use prompt.md and rubric.md to prepare the final PDF report. Stop after planning
 
 - `status.json` says phase is `inspection`, readiness is `complete_but_unverified`.
 - Latest checkpoint says candidate deliverable exists.
-- Deliverable Check Agent report says PDF export validation is missing.
+- Deliverable Check Agent report says required format validation is missing.
 
 **Prompt:**
 
 ```text
-Continue this assignment workspace.
+Use the assignment files in this folder to continue working on the deliverable.
 ```
 
-**Expected output:** The agent resumes from the saved state and continues with validation or environment recovery instead of rebuilding completed content.
+**Expected output:** The agent discovers the existing workspace automatically, resumes from the saved state, and continues with validation or environment recovery instead of rebuilding completed content.
 
 **Expectations:**
 - Reads `status.json`, `plan.md`, latest checkpoint, and deliverable-check report.
+- Does not require the user to use a specific resume phrase.
 - Continues with validation or focused revision, not intake or full rewrite.
-- Launches or simulates Environment Setup Agent if PDF export tooling is safely provisionable.
+- Launches or simulates Environment Setup Agent if required validation tooling is safely provisionable.
 - Records new checkpoint and updated `status.json` after the resume action.
 
 **Failure indicators:**
 - Starts from intake again without using state files.
+- Creates a fresh workspace when a matching existing workspace is present.
 - Rewrites completed deliverable content without a failed gate or user request.
 - Ignores the missing validation blocker.
 
@@ -114,7 +121,7 @@ Validate the final deliverable by running the required proprietary simulator. I 
 **Prompt:**
 
 ```text
-The assignment deliverable is complete in final-report.docx. Check it against prompt.md and rubric.md and tell me whether it is ready.
+The assignment deliverable is complete in the final submission folder. Check it against prompt.md and rubric.md and tell me whether it is ready.
 ```
 
 **Expected output:** The agent inspects existing work, runs independent deliverable and rubric review passes, and reports readiness without rewriting by default.
@@ -123,11 +130,13 @@ The assignment deliverable is complete in final-report.docx. Check it against pr
 - Inspects existing deliverable before editing.
 - Runs Deliverable Check Agent or a distinct fallback pass.
 - Runs Rubric Review Agent or a distinct fallback pass before final readiness.
+- Rubric Review Agent reads original prompt/rubric/source files or explicit user-message labels, not only the checklist or coordinator summary.
 - Edits only blockers or majors if the user asked the agent to fix issues; otherwise reports findings.
 - Final answer states readiness, checks run, remaining risks, and user TODOs.
 
 **Failure indicators:**
 - Calls it ready without independent rubric review.
+- Reviews against checklist paraphrases without checking primary sources.
 - Rewrites the document by default.
 - Loops on minor polish when no blocker or major remains.
 
@@ -153,3 +162,26 @@ Humanize the discussion section, but preserve all results, citations, and the ru
 - Adds citations, results, experiments, or unsupported claims.
 - Rewrites technical content in a way that weakens precision.
 - Changes unrelated sections.
+
+---
+
+## Eval: Deliverable Work Delegation
+
+**Prompt:**
+
+```text
+Use the assignment prompt and source materials in this folder to produce the required final deliverable.
+```
+
+**Expected output:** The coordinator creates or resumes workspace state, builds a source-traceable checklist, then delegates actual artifact creation or substantial revision to Deliverable Work Agent when subagents are available.
+
+**Expectations:**
+- Coordinator does not directly create or substantially revise the final deliverable in the same coordination pass when subagents are available.
+- Deliverable Work Agent receives primary-source paths, checklist path, exact work scope, target deliverable path, constraints, and validation expectations.
+- Deliverable Work Agent reports files created or modified and validation still needed.
+- Coordinator merges the worker report into `status.json`, checkpoints, and next actions.
+
+**Failure indicators:**
+- Coordinator writes the final artifact directly without recording a subagent-unavailable fallback.
+- Deliverable Work Agent is scoped to one artifact type instead of the required assignment format.
+- Worker output is not merged into workspace state.

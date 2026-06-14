@@ -21,7 +21,7 @@ Machine-readable assignment state. Located at `<assignment-name>-workspace/statu
     "final_deliverable": "<path or null>"
   },
   "state": {
-    "phase": "intake|workspace|checklist|inspection|build|validation|rubric_review|humanization|handoff",
+    "phase": "intake|workspace|checklist|inspection|deliverable_work|validation|rubric_review|humanization|handoff",
     "status": "not_started|in_progress|blocked|complete_but_unverified|ready|complete",
     "readiness": "partial|complete_but_unverified|ready|blocked",
     "last_updated": "<ISO-8601 timestamp>",
@@ -44,6 +44,7 @@ Machine-readable assignment state. Located at `<assignment-name>-workspace/statu
     "deliverable_exists": "pass|fail|not_run",
     "format_verified": "pass|fail|not_run",
     "checklist_satisfied": "pass|fail|not_run",
+    "deliverable_work": "pass|fail|not_run|blocked",
     "validation_attempted": "pass|fail|not_run|blocked",
     "deliverable_check": "pass|fail|not_run",
     "rubric_review": "pass|fail|not_run",
@@ -120,8 +121,9 @@ Checklist item for `artifacts/rubric-checklist.md`. Use JSON, tables, or Markdow
 ```json
 {
   "id": "R1",
-  "source": "prompt|rubric|template|submission_rule|user",
-  "requirement": "<requirement text>",
+  "source_type": "prompt|rubric|template|submission_rule|user|source_material",
+  "source_ref": "<path/page/section/line/user-message label>",
+  "requirement_quote": "<raw quoted requirement text>",
   "priority": "blocker|major|minor|note",
   "evidence": "<file, section, output, command, or review evidence>",
   "verification": "manual_review|command|render|export|test|calculation|file_inspection|source_trace",
@@ -132,8 +134,9 @@ Checklist item for `artifacts/rubric-checklist.md`. Use JSON, tables, or Markdow
 
 **Fields:**
 - `id`: Stable checklist identifier used in reviews.
-- `source`: Requirement source.
-- `requirement`: Exact assignment expectation.
+- `source_type`: Requirement source type.
+- `source_ref`: Primary-source path, page, section, line, cell, or explicit user-message label. Do not cite coordinator summaries or plans here.
+- `requirement_quote`: Raw quoted assignment expectation from the primary source. Do not rewrite, explain, interpret, combine, or normalize it.
 - `priority`: Submission impact severity.
 - `evidence`: Where completion can be verified.
 - `verification`: Verification method.
@@ -148,7 +151,7 @@ Summary shape for worker reports. Full reports may be Markdown, but include thes
 
 ```json
 {
-  "worker_role": "deliverable_check|environment_setup|rubric_review|humanization",
+  "worker_role": "deliverable_work|deliverable_check|environment_setup|rubric_review|humanization",
   "report_path": "<path>",
   "started_at": "<ISO-8601 timestamp>",
   "completed_at": "<ISO-8601 timestamp>",

@@ -15,12 +15,13 @@ Before starting, infer the user's preferred interaction and output language from
 
 1. Capture the intended task, trigger conditions, expected outputs, hard dependencies, and success criteria.
 2. Study this creator skill's own structure and file content patterns before designing the target skill: `SKILL.md` as the short entrypoint, `agents/` as reusable agent files, `references/` as shared schemas and examples, `scripts/` as repeatable tooling, and `assets/` as reusable static material.
-3. Inspect any existing target skill, examples, files, or repo conventions before drafting changes.
-4. Draft or update `SKILL.md` with concise frontmatter, a clear startup rule, and only the instructions needed for the workflow.
-5. Move detailed guidance into `references/`, repeatable operations into `scripts/`, reusable materials into `assets/`, and reviewer prompts into `agents/` when useful.
-6. Create realistic test prompts when behavior is verifiable; skip heavy evals for subjective or one-off drafting unless the user wants them.
-7. Run the smallest useful validation loop, compare outputs against the success criteria, and revise until the user is satisfied.
-8. Package or present the final skill only after the user accepts the behavior and metadata.
+3. Read the target skill's relevant files before editing; use search only to find candidates, not as a substitute for reading structure and content.
+4. Inspect any existing target skill, examples, files, or repo conventions before drafting changes.
+5. Draft or update `SKILL.md` with concise frontmatter, a clear startup rule, and only the instructions needed for the workflow.
+6. Move detailed guidance into `references/`, repeatable operations into `scripts/`, reusable materials into `assets/`, and reviewer prompts into `agents/` when useful.
+7. Create realistic test prompts when behavior is verifiable; skip heavy evals for subjective or one-off drafting unless the user wants them.
+8. Run the smallest useful validation loop, compare outputs against the success criteria, and revise until the user is satisfied.
+9. Package or present the final skill only after the user accepts the behavior and metadata.
 
 ## Skill Shape
 
@@ -35,7 +36,7 @@ skill-name/
 └── agents/
 ```
 
-`SKILL.md` should be the short index: frontmatter, startup rule, core flow, dependency notes, and pointers to optional resources. Put long schemas, examples, and implementation details in supporting files.
+`SKILL.md` should be the short index: frontmatter, startup rule, core flow, dependency notes, and pointers to optional resources. Put long schemas, examples, and implementation details in supporting files. Keep new and revised instructions concise; merge similar rules and remove filler.
 
 ## Metadata
 
