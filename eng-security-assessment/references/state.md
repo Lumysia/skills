@@ -6,32 +6,40 @@ repository layout, model provider, or agent host.
 ## Directories
 
 ```text
-.state/
-  progress.json
-  phase0.json
-  phase1.json
-  phase2.json
-  phase3.json
-  phase4.json
-  phase5.json
-  tool_discovery.json
-
-.tools/
-  <run-id>/
-
-results/
-  <target-name>/
-    <timestamp>/
-      profile.json
-      tool_findings.jsonl
-      verified_findings.jsonl
-      raw/
-      logs/
-      reports/
-      FINAL_REPORT.md
-      FINAL_REPORT.pdf
-      RUN_DOSSIER.md
+security-assessment-workspace/
+  README.md
+  state/
+    progress.json
+    phase0.json
+    phase1.json
+    phase2.json
+    phase3.json
+    phase4.json
+    phase5.json
+    tool_discovery.json
+  results/<target-name>/<timestamp>/
+    README.md
+    plan.md
+    status.json
+    inputs/
+    artifacts/
+    agents/
+    logs/
+    raw/
+    pocs/
+    reviews/
+    reports/
+    checkpoints/
+    profile.json
+    tool_findings.jsonl
+    verified_findings.jsonl
+    FINAL_REPORT.md
+    FINAL_REPORT.pdf
+    RUN_DOSSIER.md
+  tools/<run-id>/
 ```
+
+`security-assessment-workspace/results/<target>/<timestamp>/status.json` is the run source of truth. `security-assessment-workspace/state/` mirrors the latest run for quick resume. Legacy top-level `.state/`, `.tools/`, and `results/` may be read for migration/resume compatibility but should not receive new artifacts unless the user explicitly chooses that layout.
 
 ## Atomic Write Protocol
 
@@ -51,11 +59,53 @@ remain the source of truth.
 
 ```json
 {
-  "status": "running|complete|failed",
+  "status": "running|complete|partial|failed|blocked",
   "phase_done": 0,
-  "results_root": "results/<target>/<timestamp>",
+  "workspace_root": "security-assessment-workspace",
+  "results_root": "security-assessment-workspace/results/<target>/<timestamp>",
   "profile": "auto|native|web|java|go|rust|contracts|static|custom",
   "updated_at": "ISO-8601"
+}
+```
+
+## `status.json`
+
+Located at `security-assessment-workspace/results/<target>/<timestamp>/status.json`:
+
+```json
+{
+  "skill": "eng-security-assessment",
+  "run_id": "<target>-<timestamp>",
+  "target": {
+    "name": "<target>",
+    "root": "<path or url>",
+    "authorization_scope": "<scope>"
+  },
+  "state": {
+    "phase": "intake|profile_tools|preflight|find_verify|reports|final_report|patch|handoff",
+    "status": "not_started|in_progress|blocked|partial|complete|failed",
+    "profile": "auto|native|web|java|go|rust|contracts|static|custom",
+    "updated_at": "ISO-8601",
+    "coordinator_action": "<specific follow-up action>"
+  },
+  "artifacts": {
+    "profile": "profile.json",
+    "tool_findings": "tool_findings.jsonl",
+    "verified_findings": "verified_findings.jsonl",
+    "final_report_md": "FINAL_REPORT.md",
+    "final_report_pdf": "FINAL_REPORT.pdf|unavailable",
+    "checkpoints": ["checkpoints/<phase>.json"]
+  },
+  "quality_gates": {
+    "authorization_confirmed": "pass|fail|blocked|not_run",
+    "profile_selected": "pass|fail|not_run",
+    "tool_discovery_recorded": "pass|fail|not_run|limited",
+    "verification_separated": "pass|fail|not_run",
+    "reports_evidence_backed": "pass|fail|not_run",
+    "final_report_exported": "pass|fail|blocked|not_run"
+  },
+  "blockers": ["<blocker>"],
+  "open_risks": ["<risk>"]
 }
 ```
 
@@ -94,7 +144,7 @@ Phase 2, preflight:
   "phase": 2,
   "target_name": "...",
   "target_root": "...",
-  "results_root": "results/<target>/<timestamp>",
+  "workspace_dir": "security-assessment-workspace/results/<target>/<timestamp>",
   "execution_available": true,
   "verification_available": true,
   "notes": []
@@ -106,7 +156,7 @@ Phase 3, run:
 ```json
 {
   "phase": 3,
-  "results_root": "results/<target>/<timestamp>",
+  "workspace_dir": "security-assessment-workspace/results/<target>/<timestamp>",
   "commands_or_actions": [],
   "log_paths": [],
   "roles_dispatched": ["recon", "tool-discovery", "find", "verify"],
@@ -120,14 +170,14 @@ Phase 4, monitor/report:
 ```json
 {
   "phase": 4,
-  "results_root": "results/<target>/<timestamp>",
+  "workspace_dir": "security-assessment-workspace/results/<target>/<timestamp>",
   "tool_leads": 0,
   "verified_reproduced": 0,
   "verified_static_only": 0,
   "reports_written": 0,
-  "final_report": "results/<target>/<timestamp>/FINAL_REPORT.md",
-  "pdf_export": "results/<target>/<timestamp>/FINAL_REPORT.pdf|unavailable",
-  "run_dossier": "results/<target>/<timestamp>/RUN_DOSSIER.md",
+  "final_report": "security-assessment-workspace/results/<target>/<timestamp>/FINAL_REPORT.md",
+  "pdf_export": "security-assessment-workspace/results/<target>/<timestamp>/FINAL_REPORT.pdf|unavailable",
+  "run_dossier": "security-assessment-workspace/results/<target>/<timestamp>/RUN_DOSSIER.md",
   "latest_artifact": "..."
 }
 ```
@@ -138,16 +188,16 @@ Phase 5, summary:
 {
   "phase": 5,
   "status": "complete|partial|failed",
-  "results_root": "results/<target>/<timestamp>",
-  "next_action": "..."
+  "workspace_dir": "security-assessment-workspace/results/<target>/<timestamp>",
+  "coordinator_action": "..."
 }
 ```
 
 ## Resume
 
-Resume by reading `progress.json` and the highest completed `phaseN.json`.
+Resume by reading `status.json`, `security-assessment-workspace/state/progress.json`, and the highest completed checkpoint or `phaseN.json`.
 
-- If `status == complete`, start a new run unless the user asks to inspect old results.
-- If `status == running`, continue from `phase_done + 1`.
+- If run status is `complete`, start a new run unless the user asks to inspect old results.
+- If run status is `running`, `partial`, or `blocked`, continue from the first incomplete phase after resolving blockers.
 - If role output files already exist, do not regenerate them unless `--fresh` is set.
 - Provider/session resume is optional; file artifacts are sufficient.

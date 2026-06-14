@@ -6,58 +6,22 @@ argument-hint: "<target|results-dir> [--mode run|resume|status|report|patch|cust
 
 # Engineering Security Assessment
 
-This skill is the index for a portable security assessment workflow. Keep this file short:
-load the relevant reference, then execute that runbook.
-
-Core idea:
-
-```text
-SKILL.md = entrypoint and router
-references/ = workflow implementation
-profiles = target/domain-specific execution strategies
-tools/runtime = whatever capabilities the host can provide
-.state/ = portable checkpoint state
-results/<target>/<ts>/ = portable artifacts
-```
+Use this skill to run a resumable, evidence-grounded security assessment with scoped authorization, profile selection, tool discovery, role-agent orchestration, verification gates, reporting, and optional patch generation.
 
 ## Startup
 
-Before routing or starting a mode, infer the user's preferred interaction and report language from the request, target materials, existing artifacts, or project conventions. If it cannot be inferred confidently, ask once; then use that language for prompts, summaries, artifacts, and reports unless the user specifies otherwise.
+Read `agents/coordinator.md` before planning, scanning, resuming, reporting, patching, or checking status. Treat it as the execution contract.
 
 ## Routing
 
-- New run or first-time setup: read `references/stages.md`, then `references/state.md`.
-- Resume or status check: read `references/state.md`, then `references/status.md`.
-- Model/runtime portability: read `references/model-runtime.md`.
-- Status-only requests: read `references/status.md`.
-- General vulnerability-discovery flow and profiles: read `references/generalization.md`.
-- Concrete non-C/C++ profile runbooks: read `references/profiles.md`.
-- General artifact schemas: read `references/schemas.md`.
-- Exploitability depth requirements: read `references/exploitability.md`.
-- Final report and PDF export: read `references/final-report.md`.
-- Report language and localization: read `references/language.md`.
-- Active tool/news/research discovery: read `references/tool-discovery.md`.
-- Main/child agent design: read `references/subagents.md`.
-- Architecture and portability boundaries: read `references/architecture.md`.
-- Customizing profiles or porting domains: read `references/customization.md`.
-- Failures, retries, and safety stops: read `references/failure-handling.md`.
+- New run: use `agents/coordinator.md`, then consult `references/stages.md`, `references/state.md`, and relevant profile/tool references only as needed.
+- Resume/status/report/patch: use `agents/coordinator.md`, then the specific reference for that mode.
+- If no mode is given with a target, run: intake -> profile/tools -> preflight -> find/verify -> reports -> final report -> optional patch.
 
 ## Operating Rules
 
-- The main agent is an orchestrator, not the default worker. For a normal run it must dispatch role agents for recon, tool discovery, find, verify, report, and patch as applicable.
-- Do not perform recon, environment bootstrap, finding, verification, and reporting all in the main agent unless the host lacks subagent/task capability or the task is explicitly tiny; record this fallback in `.state/phase1.json` or `phase3.json`.
-- Do not assume any specific model provider, agent host, repository, scanner, or CLI exists. Use whatever model/tool runtime the host provides.
-- Tool discovery is first-class: search current docs/news/tools, record provenance, and run tools through the selected runtime.
-- Keep default state, downloaded tools, and reports under `.state/`, `.tools/`, and `results/`; if a profile needs generated tests, PoCs, fixtures, exports, or runtime files elsewhere, record the reason and artifact path.
-- Use `.state/` for skill-level checkpoints; use `results/<target>/<ts>/` for execution artifacts.
-- If modifying profile logic, do it as a separate customization phase before launching a run.
-
-## Default Flow
-
-If the user gives a target and no mode, run the flow in `references/stages.md`:
-
-```text
-init -> profile/tool discovery -> preflight -> recon/focus -> run/validate -> reports -> final report/export -> optional patch
-```
-
-If the user gives a results directory, infer status/report/patch mode from its contents.
+- Coordinator routes work; it is not the default worker.
+- Parallelize independent worker batches when subagents/separate model calls exist; record merge order.
+- Use `security-assessment-workspace/` for `state/`, `results/`, and `tools/`.
+- Tool output is only a lead until independently verified.
+- Ask before live testing, credentials, hosted scanners, global installs, destructive actions, or patching outside the workspace.

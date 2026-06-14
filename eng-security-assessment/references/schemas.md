@@ -13,7 +13,7 @@ Use these schemas for all profiles.
   "attack_surface": ["..."],
   "detection_oracle": "...",
   "verification_strategy": "...",
-  "tool_discovery": ".state/tool_discovery.json"
+  "tool_discovery": "security-assessment-workspace/state/tool_discovery.json"
 }
 ```
 
@@ -33,7 +33,7 @@ One JSON object per lead:
   "line": 0,
   "entrypoint": "...",
   "evidence": "...",
-  "raw_output_path": "results/<target>/<ts>/raw/...",
+  "raw_output_path": "security-assessment-workspace/results/<target>/<ts>/raw/...",
   "poc": "...",
   "dedup_key": "...",
   "verification": "unverified"
@@ -77,7 +77,7 @@ One JSON object per verified, rejected, or static-only finding:
     "blast_radius": "...",
     "profile_specific": {}
   },
-  "raw_evidence_paths": ["results/<target>/<ts>/raw/..."],
+  "raw_evidence_paths": ["security-assessment-workspace/results/<target>/<ts>/raw/..."],
   "rejection_reason": "...",
   "constraints": "...",
   "dedup_key": "...",

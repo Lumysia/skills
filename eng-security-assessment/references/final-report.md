@@ -5,9 +5,7 @@ report. Per-finding reports explain individual bugs; the final report explains
 what was tested, how, what was found, how trustworthy the findings are, and what
 to do next.
 
-Follow `language.md` for report language. The final report, per-finding report
-summaries, PDF, and HTML exports must use the user-requested language unless the
-user asks for bilingual output.
+Follow `language.md` for report language. The final report, per-finding report summaries, and PDF export must use the user-requested language unless the user asks for bilingual output.
 
 Section headings and methodology labels must also follow the selected language.
 Technical terms may remain in English only when they are canonical tool names,
@@ -18,14 +16,14 @@ acronyms, code identifiers, or intentionally defined in a terminology table.
 Always write:
 
 ```text
-results/<target>/<ts>/FINAL_REPORT.md
-results/<target>/<ts>/FINAL_REPORT.pdf
+security-assessment-workspace/results/<target>/<ts>/FINAL_REPORT.md
+security-assessment-workspace/results/<target>/<ts>/FINAL_REPORT.pdf
 ```
 
 Optional internal artifact:
 
 ```text
-results/<target>/<ts>/RUN_DOSSIER.md
+security-assessment-workspace/results/<target>/<ts>/RUN_DOSSIER.md
 ```
 
 `FINAL_REPORT.md` and `FINAL_REPORT.pdf` are the required reader-facing outputs.
@@ -105,7 +103,7 @@ Put those in `RUN_DOSSIER.*`, not in `FINAL_REPORT.*`.
 Write internal provenance separately:
 
 ```text
-results/<target>/<ts>/RUN_DOSSIER.md
+security-assessment-workspace/results/<target>/<ts>/RUN_DOSSIER.md
 ```
 
 The dossier may include:
@@ -148,7 +146,7 @@ PDF export rules:
 Use these artifacts:
 
 - `profile.json`.
-- `.state/tool_discovery.json`.
+- `security-assessment-workspace/state/tool_discovery.json`.
 - `tool_findings.jsonl`.
 - `verified_findings.jsonl`.
 - `reports/manifest.jsonl`.

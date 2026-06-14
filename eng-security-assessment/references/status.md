@@ -7,8 +7,9 @@ Status mode is read-only over state and result artifacts.
 Use, in order:
 
 - explicit results directory.
-- `.state/progress.json` `results_root`.
-- newest `results/<target>/<timestamp>/` matching the target.
+- `security-assessment-workspace/results/<target>/<timestamp>/status.json` when present.
+- `security-assessment-workspace/state/progress.json` `results_root`.
+- newest `security-assessment-workspace/results/<target>/<timestamp>/` matching the target.
 
 A valid results directory may contain:
 
@@ -64,7 +65,7 @@ Use the profile-neutral fields in `schemas.md`:
 
 Check:
 
-- latest phase in `.state/progress.json`.
+- latest phase in `security-assessment-workspace/state/progress.json`.
 - modification times of `logs/`, `raw/`, and result JSONL files.
 - whether a role output exists but later phases are missing.
 - whether findings are all unverified because a verifier is unavailable.
@@ -83,5 +84,5 @@ Verified: <reproduced n>, <static-only n>, <rejected n>
 Reports: <n>
 Patches: <verified n>/<attempted n>
 Newest: <path>
-Next: <resume|verify leads|report|patch|inspect logs|no action>
+Coordinator action: <resume|verify leads|report|patch|inspect logs|no action>
 ```

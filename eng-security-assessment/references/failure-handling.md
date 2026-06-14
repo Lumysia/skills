@@ -66,7 +66,7 @@ Ask before:
 - sending private code/logs to hosted scanners.
 - installing global host packages.
 - deleting artifacts.
-- applying generated patches outside `results/`.
+- applying generated patches outside `security-assessment-workspace/results/`.
 
 ## Untrusted Data
 

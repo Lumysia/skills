@@ -30,7 +30,7 @@ Profile selection:
 - If `--profile` is supplied, use it.
 - If `--profile auto`, inspect repo files, build files, Dockerfiles, manifests, target config, and README.
 - If multiple profiles fit, choose the safest high-signal first wave and record alternatives.
-- If execution is needed and no safe execution environment exists, fall back to `static` and ask before proceeding.
+- If execution is needed and no safe execution environment exists, fall back to `static` or ask before proceeding when the user's authorization decision is required.
 
 ## Universal Autonomous Loop
 
@@ -40,7 +40,7 @@ Use this loop for every profile:
 1. Scope: identify authorized target, trust boundary, and attack surface.
 2. Recon: read code/config/docs and map inputs to sensitive behavior.
 3. Tool discovery: search current ecosystem tools/advisories for this stack and bug class.
-4. Harness setup: choose or build a safe runner, detector, and artifact directory.
+4. Preflight: choose or build a safe runner, detector, verifier, and artifact directory.
 5. Find: generate inputs or tests, run tools/agents, collect candidate findings.
 6. Verify: independently reproduce or falsify each finding.
 7. Dedup: group by root cause, not just stack trace or endpoint string.
@@ -105,7 +105,7 @@ Target shape: any source tree where execution is unavailable.
 
 Detection oracle: evidence-grounded source reasoning plus independent reviewer.
 
-Verifier: separate child agent attempts to disprove exploitability and ranks
+Verifier: separate verify role attempts to disprove exploitability and ranks
 confidence. Mark output as static/unverified; do not call it execution-verified.
 
 ## Finding Quality Bar
@@ -125,8 +125,7 @@ say `verification: static-only`.
 
 ## Independent Discovery
 
-The main agent may independently discover vulnerabilities by combining code
-review, tools, tests, fuzzers, and generated PoCs. It must still separate:
+Role agents may discover vulnerabilities by combining code review, tools, tests, fuzzers, and generated PoCs. The Coordinator must still separate:
 
 - discovery agent/tool output.
 - independent verification evidence.

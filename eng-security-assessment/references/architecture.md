@@ -33,9 +33,10 @@ The data plane is whatever the selected profile can safely use:
 The workflow communicates through files:
 
 ```text
-.state/     control-plane state
-.tools/     downloaded or generated tools
-results/<target>/<ts>/       run artifacts
+security-assessment-workspace/                  assessment workspace root
+security-assessment-workspace/results/<target>/<ts>/  run artifacts, reports, checkpoints
+security-assessment-workspace/state/            latest-run index and checkpoint mirror
+security-assessment-workspace/tools/<run-id>/   downloaded or generated tools
 ```
 
 This makes the workflow resumable across model providers and sessions.
@@ -57,4 +58,4 @@ If the host lacks a capability, degrade explicitly:
 - no web: limited tool discovery.
 - no shell: static-only review or write commands for a human/runtime to execute.
 - no execution isolation: avoid running untrusted code.
-- no child agents: run roles sequentially and write the same artifacts.
+- no child agents: run `agents/<role>.md` workflows sequentially and write the same artifacts.

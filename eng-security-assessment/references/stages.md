@@ -1,17 +1,10 @@
 # Stages
 
-This is the portable runbook for the main agent. It does not assume any specific
-model provider, CLI, repository, or language.
+This is the portable phase reference for the Coordinator. It does not assume any specific model provider, CLI, repository, or language.
 
-The main agent is the orchestrator. It should dispatch role agents by default.
-Only fall back to doing role work itself when the host has no subagent/task
-capability, when the user explicitly asks for single-agent mode, or when the
-task is trivially small. Any fallback must be recorded in state.
+The Coordinator must read `agents/coordinator.md` before using these phases. It should dispatch role workflows under `agents/` by default. Only fall back to doing role work itself when the host has no subagent/task capability, when the user explicitly asks for single-agent mode, or when the task is trivially small. Any fallback must be recorded in state.
 
-Before running a target, read `model-runtime.md`, `generalization.md`,
-`profiles.md`, `schemas.md`, `exploitability.md`, `final-report.md`,
-`language.md`,
-`tool-discovery.md`, and `state.md`.
+Before running a target, read `model-runtime.md`, `generalization.md`, `profiles.md`, `schemas.md`, `exploitability.md`, `final-report.md`, `language.md`, `tool-discovery.md`, and `state.md`.
 
 ## Phase 0: Parse Intent
 
@@ -25,13 +18,11 @@ Parse arguments into:
 
 If target or authorization scope is unclear, ask one concise question.
 
-Write `.state/phase0.json`.
+Write `status.json`, `checkpoints/phase0-intake.json`, and `security-assessment-workspace/state/phase0.json`.
 
 ## Phase 1: Profile and Tool Discovery
 
-Dispatch a recon role agent and, unless the target/profile is already fully
-known, a tool-discovery role agent. These roles own environment scanning and
-bootstrap discovery; the main agent only coordinates and reads their artifacts.
+Dispatch `agents/recon.md` and, unless the target/profile is already fully known, `agents/tool-discovery.md`. These roles own environment scanning and bootstrap discovery; the Coordinator only routes and reads their artifacts.
 
 Infer or select a profile:
 
@@ -44,23 +35,19 @@ Infer or select a profile:
 
 The tool-discovery role actively searches current tools, advisories, and
 target-specific techniques using `tool-discovery.md`. Record provenance in
-`.state/tool_discovery.json`.
+`security-assessment-workspace/state/tool_discovery.json`.
 
-Create a results root:
+Create or resume a run workspace under the unified assessment workspace:
 
 ```text
-results/<target-name>/<UTC timestamp>/
+security-assessment-workspace/results/<target>/<ts>/
 ```
 
-Write `results/<target>/<ts>/profile.json` and `.state/phase1.json`.
-If recon/tool-discovery was not delegated, include `delegation_mode` and
-`fallback_reason` in `phase1.json`.
+Write `security-assessment-workspace/results/<target>/<ts>/profile.json`, `status.json`, `checkpoints/phase1-profile-tools.json`, and `security-assessment-workspace/state/phase1.json`. If recon/tool-discovery was not delegated, include `delegation_mode` and `fallback_reason` in the checkpoint and phase state.
 
 ## Phase 2: Preflight
 
-Dispatch a preflight/bootstrap role when the host supports subagents. It checks
-runtime capabilities and prepares the execution plan. The main agent approves the
-plan and records the chosen verifier.
+Dispatch `agents/preflight.md` when the host supports subagents. It checks runtime capabilities and prepares the execution plan. The Coordinator approves the plan and records the chosen verifier.
 
 Determine what can safely run:
 
@@ -86,17 +73,17 @@ Choose a verification strategy before finding:
 If no safe execution or verifier exists, switch to `static` and mark outputs
 `verification: static-only`.
 
-Write `.state/phase2.json`.
+Write `status.json`, `checkpoints/phase2-preflight.json`, and `security-assessment-workspace/state/phase2.json`.
 
 ## Phase 3: Find and Verify
 
 Run the universal loop:
 
-1. Recon child agent maps attack surface and entrypoints.
-2. Tool discovery child agent selects tools/techniques when needed.
-3. Find child agent runs tools, tests, fuzzers, generated PoCs, or source review.
+1. Recon role maps attack surface and entrypoints.
+2. Tool discovery role selects tools/techniques when needed.
+3. Find role runs tools, tests, fuzzers, generated PoCs, or source review.
 4. Normalize leads into `tool_findings.jsonl`.
-5. Verify child agent independently reproduces, rejects, or marks static-only.
+5. Verify role independently reproduces, rejects, or marks static-only.
 6. Characterize exploitability depth using `exploitability.md`.
 7. Write outcomes to `verified_findings.jsonl`.
 8. Deduplicate by root cause using profile-appropriate `dedup_key`.
@@ -110,15 +97,13 @@ For each command or tool run:
 
 - save raw output under `raw/` or `logs/`.
 - record command, version, environment, and timestamp.
-- keep generated PoCs or replay scripts under `results/<target>/<ts>/pocs/`.
+- keep generated PoCs or replay scripts under `security-assessment-workspace/results/<target>/<ts>/pocs/`.
 
-Write `.state/phase3.json`.
+Write `status.json`, `checkpoints/phase3-find-verify.json`, and `security-assessment-workspace/state/phase3.json`.
 
 ## Phase 4: Report
 
-Dispatch a report role to produce per-finding reports. The main agent checks
-that report content is reader-facing, language-consistent, and backed by
-verified artifacts before accepting it.
+Dispatch `agents/report.md` to produce per-finding reports. The Coordinator checks that report content is reader-facing, language-consistent, and backed by verified artifacts before accepting it.
 
 For each reproduced or static-only finding:
 
@@ -135,28 +120,26 @@ Reports must distinguish:
 - `verification: static-only`.
 - rejected leads, which should not become bug reports unless the user asks for a rejected-leads appendix.
 
-Write `.state/phase4.json`.
+Write `status.json`, `checkpoints/phase4-reports.json`, and `security-assessment-workspace/state/phase4.json`.
 
 ## Phase 4.5: Final Report and Export
 
 After per-bug reports are written, generate a campaign-level final report using
 `final-report.md`.
 
-Dispatch a final-report role when available. The main agent should review the
-final report for duplication, internal-run leakage, language consistency,
-professional tone, exploitability depth, and PDF export before completion.
+Dispatch `agents/final-report.md` when available. The Coordinator should review the final report for duplication, internal-run leakage, language consistency, professional tone, exploitability depth, and PDF export before completion.
 
 Required outputs:
 
 ```text
-results/<target>/<ts>/FINAL_REPORT.md
-results/<target>/<ts>/FINAL_REPORT.pdf
+security-assessment-workspace/results/<target>/<ts>/FINAL_REPORT.md
+security-assessment-workspace/results/<target>/<ts>/FINAL_REPORT.pdf
 ```
 
 Optional internal dossier:
 
 ```text
-results/<target>/<ts>/RUN_DOSSIER.md
+security-assessment-workspace/results/<target>/<ts>/RUN_DOSSIER.md
 ```
 
 If PDF export is unavailable, keep Markdown and state the missing export reason
@@ -164,8 +147,7 @@ in the final response.
 
 ## Phase 5: Patch, If Requested
 
-Dispatch a patch role and, when possible, a separate patch-review or verifier
-role. The patch role should not be the only judge of its own fix.
+Dispatch `agents/patch.md` and, when possible, a separate verification or review pass. The patch role should not be the only judge of its own fix.
 
 Patch only when there is enough evidence and a verifier exists.
 
@@ -180,7 +162,7 @@ Patch loop:
 Never present a diff as upstream-safe merely because it was generated. It is a
 candidate requiring human review.
 
-Write `.state/phase5.json` and set `progress.json` complete or partial.
+Write `status.json`, `checkpoints/phase5-patch.json`, `security-assessment-workspace/state/phase5.json`, and set `security-assessment-workspace/state/progress.json` complete or partial.
 
 ## Status and Resume
 
@@ -188,7 +170,7 @@ For status, read `state.md` and `status.md`.
 
 For resume:
 
-- read `.state/progress.json`.
+- read `security-assessment-workspace/state/progress.json`.
 - continue from the next incomplete phase.
 - skip role outputs that already exist unless `--fresh` is set.
 - use prior artifacts as context instead of relying on provider-specific session resume.
@@ -202,4 +184,4 @@ Stop and ask before:
 - testing a live network target.
 - installing host-global packages.
 - deleting results or killing external processes.
-- applying generated patches outside the results directory.
+- applying generated patches outside `security-assessment-workspace/results/`.

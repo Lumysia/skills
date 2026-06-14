@@ -45,10 +45,11 @@ Ask only what is unknown:
 }
 ```
 
-Save custom profile notes under:
+Save custom profile notes under the run workspace and mirror to `security-assessment-workspace/state/` when useful:
 
 ```text
-.state/custom_profile.json
+security-assessment-workspace/results/<target>/<ts>/artifacts/custom_profile.json
+security-assessment-workspace/state/custom_profile.json
 ```
 
 ## Validation
@@ -64,6 +65,6 @@ Before using a custom profile at scale:
 
 ## Editing Rule
 
-If customization requires editing files outside `.state/`,
-`.tools/`, or `results/`, ask for explicit approval and summarize
+If customization requires editing files outside `security-assessment-workspace/state/`,
+`security-assessment-workspace/tools/`, or `security-assessment-workspace/results/`, ask for explicit approval and summarize
 the intended files first.

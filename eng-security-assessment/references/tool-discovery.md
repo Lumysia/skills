@@ -31,7 +31,7 @@ Record provenance:
   "version_or_commit": "...",
   "why_selected": "...",
   "profile": "web|java|go|...",
-  "install_location": ".tools/<run-id>/<tool>",
+  "install_location": "security-assessment-workspace/tools/<run-id>/<tool>",
   "risk_notes": "..."
 }
 ```
@@ -39,7 +39,7 @@ Record provenance:
 Write provenance to:
 
 ```text
-.state/tool_discovery.json
+security-assessment-workspace/state/tool_discovery.json
 ```
 
 Tool discovery is an internal reproducibility artifact. Put the full discovery
@@ -66,7 +66,7 @@ Use one of these, in order:
 
 ```text
 1. Existing project dev dependencies, if already present.
-2. .tools/<run-id>/ for downloaded tools.
+2. `security-assessment-workspace/tools/<run-id>/` for downloaded tools.
 3. A disposable Docker image/container.
 4. A target-specific Dockerfile/profile runtime.
 ```
@@ -80,7 +80,7 @@ The skill may:
 
 - search the web for tools, advisories, docs, and examples.
 - use GitHub search/API when available, for example `gh search repos`, `gh search code`, or `gh api`.
-- clone public tool repositories into `.tools/`.
+- clone public tool repositories into `security-assessment-workspace/tools/`.
 - install package-manager tools into an isolated environment.
 - build disposable Docker images for tool execution.
 - run tools against local authorized source or local test instances.
@@ -104,7 +104,7 @@ The skill must ask before:
 5. Install in isolated workdir/container.
 6. Run a smoke test against a tiny fixture or read-only target path.
 7. Run against authorized target.
-8. Normalize outputs into findings.jsonl.
+8. Normalize outputs into `tool_findings.jsonl`.
 9. Independently verify promising findings.
 10. Keep only evidence-backed results.
 ```
@@ -133,11 +133,9 @@ Normalize external tool output to:
 Write normalized outputs under:
 
 ```text
-results/<target>/<timestamp>/tool_findings.jsonl
+security-assessment-workspace/results/<target>/<timestamp>/tool_findings.jsonl
 ```
 
 ## Verification Rule
 
-External tool output is not a final finding. Treat it as a lead until the main
-agent or verifier reproduces it, proves the source path, or marks it static-only
-with explicit confidence limits.
+External tool output is not a final finding. Treat it as a lead until a verify role reproduces it, proves the source path, or marks it static-only with explicit confidence limits.

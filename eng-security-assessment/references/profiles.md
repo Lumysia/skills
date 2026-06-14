@@ -33,7 +33,7 @@ Verification:
 
 - Replay minimal request sequence against clean local instance.
 - Show expected vs observed authorization, data exposure, injection, traversal, or SSRF evidence.
-- Store raw HTTP transcript under `results/<target>/<ts>/raw/`.
+- Store raw HTTP transcript under `security-assessment-workspace/results/<target>/<ts>/raw/`.
 
 ## Java Profile
 
@@ -108,7 +108,7 @@ PoC format:
 
 Verification:
 
-- Separate verifier child agent attempts to disprove the claim.
+- Separate verify role attempts to disprove the claim.
 - Mark final result `static-only`; never call it execution-verified.
 
 ## Patch Checks for General Profiles
