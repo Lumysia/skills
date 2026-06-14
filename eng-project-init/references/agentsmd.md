@@ -1,87 +1,69 @@
-# AGENTS.md
+# AGENTS.md Guidance
+
+Use `AGENTS.md` to give future agents concise, project-specific operating rules. It is not a place for broad philosophy, personal preferences, onboarding prose, or unrelated policy.
+
+## Discovery
+
+Inspect before writing:
+
+- Existing `AGENTS.md` and any scoped nested instruction files.
+- README, docs, scripts, task runners, and package/build files.
+- Test, lint, format, typecheck, and CI configuration.
+- Lockfiles and package-manager evidence.
+- Git hooks, release config, commit tooling, and protected paths.
+
+Infer rules from repository evidence or explicit target-project instructions. Do not promote broadly useful habits, personal preferences, or template examples into instructions unless they apply to this project.
 
 ## Hard Dependencies
 
-Ask once when missing and needed:
+Ask one concise question only when required information cannot be inferred after discovery:
 
-- commit message format,
-- required test/build command,
-- protected files or directories,
-- package manager when multiple lockfiles conflict,
-- release/deploy rule if the user asks for release guidance.
+- Target project root when multiple roots are plausible.
+- Required test/build command when the user wants it enforced and repo evidence is conflicting.
+- Protected files or directories when the user asks for protection but the repo does not reveal them.
+- Commit message format when the user wants a rule and repo evidence is absent or conflicting.
 
-Do not block on soft dependencies: issue tracker, domain glossary, ADRs, labels, preferred prose style, or docs location.
+Do not block on soft dependencies: issue tracker, domain glossary, ADR style, labels, prose preferences, optional docs locations, or future process choices.
 
-## Template
+## Template Menu
 
-Use this template as a menu, not a checklist. Include only rules supported by the inspected project and useful for future agent behavior.
-
-When `AGENTS.md` already exists, use it as the base and apply this template only to fill gaps, tighten weak rules, or remove obsolete guidance.
-
-Do not promote a user preference, template example, or broadly useful practice into `AGENTS.md` unless it applies to the target project by evidence or explicit user scope.
+Use these categories as a menu, not a checklist. Include only rules supported by the inspected project or explicit target-project scope.
 
 ```markdown
 # AGENTS.md
 
-- Respond in the user's language unless code, logs, commands, or external text require otherwise.
-- Do not add unrequested policy preferences, normative constraints, or default source restrictions to skills; limit rules to the user's request, repository conventions, and verifiable tool behavior.
-- When creating or updating a skill, include a `SKILL.md` Startup/Bootstrap rule that infers the user's interaction/output language before starting and asks once only if it cannot be inferred confidently.
-- Be concise: one sentence beats two, one word beats several, and empty phrasing is not allowed.
-- Address current-system problems; do not add speculative rules or generic filler.
-- Keep naming and layout consistent with nearby files.
-- Prefer maintainable fixes over narrow symptom patches.
-- Gather evidence before changing unclear code paths.
-- Fix shared abstractions or contracts when the bug crosses state, sync, protocol, rendering, or data boundaries.
-- For design or architecture decisions, define the target state before discussing migration, compatibility, and implementation constraints.
-- Follow SemVer for compatibility: versions before `1.0.0` do not require backward compatibility, and breaking changes after `1.0.0` must be expressed by a major version change.
-- Do not add or preserve legacy paths, aliases, transitional wrappers, compatibility shims, partial implementations, or smaller diffs when they conflict with the target model, unless SemVer or an explicit external contract requires them.
-- Treat high-confidence design assumptions as hypotheses and include the cheapest validation step or falsifying condition.
-- Keep reusable policy, protocol values, and cross-file literals in registries, config, or typed constants.
-- Keep source files under `<line limit>` by default; split by responsibility before adding more behavior.
-- Run `<test command>` before claiming code works.
-- Run `<format/lint command>` when touching `<files>`.
-- Preserve `<important convention>`.
-- Do not edit `<protected path>` unless explicitly asked.
-- Use Angular-style commit messages.
-- Keep commits focused; review the pending diff before committing.
-
-## Skill Rules
-
-- Keep `AGENTS.md` as a routing index; put detailed workflow rules in skills.
-- Keep each skill self-contained and transferable.
-- Keep main `SKILL.md` files lean; move dense details to one-level `references/` files.
-- Keep the main agent as orchestrator for large workflows; delegate when the environment supports it.
-- Use positive skill wording where practical.
-- Cross-reference another skill only as routing guidance, not as a dependency for the current skill.
+- Use `<package manager>` for dependency and script commands.
+- Run `<test command>` before claiming behavior works.
+- Run `<format/lint/typecheck command>` when touching `<file patterns>`.
+- Keep changes within `<project layout or package boundary>` unless the task requires cross-package edits.
+- Preserve `<important generated/protected path>` unless explicitly asked.
+- Follow `<commit message format>` for commits.
+- Keep commits focused; inspect status and diff before committing.
+- Do not edit `<external/vendor/generated path>`.
+- Document `<project-specific artifact or API contract>` when changing it.
 ```
 
-## Writing Rules
+For skills repositories, include only evidence-backed skill rules, such as naming conventions, README registration requirements, host-agnostic constraints, or required resource layout.
 
-- One rule per bullet.
-- Prefer commands over prose.
-- Keep only rules that affect future agent behavior.
-- Preserve existing valid rules when updating an existing `AGENTS.md`.
-- Omit template rules that do not apply to the inspected project.
-- Add rules only from existing guidance, inspected repo evidence, or explicit target-project instructions.
-- Use exact filenames, commands, and paths.
-- Preserve project-specific names only when they are part of the contract.
-- Mark uncertain rules as questions, not instructions.
-- Do not add setup docs, ADRs, CLAUDE.md, or glossaries by default.
+## Update Rules
 
-## Inspection Checklist
+- If `AGENTS.md` exists, use it as the base.
+- Preserve valid current rules that still match the project.
+- Remove obsolete, duplicate, empty, placeholder, vague, or unrelated rules.
+- Merge overlapping rules instead of adding near-duplicates.
+- Use exact filenames, commands, paths, and scopes.
+- Mark unresolved uncertainty as a question in the final response, not as an instruction in `AGENTS.md`.
+- Keep instructions short and actionable.
 
-- Existing `AGENTS.md` or agent config.
-- README and docs for project commands.
-- `package.json`, lockfiles, `pyproject.toml`, `Cargo.toml`, `go.mod`, `Makefile`, task files.
-- Formatter and linter config.
-- Test config and CI workflows.
-- Git hooks or commit tooling.
+## Output Rules
+
+- Default output is only `AGENTS.md`.
+- Do not create `CLAUDE.md`, ADRs, glossaries, setup docs, command wrappers, or broad process docs unless explicitly requested.
+- Do not edit global agent config, user profile files, or repository files outside the target project scope unless explicitly requested.
 
 ## Final Check
 
-- No duplicated rules.
-- No vague rules such as "write good code".
-- No unverifiable claims.
-- Every added rule has a clear source: existing guidance, repo evidence, or explicit target-project instruction.
-- No unnecessary user prompts.
-- No instructions copied from unrelated projects.
+- Every added rule has a source: existing guidance, repo evidence, or explicit target-project instruction.
+- No duplicated or vague rules remain.
+- No unrelated project, host, model, provider, or personal setup assumptions are included.
+- The file is concise enough for future agents to read before acting.

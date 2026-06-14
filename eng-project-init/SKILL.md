@@ -5,7 +5,7 @@ description: Initialize a software project for agent use by inspecting repo conv
 
 # Engineering Project Init
 
-Use this skill to create concise, repo-specific agent instructions. Do not create CLAUDE.md, ADRs, glossaries, or broad process docs unless the user asks.
+Use this skill to initialize or tighten project-specific agent instructions by inspecting repository evidence and writing a concise `AGENTS.md`.
 
 ## Startup
 
@@ -13,19 +13,21 @@ Before starting, infer the user's preferred interaction and output language from
 
 ## Flow
 
-1. Inspect existing guidance: `AGENTS.md`, README, package/build files, test config, formatter/linter config, CI, scripts, and docs.
-2. Infer commands, style rules, project layout, safety rules, and commit rules from files, not guesses.
-3. Ask only for hard dependencies that cannot be inferred, such as preferred commit format or required test command.
-4. Treat naming preferences, issue tracker, domain terms, and optional docs as soft dependencies; skip them if absent.
-5. Treat user preferences and template entries as candidate rules until repo evidence or explicit target-project scope confirms them.
-6. If `AGENTS.md` exists, use it as the base; apply the reference template only to fill gaps or tighten weak rules.
-7. If `AGENTS.md` is missing, create it with short, actionable rules that apply to the inspected project.
-8. Preserve existing valid rules; remove obsolete, duplicate, placeholder, or empty guidance.
-9. Treat the reference template as a menu, not a checklist; omit optional or irrelevant rules.
-10. Verify the final file is concise and matches the repository.
+1. Read `references/agentsmd.md` before creating, rewriting, or appending agent instructions.
+2. Inspect existing guidance, README, build files, test config, formatter/linter config, CI, scripts, and docs.
+3. Infer commands, style rules, project layout, safety rules, and commit rules from repository evidence or explicit target-project instructions.
+4. Ask one concise question only when a hard dependency remains unclear after inspection.
+5. Use existing `AGENTS.md` as the base when present; otherwise create one focused file for the target project.
+6. Preserve valid rules and remove obsolete, duplicate, placeholder, vague, or unrelated guidance.
+7. Verify the final `AGENTS.md` is concise, evidence-backed, and scoped to future agent behavior in this repository.
+
+Hard dependencies are target project root, permission to create or edit `AGENTS.md`, and any required command or protected path the user wants enforced but the repository does not reveal. Naming preferences, issue tracker, domain glossary, ADRs, labels, prose style, and optional docs are soft dependencies.
 
 ## Output
 
-Default output is only `AGENTS.md`. Add other files only on explicit request.
+Default output is only `AGENTS.md`. Do not create `CLAUDE.md`, ADRs, glossaries, local setup docs, or broad process docs unless explicitly requested.
 
-For the template and checks, read `references/agentsmd.md`. For user-specific local setup, read `references/personal-setup.md`.
+## Resources
+
+- `references/agentsmd.md`: AGENTS.md construction rules, evidence sources, template menu, and final checks.
+- `references/evals.md`: smoke scenarios for project initialization, existing guidance cleanup, and prompt minimization.
