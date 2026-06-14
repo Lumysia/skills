@@ -5,6 +5,7 @@
 - [`gen-browser-control`](./gen-browser-control/SKILL.md) - Browser control workflow for Playwright MCP extension mode using existing Chrome, Edge, or Chromium-family tabs and logged-in sessions.
 - [`gen-docx`](./gen-docx/SKILL.md) - Word document creation, editing, conversion, tracked changes, comments, and XML-level DOCX workflows.
 - [`gen-humanize`](./gen-humanize/SKILL.md) - Generic prose humanization workflow for author voice, genre fit, evidence grounding, and formulaic-pattern cleanup; adapted from [blader/humanizer](https://github.com/blader/humanizer), [qu-ai-wei](https://github.com/LifelongLazyLearner/qu-ai-wei), and a user-provided research report.
+- [`gen-long-running-skill-creator`](./gen-long-running-skill-creator/SKILL.md) - Skill creation workflow for multi-hour autonomous tasks with checkpoints, resumability, worker orchestration, artifact logs, and quality gates.
 - [`gen-pdf`](./gen-pdf/SKILL.md) - PDF reading, extraction, creation, merging, splitting, form filling, encryption, OCR, and validation workflows.
 - [`gen-pptx`](./gen-pptx/SKILL.md) - PowerPoint deck creation, parsing, editing, templating, rendering, and visual QA workflows.
 - [`gen-skill-creator`](./gen-skill-creator/SKILL.md) - Skill creation, evaluation, benchmarking, packaging, and description-optimization workflow; adapted from [Anthropic's skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator).
