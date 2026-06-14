@@ -1,0 +1,3 @@
+[submodule "gen-humanizer-skill"]
+	path = gen-humanizer-skill
+	url = https://github.com/Aboudjem/humanizer-skill.git
