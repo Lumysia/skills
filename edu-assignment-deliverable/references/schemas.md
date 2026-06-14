@@ -25,12 +25,12 @@ Machine-readable assignment state. Located at `<assignment-name>-workspace/statu
     "status": "not_started|in_progress|blocked|complete_but_unverified|ready|complete",
     "readiness": "partial|complete_but_unverified|ready|blocked",
     "last_updated": "<ISO-8601 timestamp>",
-    "next_action": "<specific next action>"
+    "coordinator_action": "<specific follow-up action or user question>"
   },
   "dependencies": {
     "hard_missing": ["<missing item>"],
     "soft_missing": ["<missing item>"],
-    "provisioning_blockers": ["<blocker>"]
+    "validation_blockers": ["<blocker>"]
   },
   "artifacts": {
     "checklist": "artifacts/rubric-checklist.md",
@@ -47,6 +47,7 @@ Machine-readable assignment state. Located at `<assignment-name>-workspace/statu
     "deliverable_work": "pass|fail|not_run|blocked",
     "validation_attempted": "pass|fail|not_run|blocked",
     "deliverable_check": "pass|fail|not_run",
+    "submission_purity": "pass|fail|not_run",
     "rubric_review": "pass|fail|not_run",
     "no_blockers_or_majors": "pass|fail|not_run"
   },
@@ -65,8 +66,8 @@ Machine-readable assignment state. Located at `<assignment-name>-workspace/statu
 - `skill`: Skill name matching frontmatter.
 - `workspace`: Runtime workspace path or name.
 - `assignment`: Source and submission metadata.
-- `state`: Current phase, readiness, timestamp, and next action.
-- `dependencies`: Missing hard/soft inputs and provisioning blockers.
+- `state`: Current phase, readiness, timestamp, and coordinator action.
+- `dependencies`: Missing hard/soft inputs and validation blockers.
 - `artifacts`: Key files created or referenced during the run.
 - `quality_gates`: Latest status of readiness gates.
 - `open_risks`: Remaining risks with severity and owner.
@@ -96,7 +97,7 @@ Phase completion or resume snapshot. Located under `<assignment-name>-workspace/
   ],
   "decisions": ["<decision or assumption>"],
   "blockers": ["<blocker>"],
-  "next_action": "<specific next action>"
+  "coordinator_action": "<specific follow-up action or user question>"
 }
 ```
 
@@ -110,7 +111,7 @@ Phase completion or resume snapshot. Located under `<assignment-name>-workspace/
 - `commands_run`: Commands or validation actions with purpose and result.
 - `decisions`: Assumptions, user decisions, and merge decisions.
 - `blockers`: Remaining blockers at checkpoint time.
-- `next_action`: First action for a fresh session to take.
+- `coordinator_action`: First follow-up action or user question for a fresh session.
 
 ---
 
@@ -151,7 +152,7 @@ Summary shape for worker reports. Full reports may be Markdown, but include thes
 
 ```json
 {
-  "worker_role": "deliverable_work|deliverable_check|environment_setup|rubric_review|humanization",
+  "worker_role": "deliverable_work|deliverable_check|rubric_review|humanization",
   "report_path": "<path>",
   "started_at": "<ISO-8601 timestamp>",
   "completed_at": "<ISO-8601 timestamp>",
@@ -160,7 +161,7 @@ Summary shape for worker reports. Full reports may be Markdown, but include thes
   "major_findings": ["<finding>"],
   "commands_run": ["<command>"],
   "artifacts_produced": ["<paths>"],
-  "next_action": "<specific next action>"
+  "coordinator_action": "<specific follow-up action or user question>"
 }
 ```
 
@@ -172,7 +173,7 @@ Summary shape for worker reports. Full reports may be Markdown, but include thes
 - `major_findings`: Findings likely to cause substantial mark loss.
 - `commands_run`: Commands, exports, renders, or validation actions.
 - `artifacts_produced`: Generated evidence or output files.
-- `next_action`: Recommended coordinator action.
+- `coordinator_action`: Recommended coordinator follow-up action or user question.
 
 ---
 
@@ -186,14 +187,10 @@ Structured final handoff summary. Located under `<assignment-name>-workspace/rep
   "ready_to_submit": true,
   "checks_run": ["<check or command>"],
   "reviews": ["<review report paths>"],
-  "temporary_provisioning": {
-    "performed": false,
-    "paths_created": [],
-    "cleanup": "<cleanup summary>"
-  },
+  "blocked_validation": ["<blocked validation or external action>"],
   "remaining_risks": ["<risk>"],
-  "user_todos": ["<todo>"],
-  "next_step": "<direct action>"
+  "external_blocking_actions": ["<action outside agent capability>"],
+  "coordinator_action": "<specific follow-up action or null>"
 }
 ```
 
@@ -202,7 +199,7 @@ Structured final handoff summary. Located under `<assignment-name>-workspace/rep
 - `ready_to_submit`: Whether no blockers or majors remain.
 - `checks_run`: Validation, export, render, execution, or review checks.
 - `reviews`: Saved deliverable/rubric/humanization reports.
-- `temporary_provisioning`: Setup and cleanup summary.
+- `blocked_validation`: Validation that could not be completed and the required user or external action.
 - `remaining_risks`: Real residual risks.
-- `user_todos`: Actions the user must complete.
-- `next_step`: Immediate next action.
+- `external_blocking_actions`: Actions outside agent capability that still block readiness.
+- `coordinator_action`: Specific follow-up action or user question, kept outside the deliverable.

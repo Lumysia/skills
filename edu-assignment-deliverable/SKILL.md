@@ -24,7 +24,7 @@ Before asking the user for missing assignment details, first perform a minimal n
 3. Inspect existing files and prior workspace state before drafting, rebuilding, or replacing work.
 4. For non-trivial assignments, create or resume `<assignment-name>-workspace/` with `README.md`, `plan.md`, `status.json`, `logs/`, `artifacts/`, `reviews/`, `reports/`, and `checkpoints/`.
 5. Convert the prompt, rubric, template, and submission rules into `artifacts/rubric-checklist.md` before creating or revising the final deliverable.
-6. Use worker role specs under `agents/` for deliverable checks, temporary environment setup, rubric review, and optional humanization when those gates apply.
+6. Use worker role specs under `agents/` for deliverable work, deliverable checks, rubric review, and optional humanization when those gates apply.
 7. Keep `references/` for shared schemas and eval scenarios; use `references/schemas.md` for runtime state fields and `references/evals.md` for smoke/resume/failure checks.
 
 ## Runtime Contract
@@ -52,13 +52,16 @@ Write `status.json` after every phase and major worker batch. Never overwrite ex
 - `agents/coordinator.md`: main-agent operating spec for intake, planning, worker routing, validation, checkpointing, and handoff.
 - `agents/deliverable-work.md`: generic worker for creating or revising the actual assignment artifact in the required format.
 - `agents/deliverable-check.md`: independent file/readiness inspection without modifying files.
-- `agents/environment-setup.md`: reversible temporary provisioning for blocked validation/export/execution.
 - `agents/rubric-review.md`: independent final rubric and submission-readiness review.
 - `agents/humanization.md`: constrained prose naturalization when requested or materially needed.
 
 ## Quality Gates
 
 Do not call the assignment ready until the final file or folder exists, is readable, matches the requested format, required validation has been attempted, worker findings are resolved or recorded, and rubric review reports no blockers or majors unless the final handoff clearly labels accepted risks.
+
+Keep the final deliverable or submission package pure: include only files and content required by the assignment prompt, rubric, template, or submission rules. Put agent notes, TODOs, caveats, validation summaries, reports, logs, checklists, and user instructions only in the workspace outside the submission artifact.
+
+When a required item is missing but can be supplied or completed with user help, guide the user through the missing items one at a time, using an ask/question tool when available, then continue the workflow and recheck readiness. Do not present an incomplete deliverable as done just because the next action belongs to the user.
 
 Only blockers and major issues require another fix/review loop. Do not loop on minor or note findings unless the user requests polish.
 
@@ -68,4 +71,4 @@ Use `references/evals.md` for concrete smoke, resume, failure, readiness, and hu
 
 ## Final Handoff
 
-Return the final deliverable path, checks or reviews run, temporary provisioning and cleanup, remaining blockers or majors, real risks, user TODOs, and the next direct action.
+Return the final deliverable path, checks or reviews run, remaining blockers or majors, real risks, and any external action that still blocks readiness.

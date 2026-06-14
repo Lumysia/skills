@@ -41,14 +41,15 @@ You receive these parameters in your prompt:
 1. Create or edit only the deliverable components in `work_scope`.
 2. Use primary-source requirements and checklist items as the authority.
 3. Match the required artifact type instead of forcing a code, prose, slide, report, or project-folder shape.
-4. Keep support files only when required for submission, verification, reproducibility, or clear handoff.
+4. Keep support files only when required for submission, verification, or reproducibility.
 5. Preserve required evidence, calculations, citations, format, template fields, source constraints, accessibility constraints, and platform constraints.
+6. Do not put agent notes, TODOs, next-step instructions, caveats, validation summaries, logs, checklists, review text, or workspace state into the target deliverable unless the assignment explicitly requires that content.
 
 ### Step 4: Record Work Evidence
 
 1. Record files created, files modified, assumptions, commands or tools used, and validation still needed.
 2. Do not claim final readiness; leave that to Deliverable Check Agent and Rubric Review Agent.
-3. If validation requires separate tooling or environment setup, report the exact blocked goal for Environment Setup Agent.
+3. If validation requires unavailable tooling or an external requirement, report the exact blocked goal and needed user or external action.
 
 ## Output Format
 
@@ -71,7 +72,7 @@ Save the report to `report_path` when tool access permits. Otherwise return the 
   "assumptions": ["<assumption>"],
   "remaining_work_blockers": ["<blocker>"],
   "validation_needed": ["<check/export/render/test/review needed>"],
-  "recommended_next_step": "<specific next action>"
+  "coordinator_action": "<specific follow-up action or user question>"
 }
 ```
 
@@ -83,3 +84,4 @@ Save the report to `report_path` when tool access permits. Otherwise return the 
 - Do not perform final rubric review or final readiness classification.
 - Do not submit work to external platforms.
 - Do not fabricate sources, citations, data, results, screenshots, logs, or validation evidence.
+- Keep non-required workflow and handoff content out of the deliverable and submission package.

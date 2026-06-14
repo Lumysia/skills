@@ -16,7 +16,7 @@ You receive these parameters in your prompt:
 - **final_deliverable**: File or folder to review.
 - **checklist_path**: Rubric checklist path, usually `artifacts/rubric-checklist.md`.
 - **support_paths**: Relevant source, generated, validation, or evidence files.
-- **validation_reports**: Deliverable Check Agent and Environment Setup Agent reports or summaries.
+- **validation_reports**: Deliverable Check Agent reports, command outputs, export results, or blocked-validation summaries.
 - **report_path**: Where to save the review report when tools allow.
 
 ## Process
@@ -33,6 +33,7 @@ You receive these parameters in your prompt:
 1. Verify every required component is present and credible.
 2. Check required evidence, calculations, outputs, source use, citations, template fields, and explanations.
 3. Check format, filename, included files, excluded content, and submission constraints.
+4. Check that the submission artifact contains only assignment-required content and no agent workflow notes, TODOs, caveats, validation summaries, reports, logs, checklists, or user instructions unless explicitly required.
 
 ### Step 3: Identify Risks
 
@@ -73,7 +74,7 @@ Save the report to `report_path` when tool access permits. Otherwise return the 
     }
   ],
   "remaining_blockers_or_majors": ["<finding>"],
-  "recommended_next_step": "<specific next action>"
+  "coordinator_action": "<specific fix, user question, or final handoff action>"
 }
 ```
 

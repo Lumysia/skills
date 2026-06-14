@@ -28,10 +28,10 @@ You receive these parameters from the user request and workspace context:
 1. Infer the user's preferred interaction and output language from the request, assignment prompt, sources, template, or project conventions.
 2. Perform minimal non-destructive discovery before asking questions: list the current directory, inspect user-named paths, identify obvious archives or folders, and classify likely prompt, rubric, template, source-material, existing-deliverable, and prior-workspace candidates.
 3. Read only enough from candidate primary-source files to determine hard dependencies and whether additional files are needed.
-4. Ask one concise question and stop only after this discovery cannot find a required hard dependency.
+4. Ask the next most blocking question only after this discovery cannot find a required hard dependency; use an ask/question tool when available.
 5. Treat optional preferences as soft dependencies and continue with documented assumptions.
 
-Do not ask for assignment prompt, format, rubric, template, source materials, or existing deliverables before checking whether they are already present in the current directory or user-named paths.
+Do not ask for assignment prompt, format, rubric, template, source materials, or existing deliverables before checking whether they are already present in the current directory or user-named paths. When multiple hard dependencies are missing, ask for one actionable item at a time, then resume discovery and validation before asking the next question.
 
 Hard dependencies are:
 
@@ -84,7 +84,7 @@ Classify current work as:
 - `partial`: missing required components or known incomplete work.
 - `complete_but_unverified`: appears finished but checks, exports, execution, or independent review are missing.
 - `ready`: required components are present, validation is complete or not needed, and independent review has no blockers or majors.
-- `blocked`: work cannot proceed without a hard dependency, approval, credential, paid service, license, or unsafe/heavy provisioning.
+- `blocked`: work cannot proceed without a hard dependency, approval, credential, paid service, license, unavailable capability, or external requirement.
 
 ### Step 5: Create Or Revise Deliverable
 
@@ -96,6 +96,8 @@ Classify current work as:
 
 Allowed coordinator work includes creating workspace artifacts, outlines, checklists, routing notes, reports, versioned intermediates, safe local checks for routing, and removing generated clutter from the submission package when it is not required. Actual deliverable content creation or artifact modification belongs to Deliverable Work Agent when subagents are available.
 
+The final deliverable or submission package must contain only content and files required by the prompt, rubric, template, or submission rules. Never place agent notes, process summaries, TODOs, next-step instructions, caveats, validation summaries, logs, checklists, workspace state, or review reports inside the deliverable unless the assignment explicitly asks for that content.
+
 Do not submit to a course platform, use paid services or credentials, accept licenses, install system software, make lasting global changes, delete user source files, replace source/template artifacts, or invent citations/results/evidence without approval.
 
 ### Step 6: Worker Routing
@@ -104,23 +106,23 @@ Use worker role specifications from `agents/`. These gates require delegation wh
 
 - `agents/deliverable-check.md`: required before readiness claims and before final handoff for non-trivial assignments.
 - `agents/deliverable-work.md`: required for creating or substantially revising submission artifacts when subagents are available.
-- `agents/environment-setup.md`: required when validation, export, rendering, calculation, or execution is blocked by missing local capabilities that may be provisioned safely.
 - `agents/rubric-review.md`: required before final handoff after the deliverable has been created or revised.
 - `agents/humanization.md`: optional; use only when requested or when prose quality is a material submission risk.
 
-The coordinator may inspect enough files to route work and maintain state, but should not perform substantial deliverable content creation, artifact modification, detailed deliverable validation, temporary environment provisioning, final rubric review, or humanization in the same coordination pass when a worker can do it independently.
+The coordinator may inspect enough files to route work and maintain state, but should not perform substantial deliverable content creation, artifact modification, detailed deliverable validation, final rubric review, or humanization in the same coordination pass when a worker can do it independently.
 
 Read the selected role specification and launch the worker with concrete input paths, workspace paths, output report path, non-modification rules, validation goals, prior findings, and timeout/retry expectations. Do not ask a worker to infer its role from the skill entrypoint or a shortened summary.
 
 If subagents are unavailable, state that explicitly, record the fallback in `logs/decisions.md`, and run the role as a distinct main-agent pass. Save the result in the same `reviews/` location and mark the worker gate as fallback-completed in `status.json`.
 
-### Step 7: Validation And Temporary Provisioning
+### Step 7: Validation Blockers
 
 1. Do not stop at a partial deliverable just because a required capability is missing.
-2. If validation dependencies are missing, launch Environment Setup Agent to provision a temporary local environment when safe.
-3. Report unrun validation only when provisioning is blocked by approval, credentials, licenses, payment, unsafe cleanup, unavailable source materials, unsupported platform tools, or excessive resources.
+2. If validation dependencies are missing, record the exact blocked validation goal, missing capability, and user or external action needed.
+3. If the user can provide the missing input, screenshot, export, credential status, or local result, ask for that next actionable item and continue after the answer.
+4. Report unrun validation only when it is blocked by approval, credentials, licenses, payment, unavailable source materials, unsupported platform tools, excessive resources, user refusal, or an external action the agent cannot perform.
 
-For local processing, generated evidence, or exported files, record setup, commands, parameters, relevant versions, input scope, outputs, and cleanup. Keep temporary work outside the submission folder when possible and remove non-submission artifacts after validation unless they are required evidence or needed for reproducibility.
+For local processing, generated evidence, or exported files, record commands or tools used, parameters, relevant versions, input scope, and outputs. Keep non-submission artifacts out of the final submission unless they are required evidence or needed for reproducibility.
 
 ### Step 8: Format And Template Handling
 
@@ -128,7 +130,8 @@ For local processing, generated evidence, or exported files, record setup, comma
 2. Inspect generated deliverables before saying they are ready.
 3. Do not call a deliverable ready if required content is missing, unreadable, misplaced, clipped, malformed, empty, or in the wrong format.
 4. If a required template cannot be filled reliably, create `reports/manual-fill-guide.md` with exact content and locations and tell the user not to submit the failed generated artifact.
-5. Remove content that is not required by the prompt, rubric, requested format, clean submission, execution, verification, or reproducibility.
+5. Remove content from the deliverable or submission package that is not required by the prompt, rubric, template, requested format, clean submission, execution, verification, or reproducibility.
+6. Keep all workflow notes, review findings, unresolved-risk explanations, and user guidance in the workspace or final conversation, never in the submission artifact.
 
 ### Step 9: Independent Rubric Review
 
@@ -161,24 +164,28 @@ Update `status.json` after writing the checkpoint.
 
 Before final response, ensure `status.json`, latest checkpoint, final report, and actual files agree. Do not say the assignment is ready if final status is `blocked`, `partial`, or `complete_but_unverified`.
 
+If a blocker can be resolved by user input during the session, ask for the missing item and continue rather than ending with a generic next-step instruction. Only provide a blocked or partial handoff when the user cannot or will not provide the missing item, or when the remaining action is outside the agent's capabilities.
+
+Before naming a deliverable as final, inspect the deliverable or submission package for non-required agent/workflow content. Any embedded TODOs, caveats, instructions to the user, review notes, logs, workspace files, or process summaries are blockers unless the assignment explicitly requires them.
+
 ## Output Format
 
 Final handoff should include:
 
 - Final deliverable path or location.
 - Checks, exports, commands, or reviews run.
-- Temporary provisioning and cleanup performed.
 - Whether rubric review found remaining blockers or majors.
 - Real remaining risks, manual completion, unrun validation, unavailable sources, or format constraints.
-- User TODOs.
-- Next step as a direct action.
+- External actions that still block readiness, only when the agent cannot resolve them in-session.
 
 ## Criteria
 
 - Preserve user work and version replacements.
 - Do not fabricate missing context, citations, results, data, or validation evidence.
+- Keep deliverables and submission packages free of non-required agent, workflow, review, TODO, or handoff content.
+- Guide user-resolvable blockers one step at a time before declaring a run blocked or complete.
 - Do not treat summaries, plans, or paraphrases as primary sources for rubric or submission requirements.
-- Ask once and stop for missing hard dependencies.
+- Ask for user-resolvable hard dependencies one at a time, then continue and recheck.
 - Keep worker outputs bounded, saved, and merged into state.
 - Run validation and independent rubric review before readiness claims when feasible.
 - Maintain resumable state through `status.json`, checkpoints, logs, and reports.
