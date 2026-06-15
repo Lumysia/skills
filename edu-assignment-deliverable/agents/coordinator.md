@@ -111,7 +111,7 @@ Use worker role specifications from `agents/`. These gates require delegation wh
 
 The coordinator may inspect enough files to route work and maintain state, but should not perform substantial deliverable content creation, artifact modification, detailed deliverable validation, final rubric review, or humanization in the same coordination pass when a worker can do it independently.
 
-Read the selected role specification and launch the worker with concrete input paths, workspace paths, output report path, non-modification rules, validation goals, prior findings, and timeout/retry expectations. Do not ask a worker to infer its role from the skill entrypoint or a shortened summary.
+Read the selected role specification and launch the worker with concrete input paths, workspace paths, output report path, non-modification rules, validation goals, and timeout/retry expectations. Include prior findings only for workers assigned to fix, continue, or verify those specific findings. Do not ask a worker to infer its role from the skill entrypoint or a shortened summary.
 
 If subagents are unavailable, state that explicitly, record the fallback in `logs/decisions.md`, and run the role as a distinct main-agent pass. Save the result in the same `reviews/` location and mark the worker gate as fallback-completed in `status.json`.
 
@@ -137,9 +137,11 @@ For local processing, generated evidence, or exported files, record commands or 
 
 1. Run Rubric Review Agent before final handoff for finished non-trivial deliverables.
 2. Ensure the review reads original prompt, rubric, template, submission rules, final deliverable, and validation results from files or explicit user-message labels, not coordinator memory or checklist paraphrases.
-3. Treat checklist items without primary-source traceability as review blockers until the source is found, corrected, or explicitly accepted as a risk.
-4. Fix blockers and major issues when feasible, then rerun the needed review loop.
-5. Do not loop on minor or note issues unless the user requests polish.
+3. Launch Rubric Review Agent with only role spec, source paths, workspace/report paths, final deliverable path, checklist path, validation/evidence paths, non-editing rule, and output schema. Do not include coordinator interpretation, conclusions, or other narrative context that could anchor the reviewer.
+4. If a rerun is needed after fixes, provide changed file paths and objective validation artifacts only; do not summarize the prior review outcome except by pointing to the prior review file as optional evidence.
+5. Treat checklist items without primary-source traceability as review blockers until the source is found, corrected, or explicitly accepted as a risk.
+6. Fix blockers and major issues when feasible, then rerun the needed review loop.
+7. Do not loop on minor or note issues unless the user requests polish.
 
 Severity guide:
 
@@ -150,7 +152,7 @@ Severity guide:
 
 ### Step 10: Optional Humanization Review
 
-Run humanization only when the user asks for it or when prose quality is part of the deliverable risk. Keep the pass independent and preserve calculations, cited facts, file names, equations, code, quoted text, and domain-specific precision.
+Run humanization only when the user asks for it or when prose quality is part of the deliverable risk. Route through `agents/humanization.md`, which delegates behavior to `gen-humanizer-skill`.
 
 ### Step 11: Checkpoint And Resume State
 

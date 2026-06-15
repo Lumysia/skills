@@ -26,7 +26,8 @@ You receive these parameters in your prompt:
 1. Read the original prompt, rubric, template, submission rules, validation reports, and final deliverable from files or explicit user-message labels.
 2. Read the checklist only as a navigation aid containing raw source excerpts and locations, not as the source of truth.
 3. Do not rely on the coordinator's memory, summary, plan, extracted paraphrase, checklist paraphrase, or interpreted checklist text when source files are available.
-4. Identify mark-weighted criteria and submission rejection risks from primary sources.
+4. Ignore coordinator-provided interpretation, conclusions, or narrative framing unless they are backed by a cited primary-source file or validation artifact.
+5. Identify mark-weighted criteria and submission rejection risks from primary sources.
 
 ### Step 2: Check Coverage
 
@@ -84,6 +85,7 @@ Save the report to `report_path` when tool access permits. Otherwise return the 
 - Review independently from files and validation evidence.
 - Use original source files or explicit user-message labels as the authority for grading requirements.
 - Do not use coordinator summaries, plans, or paraphrases as primary sources.
+- Do not let coordinator interpretation, conclusions, or narrative framing anchor the review.
 - Do not treat interpreted checklist text as a requirement.
 - Report findings ordered by severity.
 - Only blockers and majors require another fix/review loop.

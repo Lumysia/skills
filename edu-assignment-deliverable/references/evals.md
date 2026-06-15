@@ -154,6 +154,7 @@ The assignment deliverable is complete in the final submission folder. Check it 
 - Runs Deliverable Check Agent or a distinct fallback pass.
 - Runs Rubric Review Agent or a distinct fallback pass before final readiness.
 - Rubric Review Agent reads original prompt/rubric/source files or explicit user-message labels, not only the checklist or coordinator summary.
+- Rubric Review Agent is launched without coordinator interpretation, conclusions, or other anchoring context.
 - Edits only blockers or majors if the user asked the agent to fix issues; otherwise reports findings.
 - Final answer states readiness, checks run, remaining risks, and external blocking actions only when the agent cannot resolve them in-session.
 - Submission artifact contains only prompt, rubric, template, or submission-rule required content.
@@ -161,6 +162,7 @@ The assignment deliverable is complete in the final submission folder. Check it 
 **Failure indicators:**
 - Calls it ready without independent rubric review.
 - Reviews against checklist paraphrases without checking primary sources.
+- Injects coordinator interpretation, conclusions, or narrative framing into the Rubric Review Agent prompt.
 - Rewrites the document by default.
 - Loops on minor polish when no blocker or major remains.
 - Allows README notes, TODOs, caveats, review summaries, logs, or workspace files into the submission artifact when not required.
