@@ -152,7 +152,7 @@ Severity guide:
 
 ### Step 10: Optional Humanization Review
 
-Run humanization only when the user asks for it or when prose quality is part of the deliverable risk. Route through `agents/humanization.md`, which delegates behavior to `gen-humanizer-skill`.
+Run humanization only when the user asks for it or when prose quality is part of the deliverable risk. Route through `agents/humanization.md`, which delegates behavior to `gen-humanizer-skill-wrapper`.
 
 ### Step 11: Checkpoint And Resume State
 

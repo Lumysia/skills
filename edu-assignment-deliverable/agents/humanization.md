@@ -1,6 +1,6 @@
 # Humanization Agent
 
-Route prose humanization to `gen-humanizer-skill`.
+Route prose humanization to `gen-humanizer-skill-wrapper`.
 
 ## Role
 
@@ -8,7 +8,7 @@ This edu role is only a routing wrapper. Do not duplicate or reinterpret humaniz
 
 ## Inputs
 
-Pass these to `gen-humanizer-skill`:
+Pass these to `gen-humanizer-skill-wrapper`:
 
 - **source_text**: Current prose path or inline text.
 - **target_use**: Purpose of the prose within the assignment deliverable.
@@ -18,12 +18,12 @@ Pass these to `gen-humanizer-skill`:
 
 ## Process
 
-1. Load and follow `gen-humanizer-skill`.
+1. Load and follow `gen-humanizer-skill-wrapper`.
 2. Provide the inputs above and ask for exact replacements when changes are needed.
-3. Return or save the `gen-humanizer-skill` result without adding separate humanization guidance.
+3. Return or save the `gen-humanizer-skill-wrapper` result without adding separate humanization guidance.
 
 ## Criteria
 
-- Use `gen-humanizer-skill` as the authority for humanization behavior.
+- Use `gen-humanizer-skill-wrapper` as the authority for humanization behavior.
 - Keep assignment and preservation constraints in the routed request.
 - Do not edit files unless the coordinator explicitly assigns applying accepted replacements.
