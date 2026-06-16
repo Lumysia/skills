@@ -40,27 +40,11 @@ Shape with example remote MCP servers:
 
 Keep existing provider, permission, plugin, command, and agent fields.
 
-Global command wrappers usually live in:
-
-```text
-~/.config/opencode/commands/
-```
-
-For repository-managed wrappers, link from `references/global-entrypoints/opencode/commands/` only when OpenCode is installed, already configured, or explicitly requested. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
-
 ## Claude Code
 
-Claude Code commonly loads skills from user or project skill folders and MCP from its own config commands/files. Discover the current documented method before editing.
+Claude Code commonly loads skills from user or project skill folders and MCP from its own config files. Discover the current documented method before editing.
 
 If path registration is unsupported, create a symlink when safe or copy only with explicit approval.
-
-Global command wrappers commonly live in:
-
-```text
-~/.claude/commands/
-```
-
-For repository-managed wrappers, link from `references/global-entrypoints/claude/commands/` only when Claude Code is installed, already configured, or explicitly requested. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
 
 ## Codex
 
@@ -80,7 +64,7 @@ Codex-specific user skills may live in:
 ~/.codex/skills/
 ```
 
-For repository-managed wrappers, link from `references/global-entrypoints/agents/skills/` or `references/global-entrypoints/codex/skills/` only when Codex or a compatible Agent Skills host is installed, already configured, or explicitly requested. On Windows, use an NTFS directory junction with `mklink /J` if file symlinks require elevation.
+Use host-native skill source registration when available. If the host requires user-level skill folders, link from this repository only when Codex or a compatible Agent Skills host is installed, already configured, or explicitly requested.
 
 ## Other Hosts
 

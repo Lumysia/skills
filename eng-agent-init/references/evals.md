@@ -1,6 +1,6 @@
 # Agent Init Evals
 
-Use these smoke scenarios to check `eng-agent-init` without modifying real global config. Prefer temporary config files and temporary entrypoint directories.
+Use these smoke scenarios to check `eng-agent-init` without modifying real global config. Prefer temporary config files.
 
 ---
 
@@ -16,27 +16,9 @@ Set up this skills repo for OpenCode and add exa MCP.
 
 **Failure indicators:**
 
-- Edits Claude, Codex, or Agent Skills entrypoints without being asked.
+- Edits Claude, Codex, or Agent Skills config without being asked.
 - Replaces existing provider, permission, model, command, or MCP entries.
 - Writes directly to global config during a dry-run or repo-maintenance task.
-
----
-
-## Eval: Idempotent Entrypoints
-
-**Prompt:**
-
-```text
-Install the repository-managed command wrappers for Claude Code.
-```
-
-**Expected output:** The agent links from the Claude entrypoint destination to `references/global-entrypoints/claude/commands/`, treats existing correct links as complete, and reports conflicts without overwriting user-managed files.
-
-**Failure indicators:**
-
-- Copies wrapper contents instead of linking repository-managed templates.
-- Overwrites a different existing command without asking.
-- Duplicates command files on repeated runs.
 
 ---
 
