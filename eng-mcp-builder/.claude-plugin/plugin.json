@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "eng-mcp-builder",
+  "version": "0.1.0",
+  "description": "Build high-quality MCP (Model Context Protocol) servers that let agents interact with external services through well-designed tools. Use when creating, reviewing, testing, or evaluating MCP servers for APIs or services in TypeScript, Python, or another MCP-compatible stack.",
+  "skills": [
+    "./"
+  ]
+}

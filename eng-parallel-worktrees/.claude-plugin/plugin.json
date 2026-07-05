@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "eng-parallel-worktrees",
+  "version": "0.1.0",
+  "description": "Coordinate parallel engineering work across git worktrees and independent agents. Use when splitting tasks across isolated branches, comparing multiple implementations, running background agents, or merging worktree results.",
+  "skills": [
+    "./"
+  ]
+}

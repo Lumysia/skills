@@ -25,7 +25,7 @@ Hard dependencies are target project root, permission to create or edit `AGENTS.
 
 ## Output
 
-Default output is only `AGENTS.md`. Do not create `CLAUDE.md`, ADRs, glossaries, local setup docs, or broad process docs unless explicitly requested.
+Default output is `AGENTS.md`, plus a one-line `CLAUDE.md` pointer (`See AGENTS.md.`) so Claude Code's native doc lookup resolves to the same source. Do not create ADRs, glossaries, local setup docs, or broad process docs unless explicitly requested. If `CLAUDE.md` already exists with real content, do not overwrite it — leave it and mention the conflict instead.
 
 ## Resources
 

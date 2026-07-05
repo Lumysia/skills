@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "sys-software-lifecycle",
+  "version": "0.1.0",
+  "description": "Install, update, uninstall, and clean operating-system software across platforms. Use when the user wants package-manager commands, clean removal, leftover cleanup, or reinstall preparation.",
+  "skills": [
+    "./"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "gen-browser-control",
+  "version": "0.1.0",
+  "description": "Browser control via Playwright MCP extension mode. Use when controlling existing Chrome, Edge, or Chromium-family tabs, logged-in sessions, or installed extensions.",
+  "skills": [
+    "./"
+  ]
+}

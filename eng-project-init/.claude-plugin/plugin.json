@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "eng-project-init",
+  "version": "0.1.0",
+  "description": "Initialize a software project for agent use by inspecting repo conventions and creating or tightening AGENTS.md. Use when setting up a project, adding agent instructions, refreshing repo guidance, or asking for project initialization.",
+  "skills": [
+    "./"
+  ]
+}

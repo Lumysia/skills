@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "edu-assignment-deliverable",
+  "version": "0.1.0",
+  "description": "Create course assignment deliverables from prompts, rubrics, source materials, templates, and submission rules using a resumable workspace, staged validation, worker reviews, and final submission handoff. Use for rubric-graded coursework artifacts in any required format, especially complex or multi-file assignments.",
+  "skills": [
+    "./"
+  ]
+}

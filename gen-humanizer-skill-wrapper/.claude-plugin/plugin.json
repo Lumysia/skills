@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "gen-humanizer-skill-wrapper",
+  "version": "0.1.0",
+  "description": "Use the `gen-humanizer-skill` submodule for Aboudjem/humanizer-skill AI-pattern detection, humanizer scoring, voice-profile rewriting, aggressive cleanup, and iterative de-AI prose editing.",
+  "skills": [
+    "./"
+  ]
+}

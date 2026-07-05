@@ -57,8 +57,9 @@ For skills repositories, include only evidence-backed skill rules, such as namin
 
 ## Output Rules
 
-- Default output is only `AGENTS.md`.
-- Do not create `CLAUDE.md`, ADRs, glossaries, setup docs, command wrappers, or broad process docs unless explicitly requested.
+- Default output is `AGENTS.md`, plus a `CLAUDE.md` containing only `See AGENTS.md.` — a pointer, not a duplicate.
+- Skip the `CLAUDE.md` pointer if one already exists with real (non-pointer) content; note the conflict instead of overwriting it.
+- Do not create ADRs, glossaries, setup docs, command wrappers, or broad process docs unless explicitly requested.
 - Do not edit global agent config, user profile files, or repository files outside the target project scope unless explicitly requested.
 
 ## Final Check

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "gen-fanqie-cache-extractor",
+  "version": "0.1.0",
+  "description": "Extract cached Fanqie Novel / Tomato Novel chapters from rooted Android app data and convert the verified local AES-CBC cache format to TXT. Use when the user mentions 番茄小说, Fanqie Novel, Tomato Novel, com.dragon.read, cached chapters, offline reading cache, or recovering downloaded novel text from a rooted phone.",
+  "skills": [
+    "./"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "sci-paper-search",
+  "version": "0.1.0",
+  "description": "Search, download, and read academic papers using available external tools such as paper-search-mcp, while recording source metadata and retrieval artifacts for downstream research workflows.",
+  "skills": [
+    "./"
+  ]
+}

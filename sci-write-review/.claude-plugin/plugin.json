@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "sci-write-review",
+  "version": "0.1.0",
+  "description": "Create evidence-grounded literature reviews, research syntheses, technical reviews, and long-form manuscripts from source documents using file-backed artifacts, long-running coordination, worker roles, critic gates, quality checks, and export traceability.",
+  "skills": [
+    "./"
+  ]
+}

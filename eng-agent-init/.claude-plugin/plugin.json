@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "eng-agent-init",
+  "version": "0.1.0",
+  "description": "Initialize the current agent host by discovering config, registering skill sources, and configuring requested MCP servers. Use when setting up coding agent config, skill paths, or MCP servers.",
+  "skills": [
+    "./"
+  ]
+}

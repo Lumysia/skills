@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "gen-long-running-skill-creator",
+  "version": "0.1.0",
+  "description": "Design, refactor, and evaluate skills for extremely complex long-running agent work. Use when a task may run for hours, requires staged autonomy, checkpoints, resumability, child-agent orchestration, artifact directories, audit logs, quality gates, or recovery from partial progress.",
+  "skills": [
+    "./"
+  ]
+}

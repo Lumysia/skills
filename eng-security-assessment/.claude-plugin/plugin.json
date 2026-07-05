@@ -1,0 +1,9 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "eng-security-assessment",
+  "version": "0.1.0",
+  "description": "Run autonomous security assessment workflows with profile selection, active tool discovery, child-agent orchestration, fixed runtime directories, logs, checkpoints, resume, validation, reporting, and patching.",
+  "skills": [
+    "./"
+  ]
+}
