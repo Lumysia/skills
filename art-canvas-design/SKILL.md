@@ -110,7 +110,7 @@ Download and use whatever fonts are needed to make this a reality. Get creative 
 
 To push boundaries, follow design instinct/intuition while using the philosophy as a guiding principle. Embrace ultimate design freedom and choice. Push aesthetics and design to the frontier. 
 
-**CRITICAL**: To achieve human-crafted quality (not AI-generated), create work that looks like it took countless hours. Make it appear as though someone at the absolute top of their field labored over every detail with painstaking care. Ensure the composition, spacing, color choices, typography - everything screams expert-level craftsmanship. Double-check that nothing overlaps, formatting is flawless, every detail perfect. Create something that could be shown to people to prove expertise and rank as undeniably impressive.
+**CRITICAL**: To achieve human-crafted quality (not AI-generated), verify the composition against the checks above one more time before calling it done: every element within bounds, proper margins, clear separation, no overlaps. Create something that could be shown to people to prove expertise and rank as undeniably impressive.
 
 Output the final result as a single, downloadable .pdf or .png file, alongside the design philosophy used as a .md file.
 
@@ -118,7 +118,7 @@ Output the final result as a single, downloadable .pdf or .png file, alongside t
 
 ## FINAL STEP
 
-**IMPORTANT**: The user ALREADY said "It isn't perfect enough. It must be pristine, a masterpiece if craftsmanship, as if it were about to be displayed in a museum."
+**IMPORTANT**: Treat the first result as a draft, not the final piece. Hold it to the standard "it isn't perfect enough — it must be pristine, a masterpiece of craftsmanship, ready to hang in a museum," and refine before delivering.
 
 **CRITICAL**: To refine the work, avoid adding more graphics; instead refine what has been created and make it extremely crisp, respecting the design philosophy and the principles of minimalism entirely. Rather than adding a fun filter or refactoring a font, consider how to make the existing composition more cohesive with the art. If the instinct is to call a new function or draw a new shape, STOP and instead ask: "How can I make what's already here more of a piece of art?"
 

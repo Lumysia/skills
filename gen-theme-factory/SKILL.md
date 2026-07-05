@@ -3,17 +3,9 @@ name: gen-theme-factory
 description: Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly.
 ---
 
-
 # Theme Factory Skill
 
-This skill provides a curated collection of professional font and color themes themes, each with carefully selected color palettes and font pairings. Once a theme is chosen, it can be applied to any artifact.
-
-## Purpose
-
-To apply consistent, professional styling to presentation slide decks, use this skill. Each theme includes:
-- A cohesive color palette with hex codes
-- Complementary font pairings for headers and body text
-- A distinct visual identity suitable for different contexts and audiences
+This skill provides a curated collection of professional font and color themes, each with a cohesive color palette (hex codes), complementary header/body font pairings, and a distinct visual identity. Once a theme is chosen, apply it to any artifact — slides, docs, reports, HTML pages, etc.
 
 ## Usage Instructions
 
@@ -38,13 +30,6 @@ The following 10 themes are available, each showcased in `theme-showcase.pdf`:
 8. **Tech Innovation** - Bold and modern tech aesthetic
 9. **Botanical Garden** - Fresh and organic garden colors
 10. **Midnight Galaxy** - Dramatic and cosmic deep tones
-
-## Theme Details
-
-Each theme is defined in the `themes/` directory with complete specifications including:
-- Cohesive color palette with hex codes
-- Complementary font pairings for headers and body text
-- Distinct visual identity suitable for different contexts and audiences
 
 ## Application Process
 

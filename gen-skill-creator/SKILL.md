@@ -54,6 +54,9 @@ Use the bundled resources when they fit the environment:
 
 - `references/schemas.md` defines example JSON structures for evals, grading, and benchmarks.
 - `agents/grader.md`, `agents/comparator.md`, and `agents/analyzer.md` provide reviewer prompts for assessment workflows.
+- `scripts/quick_validate.py` sanity-checks a skill's frontmatter and structure.
+- `scripts/run_eval.py` and `scripts/run_loop.py` run trigger evals for a skill description, optionally looping with `scripts/improve_description.py` until they pass.
+- `scripts/aggregate_benchmark.py` and `scripts/generate_report.py` turn raw benchmark/loop runs into summary stats and an HTML report.
 - `eval-viewer/generate_review.py` can build a human review UI for saved eval outputs.
 - `scripts/package_skill.py` packages a skill folder into a distributable archive.
 

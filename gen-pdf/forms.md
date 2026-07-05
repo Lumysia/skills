@@ -1,7 +1,7 @@
 **CRITICAL: You MUST complete these steps in order. Do not skip ahead to writing code.**
 
 If you need to fill out a PDF form, first check to see if the PDF has fillable form fields. Run this script from this file's directory:
- `python scripts/check_fillable_fields <file.pdf>`, and depending on the result go to either the "Fillable fields" or "Non-fillable fields" and follow those instructions.
+ `python scripts/check_fillable_fields.py <file.pdf>`, and depending on the result go to either the "Fillable fields" or "Non-fillable fields" and follow those instructions.
 
 # Fillable fields
 If the PDF has fillable form fields:
@@ -277,6 +277,10 @@ This checks for:
 - Entry boxes that are too small for the specified font size
 
 Fix any reported errors in fields.json before proceeding.
+
+Optionally, get a visual sanity check by drawing the boxes on a page image:
+`python scripts/create_validation_image.py <page_number> fields.json <page_image> <output_image>`
+This draws label boxes in blue and entry boxes in red on `<output_image>` so you can inspect placement before filling.
 
 ## Step 3: Fill the Form
 

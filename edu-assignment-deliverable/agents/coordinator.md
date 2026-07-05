@@ -131,7 +131,7 @@ For local processing, generated evidence, or exported files, record commands or 
 3. Do not call a deliverable ready if required content is missing, unreadable, misplaced, clipped, malformed, empty, or in the wrong format.
 4. If a required template cannot be filled reliably, create `reports/manual-fill-guide.md` with exact content and locations and tell the user not to submit the failed generated artifact.
 5. Remove content from the deliverable or submission package that is not required by the prompt, rubric, template, requested format, clean submission, execution, verification, or reproducibility.
-6. Keep all workflow notes, review findings, unresolved-risk explanations, and user guidance in the workspace or final conversation, never in the submission artifact.
+6. Keep workflow notes, review findings, and user guidance in the workspace or final conversation, not in the submission artifact (see Step 5).
 
 ### Step 9: Independent Rubric Review
 

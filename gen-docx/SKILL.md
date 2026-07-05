@@ -79,8 +79,7 @@ python scripts/office/validate.py doc.docx
 ### Page Size
 
 ```javascript
-// CRITICAL: docx-js defaults to A4, not US Letter
-// Always set page size explicitly for consistent results
+// CRITICAL: docx-js defaults to A4, not US Letter - always set page size explicitly
 sections: [{
   properties: {
     page: {
@@ -174,25 +173,23 @@ const doc = new Document({
 
 ### Tables
 
-**CRITICAL: Tables need dual widths** - set both `columnWidths` on the table AND `width` on each cell. Without both, tables render incorrectly on some platforms.
+**Tables need dual widths** - set both `columnWidths` on the table AND `width` on each cell. Both must use `WidthType.DXA` (never `PERCENTAGE` - it breaks in Google Docs), and `columnWidths` must sum to the table width. Without both, tables render incorrectly on some platforms.
 
 ```javascript
-// CRITICAL: Always set table width for consistent rendering
-// CRITICAL: Use ShadingType.CLEAR (not SOLID) to prevent black backgrounds
 const border = { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" };
 const borders = { top: border, bottom: border, left: border, right: border };
 
 new Table({
-  width: { size: 9360, type: WidthType.DXA }, // Always use DXA (percentages break in Google Docs)
-  columnWidths: [4680, 4680], // Must sum to table width (DXA: 1440 = 1 inch)
+  width: { size: 9360, type: WidthType.DXA }, // US Letter, 1" margins: 12240 - 2880
+  columnWidths: [4680, 4680], // must sum to table width (1440 DXA = 1 inch)
   rows: [
     new TableRow({
       children: [
         new TableCell({
           borders,
-          width: { size: 4680, type: WidthType.DXA }, // Also set on each cell
-          shading: { fill: "D5E8F0", type: ShadingType.CLEAR }, // CLEAR not SOLID
-          margins: { top: 80, bottom: 80, left: 120, right: 120 }, // Cell padding (internal, not added to width)
+          width: { size: 4680, type: WidthType.DXA }, // matches columnWidths[0]
+          shading: { fill: "D5E8F0", type: ShadingType.CLEAR }, // CLEAR not SOLID - SOLID renders as a black background
+          margins: { top: 80, bottom: 80, left: 120, right: 120 }, // internal padding, not added to width
           children: [new Paragraph({ children: [new TextRun("Cell")] })]
         })
       ]
@@ -201,23 +198,7 @@ new Table({
 })
 ```
 
-**Table width calculation:**
-
-Always use `WidthType.DXA` — `WidthType.PERCENTAGE` breaks in Google Docs.
-
-```javascript
-// Table width = sum of columnWidths = content width
-// US Letter with 1" margins: 12240 - 2880 = 9360 DXA
-width: { size: 9360, type: WidthType.DXA },
-columnWidths: [7000, 2360]  // Must sum to table width
-```
-
-**Width rules:**
-- **Always use `WidthType.DXA`** — never `WidthType.PERCENTAGE` (incompatible with Google Docs)
-- Table width must equal the sum of `columnWidths`
-- Cell `width` must match corresponding `columnWidth`
-- Cell `margins` are internal padding - they reduce content area, not add to cell width
-- For full-width tables: use content width (page width minus left and right margins)
+For full-width tables, use content width (page width minus left and right margins).
 
 ### Images
 
@@ -374,23 +355,13 @@ sections: [{
 }]
 ```
 
-### Critical Rules for docx-js
+### Other docx-js Rules
 
-- **Set page size explicitly** - docx-js defaults to A4; use US Letter (12240 x 15840 DXA) for US documents
-- **Landscape: pass portrait dimensions** - docx-js swaps width/height internally; pass short edge as `width`, long edge as `height`, and set `orientation: PageOrientation.LANDSCAPE`
+Rules not covered by the sections above:
+
 - **Never use `\n`** - use separate Paragraph elements
-- **Never use unicode bullets** - use `LevelFormat.BULLET` with numbering config
-- **PageBreak must be in Paragraph** - standalone creates invalid XML
-- **ImageRun requires `type`** - always specify png/jpg/etc
-- **Always set table `width` with DXA** - never use `WidthType.PERCENTAGE` (breaks in Google Docs)
-- **Tables need dual widths** - `columnWidths` array AND cell `width`, both must match
-- **Table width = sum of columnWidths** - for DXA, ensure they add up exactly
 - **Always add cell margins** - use `margins: { top: 80, bottom: 80, left: 120, right: 120 }` for readable padding
-- **Use `ShadingType.CLEAR`** - never SOLID for table shading
 - **Never use tables as dividers/rules** - cells have minimum height and render as empty boxes (including in headers/footers); use `border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: "2E75B6", space: 1 } }` on a Paragraph instead. For two-column footers, use tab stops (see Tab Stops section), not tables
-- **TOC requires HeadingLevel only** - no custom styles on heading paragraphs
-- **Override built-in styles** - use exact IDs: "Heading1", "Heading2", etc.
-- **Include `outlineLevel`** - required for TOC (0 for H1, 1 for H2, etc.)
 
 ---
 
@@ -402,7 +373,7 @@ sections: [{
 ```bash
 python scripts/office/unpack.py document.docx unpacked/
 ```
-Extracts XML, pretty-prints, merges adjacent runs, and converts smart quotes to XML entities (`&#x201C;` etc.) so they survive editing. Use `--merge-runs false` to skip run merging.
+Extracts XML, pretty-prints, merges adjacent runs, simplifies adjacent tracked changes from the same author, and converts smart quotes to XML entities (`&#x201C;` etc.) so they survive editing. Use `--merge-runs false` or `--simplify-redlines false` to skip either step.
 
 ### Step 2: Edit XML
 
