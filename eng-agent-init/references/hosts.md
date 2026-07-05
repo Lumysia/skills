@@ -86,6 +86,24 @@ Edit via a JSON parser, not a text patch — `~/.claude.json` also holds unrelat
 
 `CLAUDE.md` is Claude Code's own doc convention, separate from `AGENTS.md` — keep both rather than assuming one substitutes for the other.
 
+### Telemetry / non-essential traffic opt-out
+
+Only apply when the user explicitly asks. Merge into the target `settings.json` (user scope: `~/.claude/settings.json`):
+
+```json
+{
+  "env": {
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
+  },
+  "autoUploadSessions": false,
+  "feedbackSurveyRate": 0
+}
+```
+
 ## Codex
 
 Codex primarily uses instruction files such as `AGENTS.md`; skill and MCP support may depend on runtime or wrapper. Discover the active config and adapt.
