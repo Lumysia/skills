@@ -38,6 +38,7 @@ Use these categories as a menu, not a checklist. Include only rules supported by
 - Keep changes within `<project layout or package boundary>` unless the task requires cross-package edits.
 - Preserve `<important generated/protected path>` unless explicitly asked.
 - Follow `<commit message format>` for commits.
+- Do not add a `Co-Authored-By` trailer to commit messages.
 - Keep commits focused; inspect status and diff before committing.
 - Do not edit `<external/vendor/generated path>`.
 - Document `<project-specific artifact or API contract>` when changing it.
