@@ -47,7 +47,7 @@ No arbitrary multi-path skill config exists (no `skills.paths` array like openco
 - User scope: `~/.claude/skills/<name>/`
 - Project scope: `<repo>/.claude/skills/<name>/`
 
-**Verified: a bare `SKILL.md` is not enough.** A folder containing only `SKILL.md` (e.g. plain symlinked in) does not get picked up — `claude plugin list` won't show it and invoking it by name errors `Unknown skill`. Each `<name>/` needs its own `.claude-plugin/plugin.json`:
+**Verified: a bare `SKILL.md` is not enough.** A folder with only `SKILL.md` (e.g. plain symlinked in) is invisible to Claude Code — `claude plugin list` won't show it, and invoking it errors `Unknown skill`. Each `<name>/` needs `.claude-plugin/plugin.json`:
 
 ```json
 {
@@ -58,37 +58,33 @@ No arbitrary multi-path skill config exists (no `skills.paths` array like openco
 }
 ```
 
-`skills` is an array of relative directory paths, each containing its own `SKILL.md` (use `"./"` when `SKILL.md` sits at the plugin root; use a subpath like `"skills/foo"` when it's nested). Object-shaped entries (`{"name":..,"path":..}`) are an old schema and fail validation.
+`skills` is an array of directory paths, each holding a `SKILL.md` — `"./"` if it's at the plugin root, `"skills/foo"` if nested. Object-shaped entries (`{"name":..,"path":..}`) are an old schema and fail validation.
 
-To register this repository's skills at user scope without copying files:
+To register this repo's skills at user scope:
 
-1. Symlink (POSIX: `ln -s`) or junction (Windows: `New-Item -ItemType Junction`) each top-level skill directory — or the whole repo root — into `~/.claude/skills/`.
-2. For every skill folder lacking `.claude-plugin/plugin.json`, generate one from that folder's `SKILL.md` frontmatter (`name`, `description`).
-3. Verify with `claude plugin list --json` — each entry shows `enabled` and any `errors`. Newly added/fixed manifests are picked up live in an already-running session; no restart required.
+1. Symlink/junction each skill directory, or the whole repo root, into `~/.claude/skills/`. Skip names that already exist there; copy instead of linking only with explicit approval.
+2. Add `.claude-plugin/plugin.json` to any folder missing one, generated from its `SKILL.md` frontmatter.
+3. Verify with `claude plugin list --json` (`enabled`/`errors` per entry) — picked up live, no restart needed.
 
-Skip any name that already exists under `~/.claude/skills/`. Only copy instead of symlinking with explicit user approval.
+MCP servers live in `~/.claude.json`:
 
-MCP servers are configured in `~/.claude.json`:
+- Global: top-level `"mcpServers"`.
+- Project, local-only: `"mcpServers"` inside `projects["<absolute-repo-path>"]`.
+- Project, shared via git: `.mcp.json` at repo root, same shape.
 
-- User scope (global): top-level `"mcpServers"` object in `~/.claude.json`.
-- Project scope, local to this machine: `"mcpServers"` inside `projects["<absolute-repo-path>"]` in `~/.claude.json`.
-- Project scope, shared via git: `.mcp.json` at the repo root with the same shape.
-
-Remote HTTP/SSE servers use this shape (matches `claude mcp add --transport http`):
+Remote HTTP/SSE shape (matches `claude mcp add --transport http`):
 
 ```json
 {
   "mcpServers": {
-    "context7": { "type": "http", "url": "https://mcp.context7.com/mcp" },
-    "ghgrep": { "type": "http", "url": "https://mcp.grep.app" },
-    "exa": { "type": "http", "url": "https://mcp.exa.ai/mcp" }
+    "context7": { "type": "http", "url": "https://mcp.context7.com/mcp" }
   }
 }
 ```
 
-Edit the JSON with a parser (not a raw text patch) to avoid corrupting the surrounding config, and back up the file first since it also holds unrelated user state (auth, caches, per-project settings).
+Edit via a JSON parser, not a text patch — `~/.claude.json` also holds unrelated user state (auth, caches, settings) that a bad patch can corrupt. Back it up first.
 
-Claude Code's own project-doc convention is `CLAUDE.md`, separate from `AGENTS.md`. If both this repo's skills and Claude Code's native docs are in play, keep both files rather than assuming one substitutes for the other.
+`CLAUDE.md` is Claude Code's own doc convention, separate from `AGENTS.md` — keep both rather than assuming one substitutes for the other.
 
 ## Codex
 
