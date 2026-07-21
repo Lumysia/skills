@@ -1,0 +1,20 @@
+{
+  "skill_name": "gen-apple-music-sync",
+  "evals": [
+    {
+      "id": "fresh-dual-codec-library",
+      "prompt": "Set up a new ALAC and Atmos Apple Music playlist library on an x86_64 Linux host for Jellyfin.",
+      "expected": "Discovers compatible releases, verifies APK libraries, separates codec roots, snapshots before download, validates codecs, and excludes credentials from support artifacts."
+    },
+    {
+      "id": "incremental-playlist-sync",
+      "prompt": "Update my existing playlist mirror from yesterday's snapshot without downloading unchanged tracks.",
+      "expected": "Captures a current snapshot, diffs catalog IDs, downloads only added URLs, removes only explicit removed IDs, rebuilds ordered playlists, verifies both libraries, and promotes the snapshot after success."
+    },
+    {
+      "id": "portable-support-bundle",
+      "prompt": "Package this setup so another agent can restore it, but exclude every credential and account artifact.",
+      "expected": "Includes only non-reproducible inputs, the current snapshot, dependency references, and checksums while excluding credentials and reproducible files."
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 
 ## General
 
+- [`gen-apple-music-sync`](./gen-apple-music-sync/SKILL.md) - Apple Music ALAC and Dolby Atmos setup, full or incremental playlist synchronization, media verification, support packaging, and Plex/Jellyfin organization.
 - [`gen-browser-control`](./gen-browser-control/SKILL.md) - Browser control workflow for Playwright MCP extension mode using existing Chrome, Edge, or Chromium-family tabs and logged-in sessions.
 - [`gen-docx`](./gen-docx/SKILL.md) - Word document creation, editing, conversion, tracked changes, comments, and XML-level DOCX workflows.
 - [`gen-humanizer-skill-wrapper`](./gen-humanizer-skill-wrapper/SKILL.md) - Wrapper for the [`gen-humanizer-skill`](./gen-humanizer-skill/) submodule from [Aboudjem/humanizer-skill](https://github.com/Aboudjem/humanizer-skill), covering AI-pattern detection, scoring, voice-profile rewriting, aggressive cleanup, and iterative de-AI prose editing.
