@@ -9,7 +9,7 @@
     {
       "id": "incremental-playlist-sync",
       "prompt": "Update my existing playlist mirror from yesterday's snapshot without downloading unchanged tracks.",
-      "expected": "Captures a current snapshot, diffs catalog IDs, downloads only added URLs, removes only explicit removed IDs, rebuilds ordered playlists, verifies both libraries, and promotes the snapshot after success."
+      "expected": "Fetches and validates the live Apple Music playlist before loading the old snapshot as a baseline, diffs catalog IDs, downloads only added URLs, removes only explicit removed IDs, rebuilds ordered playlists, verifies both libraries, promotes the snapshot after success, reports playlist changes separately from per-codec outcomes, and leaves no changes directory in the media library."
     },
     {
       "id": "portable-support-bundle",

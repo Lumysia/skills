@@ -16,7 +16,7 @@ Clone the compatible wrapper-v2 release at an exact tag. Obtain the user-supplie
 
 Create a private `.env` from `.env.example` with the target architecture, Docker platforms, host ports, and session restore. Do not place account values in `.env`.
 
-Build and start with Docker Compose. Verify `/health` and `/me`: version compatibility, loader readiness, playback readiness, and authentication state. Complete login and 2FA interactively. Persist runtime state in the wrapper data volume.
+Build and start with Docker Compose. Verify `/health` and `/me`: version compatibility, loader readiness, playback readiness, and authentication state. Parse responses locally and print only required status fields; never print complete `/me` responses or token-bearing fields. Complete login and 2FA interactively. Persist runtime state in the wrapper data volume.
 
 ## 4. Configure Libraries
 
@@ -39,7 +39,7 @@ Use `song_codec_piority = atmos` for the Atmos config. Use separate output roots
 
 ## 5. Snapshot
 
-Capture the public playlist page before each run. Parse its `serialized-server-data` JSON and select the track list whose ID matches the playlist ID from the URL.
+Capture the live public playlist page before each run. This is the first playlist-state operation in an incremental run: do not read or present the old snapshot as though it describes the current Apple Music playlist. Parse the page's `serialized-server-data` JSON and select the track list whose ID matches the playlist ID from the URL.
 
 Write a JSON snapshot containing schema version, playlist ID, URL, title, capture time, declared track count, and ordered tracks. Each track must contain contiguous one-based position, string catalog ID, title, artist, album, album ID, duration, explicit flag, and canonical song URL.
 
@@ -58,7 +58,7 @@ Database registration and `overwrite=false` prevent repeated replacement. Catalo
 
 ## 7. Incremental Sync
 
-Capture a new snapshot. Reject comparisons with different schema versions or playlist IDs.
+After the live snapshot has been captured and validated, load the previous snapshot only as the comparison baseline. Reject comparisons with different schema versions or playlist IDs.
 
 Build previous and current maps by catalog ID:
 
@@ -67,20 +67,25 @@ Build previous and current maps by catalog ID:
 - Reordered: compare the previous and current sequences after filtering both to common IDs. Report an ID as moved only when its index within the common-ID sequence changes. Additions and removals alone must not create move records.
 - Common count: size of the ID intersection.
 
-Write `diff.json`, `added-urls.txt`, and `removed-ids.txt`. An empty change set must overwrite stale output files with empty files.
+Write `current.json`, `diff.json`, `added-urls.txt`, and `removed-ids.txt` under a per-run system temporary directory outside the media library. An empty change set must overwrite stale run files with empty files. Do not create or retain a `changes/` directory under the target music or snapshot directory unless the user explicitly requests audit artifacts.
 
 Download additions only:
 
 ```bash
-gamdl --config-path ALAC_CONFIG --read-urls-as-txt changes/added-urls.txt
-gamdl --config-path ATMOS_CONFIG --read-urls-as-txt changes/added-urls.txt
+gamdl --config-path ALAC_CONFIG --read-urls-as-txt RUNTIME_DIR/added-urls.txt
+gamdl --config-path ATMOS_CONFIG --read-urls-as-txt RUNTIME_DIR/added-urls.txt
 ```
 
 For each codec library, resolve only removed IDs through that library's SQLite `media` table. Require every resolved path to remain inside the configured library root. Delete the audio file and same-basename lyric sidecars, then delete the matching database rows in one transaction.
 
 Rebuild the M3U in current snapshot order by joining current catalog IDs to existing database paths. Use paths relative to the M3U directory. Skip catalog items unavailable in that codec and report their IDs.
 
-Repeat for every codec. Promote `current.json` to `previous.json` only after all libraries pass verification.
+Repeat for every codec. Promote `current.json` to `previous.json` only after all libraries pass verification. Optionally retain the promoted dated snapshot, then remove the per-run temporary directory.
+
+Report two distinct result layers:
+
+- Playlist diff: titles and counts added, removed, and reordered between previous and live snapshots.
+- Codec execution: files actually downloaded, skipped as unavailable, and deleted for each codec. Do not describe a playlist addition as an Atmos addition when Atmos was unavailable.
 
 ## 8. Verify
 
